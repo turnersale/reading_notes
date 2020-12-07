@@ -1,0 +1,357 @@
+# Hands-On Machine Learning with Scikit-Learn and TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems 1st Edition
+### Aurélien Géron <!-- omit in toc -->
+### 1491962291 <!-- omit in toc -->
+
+- [Hands-On Machine Learning with Scikit-Learn and TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems 1st Edition](#hands-on-machine-learning-with-scikit-learn-and-tensorflow-concepts-tools-and-techniques-to-build-intelligent-systems-1st-edition)
+- [Preface](#preface)
+- [Part 1 - The Fundamentals of Machine Learning](#part-1---the-fundamentals-of-machine-learning)
+  - [Chapter 1 - The Machine Learning Landscape](#chapter-1---the-machine-learning-landscape)
+  - [Chapter 2 - End-to-End Machine Learning Project](#chapter-2---end-to-end-machine-learning-project)
+  - [Chapter 3 – Classification](#chapter-3--classification)
+  - [Chapter 4 – Training Models](#chapter-4--training-models)
+  - [Chapter 5 – Support Vector Machines](#chapter-5--support-vector-machines)
+
+# Preface
+
+- Will be covering from the simple and regularly used (like linear regression) to the more advanced deep learning concepts
+- Using Scikit learning and TensorFlow:
+  - Scikit learn is better for learning and is an efficient implementation for common applications
+  - TensorFlow is more advanced and is designed to be implemented across a large cluster of GPU or TPU enabled servers if needed
+- This book assumes some familiarity with Python and it&#39;s primary libraries (NumPy, Pandas, Matplotlib)
+- Also useful is calculus, linear algebra, probabilities and stats
+- Code exampLes and additional material can be downloaded at [www.github.com/ageron/hanson-ml](http://www.github.com/ageron/hanson-ml)
+
+# Part 1 - The Fundamentals of Machine Learning
+
+## Chapter 1 - The Machine Learning Landscape
+
+- Supervised/Unsupervised Learning:
+  - Supervised:
+    - The training set includes the desired solution (usually called labels)
+    - Good for classification problems, predicting a target value based on a set of features called predictors (usually called regression)
+    - Sometimes a regression can be used for classification and vice versa
+    - Common algorithms:
+      - k-Nearest Neighbors
+      - Linear Regression
+      - Logistic Regression
+      - Support Vector Machines
+      - Decision Trees and Random Forests
+      - Neural Networks (dependent on type)
+  - Unsupervised:
+    - The data is unlabeled and the machine attempts to learn on its own
+    - Most common algorithms:
+      - Clustering:
+        - k-Means
+        - Hierarchical Cluster Analysis
+        - Expectation Maximization
+      - Visualization and dimensionality reduction:
+        - Principal Component Analysis
+        - Kernel PCA
+        - Locally-Linear Embedding
+        - t-Distributed Stochastic Neighbor Embedding
+      - Association rule learning:
+        - Apriori
+        - Eclat
+    - Dimensionality reduction is a good idea to do before feeding data to other algorithms as it will likely run faster, save space, and may also perform better
+    - Feature extraction: merging two or more features that are highly correlated to achieve dimensionality reduction
+  - Semisupervised:
+    - Some of the data is labeled and some is not
+    - Good example is Google Photos. It can recognize the same face in photos, but you need to say who it is
+    - Often a combination of the first two types
+    - Common algorithms:
+      - Deep Belief Networks (DBN)
+      - Restricted Boltzmann Machines (RBM)
+  - Reinforcement Learning:
+    - The system (called the agent) observes the environment, selects and performs action, and gets rewards or punishments
+    - It will then decide on a policy to maximize returns
+    - Used in many machines that learn to walk or play games
+- Batch vs. Online:
+  - Batch:
+    - System is incapable of learning incrementally
+    - Usually trained offline and fed all available data. This is compute intensive but allows the model to be sent direct to production
+    - Usually called offline learning
+  - Online:
+    - Trained incrementally by feeding it data instances sequentially (either individually or in min-batches)
+    - Once the model has learned from the instance, it can remove it from storage, savings resources
+    - Important to establish a learning rate (how fast they adapt to change)
+      - Trade-off is that the higher rate is quicker to react, whereas the low rate has more inertia (learns slower but is less susceptible to noise)
+    - Has the disadvantage of degrading in performance if poor data is fed to the system (a malfunctioning sensor, bad operator, etc.)
+- Instance vs. Model:
+  - Instance:
+    - The system learns by heart and generalizes typically using some similarity measure
+  - Model:
+    - System is used to make predictions based on learning process
+    - To answer how good the predictions are, you can either use a utility function (fitness function) of how good it is, or a cost function of how bad it is
+  - Theta is a common marker used to show model parameters
+- Main Challenge of ML:
+  - Insufficient Quantity of Data:
+    - Often requires thousands if not millions of examples (compared to a few or several examples for humans)
+    - A famous paper titled &quot;The Unreasonable Effectiveness of Data&quot; suggests that more effort should be spent on a proper corpus rather than a great model, as researchers found that many algorithms performed similarly once a sufficiently large data store was used
+  - Nonrepresentative Training Data:
+    - Likely to train a model that only describes the samples and cannot generalize
+    - Sampling bias: a flawed method of data collection that unduly biases the samples used for model training
+    - Nonresponse bias: bias introduced by individuals not responding to requests for survey data
+  - Poor Quality Data:
+    - Outliers, errors, noise
+    - Some features will be partially accurate and you must decide to discard, fill in, train multiple models with or without it, etc.
+  - Irrelevant Features:
+    - Feature engineering:
+      - Selection: most useful features used to model
+      - Extraction: combining or altering existing features to produce more useful ones
+      - Gather new data
+  - Overfitting the Training Data:
+    - Performs well on the training data but generalizes poorly
+    - Often occurs because the model is too complex for existing data or the noisiness of the sample
+    - Common fixes:
+      - Simplify the model
+      - Reduce the attributes
+      - Gather more training data
+      - Reduce noise (remove outliers and the like)
+    - Constraining a model is called regularization and is used to fight overfitting
+    - Hyperparameters:
+      - Parameters related to the learning algorithm
+      - Defined prior to model training and remains constant
+      - Critical in defining models that generalize well
+  - Underfitting the Training Data:
+    - Usually occurs because the model is too simple
+    - Common fixes:
+      - Selecting a more complex model with more params
+      - Feeding in better features
+      - Reducing constraints on the model
+- Testing and Validating:
+  - Simplest test is to set in production, but may end up with user complaints and the like
+  - The more stable solution is to split the existing data into a training and a testing set
+  - Generalization error: the error rate on the testing examples
+  - Common to train on 80% and test with 20%
+  - It is possible that you don&#39;t get the accuracy you expect because you adjust the model to fit your specific testing set
+    - e. you tune the model to meet accuracy for the testing data, but the testing data may not be representative of your production samples
+  - To help solve the problem above, many people also reserve a validation set
+    - Train many models with new hyperparams, test many times against the validation set, then run a final test on the test set
+    - To avoid wasting training examples, cross validation is often used
+      - Training is split into complementary subsets, each model trains against different combinations of subsets, and validation occurs against the rest
+      - The best model is then run on the test data
+- No Free Lunch Theorem: if you make no assumptions about the data, then there is no reason to prefer one model over another
+
+## Chapter 2 - End-to-End Machine Learning Project
+
+- Main steps for an ML project:
+  - Look at the big picture:
+    - Frame the problem: what do you want to know or solve?
+    - Pipelines are important to define as they determine the type of output and processing methods needed for later steps
+    - What does the existing solution look like?
+    - Is it supervised, unsupervised, or Reinforcement?
+    - Is it classification, regression, or something else?
+    - Should it be batched or online?
+    - Select a performance metric:
+      - RMSE, AIC, Mean absolute error (MAE), etc.
+    - Check your assumptions are reasonable
+      - This includes making sure what the expected output is (if you want to know cheap and not the dollar value, then it would be classification and the regression model would be overkill or perform worse)
+  - Get the data:
+    - Setup Python and necessary packages
+    - Recommended to use virtualenv for isolated environments
+    - Pandas has a .info() method for dataframe structure and .describe() for a summary of numerical attributes
+    - To avoid &quot;data snooping bias&quot; make a test set before digging too deeply into your dataset
+  - Discover and visualize the data to gain insights:
+    - _pd.scatter\_matrix_ used to compare multiple scatterplots (can feed a subset of attributes to shrink the number of plots since they grow at N^2 where N is the number of attributes)
+  - Prepare the data for ML:
+    - Common to write functions to handle transformations, that way you can reuse them in later projects
+    - Scikit-Learn has a couple design decisions that make it easy to use:
+      - Consistent: all objects share simple interfaces
+      - Estimators: objects like impute create their estimates with the _,fit()_ method and all other arguments are considered hyperparameters
+      - Transformers: objects that alter a dataset are run using the _.transform()_ method following their fitting and can usually be done in one step using the _.fit\_trannsform()_ method
+      - Predictors: objects like the linear regression model provide the _.predict()_ and _.score()_ methods used to create predictions and test the accuracy of those predictions
+    - _pd.factorize()_ provides a way to convert text values into a numerical feature and provides a list of the text options (like a Navision option field actually)
+    - Sklearn has a _OneHotEncoder()_ object for converting categorical variables to one-hot encoding and outputs a sparse SciPy matrix (this is to save memory as it only stores the location of the 1&#39;s and ignores the many 0&#39;s)
+    - Sklearn also has a _CategoricalEncoder()_ class that handles the text to integer and integer to one-hot vectors in a single go
+    - You may also want to write custom classes that act like Sklearn classes (return to pg. 65)
+    - Feature scaling the predictors is also very useful as most models learn better on features that are not dramatically different in scale
+    - Main scaling methods:
+      - Min-Max (normalization):
+        - Scale all value within 0 to 1 (can be altered if desired)
+        - Subtract the min value and divide by the max minus the min
+        - _sklearn.MinMaxScaler()_
+      - Standardization:
+        - Subtracts the mean and then divides by variance
+        - Does not bound to certain values
+        - Less affected by outliers but not as good for certain algorithms that expect 0-1 value ranges
+        - _sklearn.StandardScaler()_
+    - Sklearn also provides a _Pipeline()_ class that allows you to string multiple estimator/transformers as a single _.fit\_transform()_
+    - This type of pipeline is really useful for creating automatic routines for converting data quickly, all you need to do:
+      - Import the data
+      - Create a custom class that only pulls the numerical features (see pg. 68)
+      - Create a custom class that only pulls the categorical features (see pg. 68)
+      - Apply the unique pipelines to each set
+    - The custom class that pulls only the numerical or categorical features can even be embedded inside the pipelines
+    - What&#39;s even cooler is you can setup a pipeline that handles other pipelines using the _sklearn.FeatureUnion()_ class
+  - Select and train models:
+    - It is preferred not to immediately touch your test data until you are confident with the model, thus cross-validation is very useful in this phase
+    - _sklearn.cross\_val\_score()_ provides a simple way to do this and you can decide on the number of fold (it uses K-fold Cross-validation methods)
+    - Cross-validation also provides multiple scores so you can see the mean of the scores and the standard deviation
+    - Cross-validation does require multiple training runs so it is not always possible
+    - It is best to test many models here and shortlist the best 2-5 models
+  - Fine tune:
+    - _sklearn.GridSearchCV()_:
+      - Allows you to pass along a model and will automatically tune the hyperparameters using cross-validation and a scoring method
+      - You can also pass along a parameter grid that the model can test (such as the number of features, whether to bootstrap, etc.)
+      - _.best\_estimator_ provides the best estimator and the hyperparameters
+      - The function automatically tries to train the best estimator with the full training dataset, as this can often improve model performance
+    - If the search space for hyperparameters is very large, it is better to use the _sklearn.RandomizedSearchCV_ as this will iterate as many times as you define, allowing you to define the computation you are willing to give it
+  - Present your solution:
+    - Document all the phases of the project
+    - Prepare presentations and justifications
+  - Launch, monitor, and maintain your system:
+    - &quot;Rot&quot; of the data is likely to occur over time, to combat this:
+      - Set up alerts for model performance degradation
+      - Monitor the input data for faulty/poor quality data
+      - Update the model regularly
+      - Take snapshots of online models so you can revert if needed
+- Exercises on pg. 79
+
+## Chapter 3 – Classification
+
+- Binary classifier: a classifier task where there are only two classes
+- Stochastics Gradient Descent (SGD):
+  - Well suited for large datasets
+  - Good for online training
+  - _sklearn.SGDClassifier_
+- Performance measures for classifiers:
+  - Cross-validation:
+    - In cases where you need more control than Sklearn provides, see pg. 85
+    - Provides some additional information since you are using Kfolds
+  - Accuracy:
+    - Can be a useful measure but is poor for skewed datasets
+  - Confusion Matrix:
+    - _sklearn.cross\_val\_predict()_ provides the predictions for each fold
+    - _sklearn.confusion\_matrix()_ can take the training data and the predictions and provide a matrix of actual (row) vs. predicted class (column)
+  - Precision:
+    - Can be &quot;fooled&quot; if you have a small number of predictions which are accurate, but not generalizable
+    -
+    - Where TP = True Positives and FP = False Positives
+  - Recall:
+    - Also called sensitivity or true positive rate (TPR)
+    -
+    - Where FN = False Negatives
+  - F1 Score:
+    - Harmonic mean of precision and recall
+    - Gives more weight to low values, therefor it will only be high if both recall and precision are high
+    -
+- Sklearn has functions for _precision\_score_, _recall\_score_ and _f1\_score_
+- Sklearn also allows you to see the decision function output
+  - _sklearn.decision\_function()_ provides an array just like the predictions
+  - You can use this to alter the decision threshold
+  - You can return the scores with _cross\_val\_predict()_ if you specify the method
+  - Then you can run this output through the _precision\_recall\_curve()_ function in order to see the interaction between the precision and recall curves
+  - See pgs. 90-91 for detailed code
+- ROC Curve:
+  - Receiver Operating Characteristic
+  - Plots the True Positive Rate (TPR) against the False Positive Rate (FPR)
+  - FPR = 1 – True Negative Rate (TNR or specificity)
+  - Thus ROC is plotting sensitivity (recall) vs. 1-specificity
+  - Good models will perform to the upper left corner
+- AUC:
+  - Area Under the Curve
+  - Sometimes called ROC AUC
+  - Perfect classifiers would have a measure of 1 and random would be 0.5
+- Some Sklearn classifiers do not have a _decision\_function_ method, instead providing a _predict\_proba()_ method
+  - This provides a column for each class and a probability of being in that class for each row
+- Multiclass Classification:
+  - Some algorithms are well suited for this (like RF and NB), but others are only binary (like SVM or Linear classifiers)
+  - You can however combine multiple binary classifiers to make a multiclass problem
+    - For example, make 10 binary classifiers and use the highest probability score as the answer for the class
+    - This is also called One vs. All (OvA)
+  - You could also train binary classifiers against every combination of outputs
+    - Example: 0 vs. 1, 0 vs. 2, etc.
+    - This does mean you need to train N x (N-1) / 2 classifiers and then run the test data through all the resulting models
+    - Also called One vs. One (OvO)
+- Multilabel Classification:
+  - A system which outputs multiple binary labels (such as the presence of multiple faces in a single photo)
+  - It is pretty common in such cases to score the model by averaging the F1 Score of all classification outputs
+    - This assumes all labels are equally important, which may not be true
+    - Can be changed in the _f1\_score()_ function with the _average_ argument
+- Multioutput Classification:
+  - A generalized form of multilabel classification where each label can be multiclass
+  - Example: turning an image into a pixel intensity representation\
+    - Each pixel receives an output (multilabel)
+    - Each label can have multiple values (multioutput)
+- Exercises on pgs. 104-105
+
+## Chapter 4 – Training Models
+
+- Closed Form Solution:
+  - A mathematical equation that gives the result directly
+  - Example: normal equation for linear regresion
+    -
+    - Provides the vector of bias term and feature weights
+  - Computational complexity for this is typically between O(n2.4) to O(n3)
+    - In other words, if you double the number of features n, then you increase the computation by a factor of 22.4=5.3 to 23=8
+  - The equation is linear with the number of instances m though (O(m))
+- Gradient Descent:
+  - You fill θ will random numbers and slowly iterate while trying to reduce the cost function
+  - Eventually you converge to a minimum
+  - The iteration speed is also called the learning rate
+    - Too small may lead to many iterations
+    - Too big and you may overshoot the minimum
+  - Not all functions are convex (meaning you may converge to a local minimum rather than a global, or stop at a plateau)
+  - Parameter space: the dimensions that must be searched, more features means more dimensions
+  - Batch Gradient Descent:
+    - In order to reduce the cost function, we have to calculate the partial derivative of each parameter independently to see which way to &quot;step&quot;
+    - This gradient vector can be calculated all together (see pg. 117 for equation)
+    - This is called batch gradient descent because we use the entire set of data X for each step
+    - This means it does not scale very well for large datasets, but is very scalable for many features
+    - It is also important to consider the number of iterations as learning rate and iterations determine how quickly you reach convergence
+    - In order to compensate for too many iterations, you can use a high number of iterations and break when the gradient vector becomes smaller than some tiny number (called tolerance)
+  - Stochastic Gradient Descent:
+    - The batch methodology uses all data at each step, while stochastic just picks a random instance
+    - This allows for far larger datasets, but it also means the model never has true convergence as it continues to &quot;bounce around&quot;
+    - This bouncing does have a good chance of finding the global minima though, as batch will be caught in the local minima
+    - In order to get the global finding benefits along with the ability to converge, it is common to use simulated annealing, where the learning rate starts large and shrinks over time (annealing coming from the slow cooling metallurgy process)
+    - The rate of learning rate change is called the learning schedule and is important in order to match sure iterations aren&#39;t wasted and we don&#39;t get stuck in local minima
+    - Each time we iterate through the set is called an epoch
+      - This is different from batch in that the epoch is only capturing a single instance rather than using the whole dataset each time
+  - Mini-batch Gradient Descent:
+    - This is a mix of both methodologies in that instead of using the whole set (batch) or a single instance (stochastic) we use a subset of the data
+    - This has a performance improvement as hardware like GPU&#39;s are optimized for matrix operations that run on such a method
+    - Table 4-1 on pg. 122 shows the comparison between methods
+- Polynomial Regression:
+  - This allows us to use linear regression models to fit multiple features
+  - Uses a certain degree creation process that adds new features based on the ^N degree and the combination of such features
+  - Using too many degrees can severely overfit the data while simple regression may underfit, thus there is a middle ground that is usually best for generalizing
+- Bias/Variance Tradeoff:
+  - Generalization error can be expressed as the sum of three main metrics:
+    - Bias: due to wrong assumptions, high bias is likely to underfit
+    - Variance: due to excessive sensitivity to small variations, many degrees of freedom are likely to have high variance and overfit
+    - Irreducible error: due to noisiness of the data, can only handled with cleansing
+- Regularized Linear Models:
+  - In order to reduce overfitting, we typically must restrain the model, which is usually reducing the degrees of freedom
+  - Ridge Regression:
+    - Also called Tikhonov regularization
+    - This adds a regularization term to the cost function
+    - You should only apply this on the training set and measure model performance on the unregularized
+  - Lasso Regression:
+    - Least Absolute Shrinkage and Selection Operator Regression
+    - Similar to ridge, just with a different regularization term
+    - Often eliminates the weights for the least important features
+  - Elastic Net:
+    - This is a mixture of both method above
+    - When r (the mixture ratio) it is the same as ridge, while 1 is the same as lasso
+- Early Stopping:
+  - Often the validation error will hit a minimum or plateau
+  - In order to not waste computations, we can stop the training process in the epoch in which the minimal error is reached
+  - With stochastic or mini-batch it can be hard to know exactly when that occurs, so sometimes you may need to allow it to run a few more iterations and see if the minimum is retained
+- Logistic Regression:
+  - Similarly to linear regression, it computes the weighted sum of the input features, however instead of outputting the direct result, it outputs the logistic
+  - The logistic is also called a logit and is the output returned from a sigmoid function (outputting a number between 0 and 1)
+  - Often denoted as
+  - There is no known closed-form function to minimize this function
+  - The function is convex though, which means gradient descent can be used to find the global minimum every time
+  - Softmax Regression:
+    - Logistics regression can be generalized to multiple classes directly
+    - Also called Multinomial Logistic Regression
+    - The class with the highest softmax score is the response that the regression returns
+    - Cross Entropy is used as the cost function for this model as it penalizes the model for generating a low probability for the target class
+    - In order to run this methodology, you can use _sklearn.LogisticRegression_ but you must set the _multi\_class_ argument to multinomial and the _solver_ to a solver that supports softmax (such as lbfgs)
+- Exercises on pg. 145
+
+## Chapter 5 – Support Vector Machines
+
+-
