@@ -18,7 +18,7 @@ In addition to a markdown file of notes (markdown is used for portability and ca
   * Publisher:O'Reilly Media
   * Purchase link: https://www.amazon.com/Learning-SQL-Master-Fundamentals/dp/0596520832
   * Tags: SQL, Databases
-  * Originally written in docx, working on converting properly
+  * Originally written in docx, working on converting properly, currently finished chapter 3
 * 
 
 ## Ongoing Reading List

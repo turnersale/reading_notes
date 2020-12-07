@@ -21,13 +21,11 @@
   - [Chapter 15 – Metadata](#chapter-15--metadata)
 
 ### Preface
-
 - Schema statements: used to create database objects (tables, indices, constraints, etc.)
 - Data statements: used to create, manipulate and retrieve data
 - Sample database and programs are run in MySQL for the purposed of this book
 
 ### Chapter 1 – A Little Background
-
 - Nonrelational Database Systems:
   - In early database systems data was often stored in a hierarchical manner with parent-child pairs (with only 1 connection from child to parent, this is called a single-parent hierarchy)
   - Another common method was a network database, which shows the sets of records and sets of links that define relationships between different records
@@ -50,7 +48,7 @@
   - Integration toolkits:
     - Java : JDBC
     - C++ : Rogue Wave SourcePro DB
-    - C/C++ : Pro\*C (Oracle), MySQL C API, and DBM2 Call Level Interface (IBM)
+    - C/C++ : Pro*C (Oracle), MySQL C API, and DBM2 Call Level Interface (IBM)
     - C# : ADD.NET (Microsoft)
     - PERL : Perl DBI
     - Python : Python DB
@@ -68,21 +66,21 @@
 - Instructions on installing MySQL 6.0 or higher on pg. 15
 - Invoke commands in the command line:
   - Specify the username and database you wish to use
-    - E.g. _mysql –u <username> -p bank_
+    - E.g. _mysql –u username -p bank_
   - A password prompt will appear
   - The _mysql>_ prompt will then appear
   - _quit_ and _exit_ will end the command and return to the command shell
 - MySQL Data Types:
   - Character Data:
-    - _char(<n>)_ : defined number of characters with right padding if the string does not match, this will always produce the same number of bytes
-    - _varchar(<n>)_ : allows up to n number of characters without and right padding
+    - _char(n)_ : defined number of characters with right padding if the string does not match, this will always produce the same number of bytes
+    - _varchar(n)_ : allows up to n number of characters without and right padding
     - char columns can be up to 255 bytes, while varchar can be 65,535 bytes
     - Character sets:
       - Languages with a large number of characters may require more than a single byte to store a character, these are called multibyte character sets
       - To determine which languages are supported you can use the _show_ command
         - E.g. SHOW CHARACTER SET
       - Each column may use a separate character set and multiple sets can be stored in the same table
-      - To define a character set other than the default use _character set <setID>_ after the column definition
+      - To define a character set other than the default use _character set setID_ after the column definition
     - Text data:
       - If the column will exceed the 64KB limit, then you must use a text type
       - Types:
@@ -121,53 +119,53 @@
   - Remember to include a primary key column (whether defined by another column or by an ever expanding number)
   - Writing a SQL schema statement:
 ```SQL
-CREATE TABLE <table_name>
+CREATE TABLE table_name
 
-(<column_name_1> <type> <additional calls>, ...
+(column_name_1 type additional calls, ...
 
-<column_name_N> <type> <additional calls>,
+column_name_N type additional calls,
 
-CONSTRAINT <constraint>
+CONSTRAINT constraint
 
 )
 ```
   - Check constraints: used to define the allowable options for a column (e.g. gender), but MySQL does not enforce these constraints (it only stores them)
-  - In order to constrain the options in MySQL you must use ``` ENUM(<option1>, ... ,<option>) ```
+  - In order to constrain the options in MySQL you must use _ENUM(option1, ... , option)_
   - NULL: the absence of a value, this does not mean it is equal to NULL
   - _REFERENCE_: another check constraint, used to restrict the option in a foreign table to only those found in the primary key table (e.g. a sales order line must use a preexisting customer ID)
 - Populating and Modifying Tables:
   - Inserting Data:
-    - ``` _INSERT(<name_of_table>, <names_of_columns>, <values>)_ ```
+    - _INSERT(name_of_table, names_of_columns, values)_
     - You cannot insert a numeric key into a table, as you might have an issue with concurrency and duplication
     - All major databases use some form of auto-incrementation on the server side that will provide your row with the appropriate value
       - In MySQL you can enable this with:
-        - ``` _ALTER TABLE_ <table> MODIFY <column_name> <data_type> <signed/unsigned> AUTO_INCREMENT ```
+        - ``` ALTER TABLE table MODIFY column_name data_type signed/unsigned AUTO_INCREMENT ```
     - If nulls are allowed for a column then you need not specify and insert data into them, but if nulls are not allowed then you will receive and error
   - Changing the output to XML depends on the product you use
     - MySQL: enter _–xml_ before the database name in the command line tool
     - SQL Server: add the xml clause to the end of the query
-      -```  _FOR XML AUTO, ELEMENTS_ ```
+      - ```  FOR XML AUTO, ELEMENTS ```
   - Updating Data:
-    - Use the UPDATE statement to alter rows based on a filter generated by WHERE:
+    - Use the _UPDATE_ statement to alter rows based on a filter generated by _WHERE_:
 ``` SQL
-UPDATE <table>
+UPDATE table
 
-SET <column> = '<value>', ...
+SET column = 'value', ...
 
-WHERE <condition>
+WHERE condition
 ```
-  - The WHERE condition allows you to alter as many or few rows as you would like
+  - The _WHERE_ condition allows you to alter as many or few rows as you would like
   - Deleting Data:
-    - Used just like UPDATE, except it removes rather than alters
-    - The WHERE statement functions similarly to UPDATE in that you can delete as many rows as you chose to filter
+    - Used just like _UPDATE_, except it removes rather than alters
+    - The _WHERE_ statement functions similarly to _UPDATE_ in that you can delete as many rows as you chose to filter
 - When Good Statements Go Bad:
   - Nonunique primary keys: can be created in many databases, there is no default blocking mechanism to keep you from overwriting the key with a duplicate. There are schema objects that can keep this from happening if you so choose
   - Nonexistent foreign keys: will restrict you from updating or adding data if the constraint is not met (namely if the foreign key does not match an entry in the primary key column of another table)
   - Column value violations: if you constrain a column to only certain values and attempt to add a nonmatching value you will receive an error
-  - Invalid date conversions: you may have an instance where the format of the input does not match the expected formatting, if this is the case you can use ``` _str_to_date(<input>, <format>)_ ``` in order to correct the formatting
+  - Invalid date conversions: you may have an instance where the format of the input does not match the expected formatting, if this is the case you can use ``` _str_to_date(input, format)_ ``` in order to correct the formatting
 - Bank Schema: the remainder of the book uses the bank schema found in the setup
-- To view the columns of a table: ``` _DESC <table_name>_ ```
-- To see all tables in a database: ``` _SHOW TABLES_ ```
+- To view the columns of a table:  ```DESC table_name ```
+- To see all tables in a database: ``` SHOW TABLES ```
 
 ## Chapter 3 – Query Primer
 
@@ -180,42 +178,42 @@ WHERE <condition>
   - The server then develops an execution plan in the query optimizer to determine the fastest way to run your request
   - The output, called the result set, is then returned as a new table
 - Query Clauses:
-  - SELECT : which columns to pull
-  - FROM : the tables from which to pull the selected columns
-  - WHERE : filters out the unwanted
-  - GROUP BY : used to group together by common values
-  - HAVING : filters unwanted groups
-  - ORDER BY : sorts the final results by one+ columns
-- SELECT:
-  - SELECT followed by a * indicates you want the whole data set (all columns)
-  - You can also include literals, expressions (like ``` <column>*2 ```), built in function calls (like ROUND) and user defined function calls
+  - _SELECT_ : which columns to pull
+  - _FROM_ : the tables from which to pull the selected columns
+  - _WHERE_ : filters out the unwanted
+  - _GROUP BY_ : used to group together by common values
+  - _HAVING_ : filters unwanted groups
+  - _ORDER BY_ : sorts the final results by one+ columns
+- _SELECT_:
+  - _SELECT_ followed by a * indicates you want the whole data set (all columns)
+  - You can also include literals, expressions (like ``` column*2 ```), built in function calls (like _ROUND_) and user defined function calls
   - Column aliases can be added as well by using the _AS_ function, this assigns a new name to the data that you are pulling
   - If you include _DISTINCT_ before the column name it will return only the unique values in that column
-    - Using ALL in place of DISTINCT will do nearly the opposite
-- FROM:
+    - Using _ALL_ in place of _DISTINCT_ will do nearly the opposite
+- _FROM_:
   - Three types of tables that fall under the definition 'table'
     - Permanent tables : created and stored in the database
     - Temporary tables : e.g. the returns of a subquery
     - Virtual tables : created using the view statement
-  - Sub-queries can be seen and used by all other clauses of the SELECT statement
+  - Sub-queries can be seen and used by all other clauses of the _SELECT_ statement
   - Views:
     - A query stored in the data directory, but has no associated data in itself
     - When called upon it will run the definition you gave it and return the data set at run time
-    - ``` _CREATE VIEW <view_name> AS <definition>_ ```
-  - In order to pull from multiple tables you must define the table name and column, you can do this by using an alias (e.g. employee AS e) or the full name, but alias is faster and easily read
-  - Defining table aliases doesn't require the AS statement, but about half of people use it and the other half just use the alias immediately after the name
-- WHERE:
+    - ``` CREATE VIEW view_name AS definition ```
+  - In order to pull from multiple tables you must define the table name and column, you can do this by using an alias (e.g. ``` employee AS e ```) or the full name, but alias is faster and easily read
+  - Defining table aliases doesn't require the _AS_ statement, but about half of people use it and the other half just use the alias immediately after the name
+- _WHERE_:
   - Can include Boolean tests or conditionals, as well as the operators AND/OR
-- GROUP BY and HAVING:
-  - GROUP BY: is used to group the data on a column definition (e.g. a department with employees in it)
-  - Must define the manner in which you wish to group, i.e. do you wish to SUM, COUNT, etc.?
-  - HAVING operates much like WHERE does for raw data, except it filters an entire group based on the condition (e.g. a group must have a member that is >10 or it is filtered)
-- ORDER BY:
+- _GROUP BY_ and _HAVING_:
+  - _GROUP BY_: is used to group the data on a column definition (e.g. a department with employees in it)
+  - Must define the manner in which you wish to group, i.e. do you wish to _SUM_, _COUNT_, etc.?
+  - _HAVING_ operates much like _WHERE_ does for raw data, except it filters an entire group based on the condition (e.g. a group must have a member that is > 10 or it is filtered)
+- _ORDER BY_:
   - Used to define the column you wish you sort by and the manner in which it will be ordered
   - You can add multiple conditions separated by a comma, the first condition is the first sort order, then each preceding adds a level of sortation
-  - Default behavior is ascending, but you can define ASC or DESC at the end of the clause
-  - You can also order by expression (e.g. sort by the last 3 digits of a column using RIGHT())
-  - It is possible to sort via numeric placeholders (the position in the select statement) using the columns you wish to sort on (e.g. ORDER BY 2, 5; returns the order by the second and fifth columns that are returned)
+  - Default behavior is ascending, but you can define _ASC_ or _DESC_ at the end of the clause
+  - You can also order by expression (e.g. sort by the last 3 digits of a column using _RIGHT()_)
+  - It is possible to sort via numeric placeholders (the position in the select statement) using the columns you wish to sort on (e.g. ``` ORDER BY 2, 5; ``` returns the order by the second and fifth columns that are returned)
     - Best to use sparingly, as writing the column name tends to be better for readability
 - Exercises on pg. 60
 
