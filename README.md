@@ -14,11 +14,23 @@ In addition to a markdown file of notes (markdown is used for portability and ca
 * Learning SQL: Master SQL Fundamentals 2nd Edition
   * Author: Alan Beaulieu
   * ISBN: 9780596520830
-  * Publication Date:May 5, 2009
-  * Publisher:O'Reilly Media
+  * Publication date: May 5, 2009
+  * Publisher: O'Reilly Media
   * Purchase link: https://www.amazon.com/Learning-SQL-Master-Fundamentals/dp/0596520832
-  * Tags: SQL, Databases
-  * Originally written in docx, working on converting properly, currently finished chapter 3
-* 
+  * Tags: SQL, databases
+* Mastering Microsoft Power BI: Expert techniques for effective data analytics and business intelligence
+  * Author: Brett Powell
+  * ISBN: 1788297237
+  * Publication date: March 29, 2018
+  * Publisher: Packt
+  * Purchase link: https://www.amazon.com/Mastering-Microsoft-Power-techniques-intelligence/dp/1788297237/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=&sr=
+  * Tags: Power_BI, DAX, M, analytics, reporting
 
 ## Ongoing Reading List
+* Hands-On Machine Learning with Scikit-Learn and TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems 1st Edition
+  * Author: Aurélien Géron
+  * ISBN: 1491962291
+  * Publication date: April 18, 2017
+  * Publisher: O'Reilly Media
+  * Purchase link: https://www.amazon.com/gp/product/1491962291/ref=dbs_a_def_rwt_bibl_vppi_i3
+  * Tags: machine_learning, TensorFlow, Scikit-Learn, python
