@@ -220,34 +220,34 @@ WHERE condition
 ## Chapter 4 – Filtering
 
 - Condition evaluation:
-  - If multiple condition are separated only by the AND operator, then both conditions must evaluate to TRUE in order to appear in the output
+  - If multiple condition are separated only by the _AND_ operator, then both conditions must evaluate to TRUE in order to appear in the output
   - If you wish to use more than two conditions it is best to use parentheses for readability and for the query to follow the appropriate order you want
-  - The NOT operator can be used well in this context, but it is rare to see as many people have more trouble interpreting it, thus it is better to create the filters in a positive manner
+  - The _NOT_ operator can be used well in this context, but it is rare to see as many people have more trouble interpreting it, thus it is better to create the filters in a positive manner
   - Operators that can be used within a condition:
-    - Comparison: =, !=, <, >, <>, LIKE, IN, and BETWEEN
-    - Arithmetic: +, -, *, /
-  - A JOIN also applies a condition, just outside of the WHERE clause
+    - Comparison: _=, !=, <, >, <>, LIKE, IN, and BETWEEN_
+    - Arithmetic: _+, -, *, /_
+  - A _JOIN_ also applies a condition, just outside of the _WHERE_ clause
   - != and <> are both acceptable to indicate inequality in conditions
-  - The BETWEEN operator behaves similarly to using two AND conditions and is useful when you have both an upper and a lower bound
+  - The _BETWEEN_ operator behaves similarly to using two _AND_ conditions and is useful when you have both an upper and a lower bound
     - Is an inclusive condition
-  - IN: used to filter over a finite selection values (e.g. ``` WHERE <column> IN (<value>, <value2>, ... ```)
+  - IN: used to filter over a finite selection values (e.g. ``` WHERE column IN (value, value2, ... ```)
     - Using a subquery to generate your list of values is also acceptable
-    - Can be reversed by using NOT IN
+    - Can be reversed by using _NOT IN_
   - Wildcards:
     - _ : one character
     - % : any number of characters
 - Null:
   - An expression can be null, but it cannot equal null
   - Two nulls do not equal each other
-  - You can test with IS NULL (and the reverse with IS NOT NULL)
+  - You can test with _IS NULL_ (and the reverse with _IS NOT NULL_)
 - Exercises on pg. 79
 
 ## Chapter 5 – Querying Multiple Tables
 
 - Cartesian product: every possible combination of the specified values, if you use a JOIN without an ON condition or join definition (inner, outer, etc.) then this is what will be returned from said query
-- The most common is an INNER JOIN, which will take a value from one table and correlate it with the other table in order to collect values that appear in both tables
+- The most common is an _INNER JOIN_, which will take a value from one table and correlate it with the other table in order to collect values that appear in both tables
   - Inner is the default behavior, but explicitly stating which type you use is the better practice and easier to read for others
-- USING: if the names of the columns in two tables are the exact same then you can use ``` _USING(<colun_name>)_ ``` rather than the ON statement
+- USING: if the names of the columns in two tables are the exact same then you can use ``` USING(column_name) ``` rather than the ON statement
 - It is possible to join a subquery to database tables if you choose
 - The order in which you join is not important, just that you join the appropriate columns
 - You can join a table twice, but you must give them each a unique alias in order for the server to process which table it needs to use
@@ -264,9 +264,9 @@ WHERE condition
 - When performing set operations on data sets they must have the same number of columns and each column that is connected must be of the same data type
 - Compound query: comprised of multiple queries that are otherwise independent
 - Set Operators:
-  - UNION: UNION and UNION ALL combine the data (ALL includes duplicates) from the same number of column with the same data types and returns them as a single output table that can also be used as a subquery
-  - INTERSECT: returns data much like UNION but only those values which exist in both tables (this does not work in MySQL)
-  - EXCEPT: returns all values from table 1 except those that also exist in table 2 (this does not work in MySQL)
+  - _UNION_: _UNION_ and _UNION ALL_ combine the data (_ALL_ includes duplicates) from the same number of column with the same data types and returns them as a single output table that can also be used as a subquery
+  - _INTERSECT_: returns data much like _UNION_ but only those values which exist in both tables (this does not work in MySQL)
+  - _EXCEPT_: returns all values from table 1 except those that also exist in table 2 (this does not work in MySQL)
 - When sorting a compound query you must specify the order from the first query of your compound query (table 1 basically)
 - Intersect has precedence over all the other set operators
 - You can dictate the order of evaluation of set operators with parentheses otherwise it will default from top to bottom
@@ -290,30 +290,30 @@ WHERE condition
   - _LENGTH()_: returns the number of characters in a string
     - SQL Server uses the _LEN()_ function
   - _POSITION()_: returns the position (start character) of a substring inside of a string
-    - ``` POSITION('<string>' IN <table_name>) ```
-  - _LOCATE()_: MySQL function that behaves like POSITION() but has a third parameter in which allows you to choose the starting position of the count
+    - ``` POSITION('string' IN table_name) ```
+  - _LOCATE()_: MySQL function that behaves like _POSITION()_ but has a third parameter in which allows you to choose the starting position of the count
     - E.g. you can start the positioning from the fifth character rather than the first
-  - MySQL allows you to compare strings in the SELECT clause using LIKE and REGEXP
-  - CONCAT() can be used inside of things like the UPDATE clause in order to update or create new strings
-    - Oracle DB includes the CONCAT() function but it will only accept 2 strings as arguments, you can instead use the concatenation operator ( || ) to concatenate more than 2 strings
-    - SQL Server does not have CONCAT(), and it doesn't use the double pipe, the SQL Server concatenation operator is the plus sign ( + )
+  - MySQL allows you to compare strings in the _SELECT_ clause using _LIKE_ and _REGEXP_
+  - _CONCAT()_ can be used inside of things like the _UPDATE_ clause in order to update or create new strings
+    - Oracle DB includes the _CONCAT()_ function but it will only accept 2 strings as arguments, you can instead use the concatenation operator ( || ) to concatenate more than 2 strings
+    - SQL Server does not have _CONCAT()_, and it doesn't use the double pipe, the SQL Server concatenation operator is the plus sign ( + )
   - _INSERT()_: MySQL function that takes four arguments: the original string, the position at which to start, the number of characters to replace, and the replacement string
     - If the third argument is 0 then it will push characters to the right rather than overwrite them
   - _REPLACE()_: Oracle DB function with three arguments: the original string, the substring to replace, the replacement substring
     - Will replace all instances of the string, so if there are 3 instance it will replace all 3 even if you didn't intend to replace the last 2
     - SQL Server also has this functionality
-  - _STUFF()_: SQL Server function that behaves like INSERT() with the same arguments
+  - _STUFF()_: SQL Server function that behaves like _INSERT()_ with the same arguments
   - _SUBSTRING()_ (or _SUBSTR()_ in Oracle DB): used to extract a specified number of characters from a specified starting position
 - Working with Numerical Data:
   - Primary concern is for rounding, if the column is not designed to hold a large enough number then you may lose some fidelity
   - Performing Arithmetic Functions:
     - Common trig functions: _ACOS(), ASIN(), ATAN(), COS(), COT(), SIN(), TAN()_
     - Common arithmetic functions: _EXP()_ ( e to the power of x)_, LN(), SQRT()_
-    - Modulo: ``` _MOD(<numerator>, <denominator>)_ ```
+    - Modulo: ``` MOD(numerator, denominator) ```
       - Returns the remainder after division
       - In MySQL and Oracle DB
       - MySQL can also use this with real numbers and not just integers
-    - Power: ``` _POW(<base>, <exponent>)_ ```
+    - Power: ``` POW(base, exponent) ```
   - Controlling Number Precision:
     - _CEIL()_ : round up to the nearest integer
       - _CEILING()_ in SQL Server
@@ -330,34 +330,34 @@ WHERE condition
 - Working with Temporal Data:
   - _GETUTCDATE()_ : returns the time in UTC
     - _UTC_TIMESTAMP()_ in MySQL
-  - _SET time_zone = '<Zone>_ : To set the time zone manually in MySQL
-    - _ALTER SESSION TIMEZONE = '<Zone>'_ in Oracle DB
+  - _SET time_zone = 'zone'_ : To set the time zone manually in MySQL
+    - _ALTER SESSION TIMEZONE = 'zone'_ in Oracle DB
     - To use time zone data in MySQL you need to download the time zones table ([http://dev.mysql.com/downloads/timezones.html](http://dev.mysql.com/downloads/timezones.html))
-  - ``` STR_TO_DATE(<string>, <format>) ``` :converts a string into a datetime column
+  - ``` STR_TO_DATE(string, format) ``` :converts a string into a datetime column
     - _TO_DATE()_ in Oracle DB
     - _CONVERT()_ in SQL Server, but not as flexible
   - To generate the current values: _CURRENT_DATE(), CURERNT_TIME(), CURRENT_TIMESTAMP()_
-  - _DATE_ADD(<date>, INTERVAL <n> <type>)_ : add some number of days/min/etc. to a datetime in MySQL
+  - ``` DATE_ADD(date, INTERVAL n type) ``` : add some number of days/min/etc. to a datetime in MySQL
     - _DATEADD()_ in SQL Server
   - _LAST_DAY()_ : returns the last day of the month in MySQL and Oracle DB, but SQL Server has no comparable function
-  - _DATEDIFF(<end>, <start>)_ : returns the difference between two dates
+  - ``` DATEDIFF(end, start) ``` : returns the difference between two dates
     - Ignores time of day in the calculation
     - SQL Server has an argument before the dates that allows you to specify the unit, like day or hour, whereas the others only do dates
 - Conversion Functions:
-  - _CAST(<value/expression> AS <target_conversion_type>)_ : turns one type of data into another defined type
+  - ```CAST(value/expression AS target_conversion_type) ``` : turns one type of data into another defined type
     - If going from string to an integer, it will convert from left to right, if there are non-numerical characters it will simply truncate and continue, it won't stop but it will issue an error
 - Exercises on pg. 142
 
 ## Chapter 8 – Grouping and Aggregates
 
-- When grouping, you cannot filter on the grouped output in the WHERE clause, you must use the HAVING clause to filter after the rest of the functions
+- When grouping, you cannot filter on the grouped output in the _WHERE_ clause, you must use the _HAVING_ clause to filter after the rest of the functions
 - Aggregate Functions:
   - _MAX(), MIN(), AVG(), SUM(), COUNT()_
-- _COUNT(DISTINCT <column>)_ : returns only the distinct values found in a column, not all
+- ``` COUNT(DISTINCT column) ``` : returns only the distinct values found in a column, not all
 - Expressions can also be used inside of aggregate functions
 - You must always consider the impact of Null values on your aggregated functions
 - _WITH ROLLUP_ : used at the end of a grouping to perform rollups like a PivotTable
-  - _GROUB BY ROLLUP()_, or _GROUP BY <a,b,...>, ROLLUP(<a,b,...>)_ in Oracle DB, this allows you to choose which columns actually use the rollup function
+  - _GROUB BY ROLLUP()_, or ``` GROUP BY a,b,..., ROLLUP(a,b,...) ``` in Oracle DB, this allows you to choose which columns actually use the rollup function
 - _WITH CUBE_ : similar to rollup, but groups all possible combinations in SQL Server
   - _GROUB BY CUBE()_ in Oracle DB
   - MySQL doesn't have an equivalent function
@@ -370,22 +370,22 @@ WHERE condition
 - Noncorrelated Subqueries:
   - Scalar subquery: a query which is noncorrelated and returns a single row or value that can be used in a comparison operation with the typical operators (=, +, -, ...)
   - Multiple-Row, Single-Column Subqueries:
-    - Even though these cannot be used with the typical operators, you can use IN, _NOT IN_, _ALL_ (with an operator), or _ANY_
-    - ALL with evaluate to true and use a value in a comparison (e.g. ALL accounts may return $1,000 and $2,000, ALL < would give all other accounts that are less than $1,000), while ANY will evaluate to true as long as either condition matches(e.g. like the previous, but ANY < would give all accounts less than $2,000)
+    - Even though these cannot be used with the typical operators, you can use _IN_, _NOT IN_, _ALL_ (with an operator), or _ANY_
+    - _ALL_ with evaluate to true and use a value in a comparison (e.g. _ALL_ accounts may return $1,000 and $2,000, _ALL <_ would give all other accounts that are less than $1,000), while _ANY_ will evaluate to true as long as either condition matches(e.g. like the previous, but _ANY <_ would give all accounts less than $2,000)
 - Correlated Subqueries:
   - Correlated subqueries rely on the containing query and cannot be run on their own. They also run multiple times dependent on the query, not once prior to the containing query like a noncorrelated query would
   - _EXISTS_: used to identify that a relationship exists without regard for the quantity of occurrence (e.g. there may be 10 entries in a table, but as long as 1 exists, it will evaluate positively)
-- Subqueries used in the FROM clause must be noncorrelated, they are executed first then held in memory until the containing query finishes execution
+- Subqueries used in the _FROM_ clause must be noncorrelated, they are executed first then held in memory until the containing query finishes execution
 - Exercises on pg. 181
 
 ## Chapter 10 – Joins Revisited
 
 - Outer Joins:
   - Always include the rows from one table, and the rows from the joined table that match, this way you retain all the rows from one table even if there are not matches
-  - Defining left or right outer joins determine which table defines the number of rows (e.g. LEFT OUTER JOIN uses the left table to determine rows, and matches the right table whenever there are matches)
-  - There are instances in which you may need to use a subquery in the FROM statement to generate a joined table, then you can join another table onto the table generated from the subquery once the containing query is executed. This way you have a JOIN in the subquery and the containing query, allowing for the combination of the three tables
+  - Defining left or right outer joins determine which table defines the number of rows (e.g. _LEFT OUTER JOIN_ uses the left table to determine rows, and matches the right table whenever there are matches)
+  - There are instances in which you may need to use a subquery in the _FROM_ statement to generate a joined table, then you can join another table onto the table generated from the subquery once the containing query is executed. This way you have a _JOIN_ in the subquery and the containing query, allowing for the combination of the three tables
   - A self inner join can be useful, however, you may run into the issue of missing data points because of a missing data removing the rows. In this instance, you need to use a self outer join in order to retain the data
-    - Think very carefully about the LEFT and RIGHT aspect of the JOIN
+    - Think very carefully about the _LEFT_ and _RIGHT_ aspect of the _JOIN_
 - Cross Joins:
   - Cross joins are rarely used intentionally, but if you do want the Cartesian product of the two tables, then you should use the _CROSS JOIN_ function
   - A cross join could be useful in a task such as generating a date table in a subquery. This can be done by generating a Cartesian product of the numbers 1-10, 10-90, and 100-900, then using the resulting numbers (from 0 to 999) as the addition in a date add function based on the first date. This would allow the first day to add zero and stay the same then so on and so forth. Once all dates are made you could filter out to however many days you want. Then this generated table could be used for functions as if it was a date table in the database all along.
@@ -402,12 +402,12 @@ WHERE condition
   - All modern databases contain built in statements for processing if-then style computation found in many other programming languages
   - The case statement has the benefit of being part of SQL standard and they can be inserted into the select, insert, update, and delete expressions
 - Searched Case Expressions:
-  - Follows the syntax of: CASE WHEN C1 THEN E1 WHEN.... END
-  - You can also include a default expression (ED) if none of the cases are met: ELSE ED END
+  - Follows the syntax of: ``` CASE WHEN C1 THEN E1 WHEN.... END ```
+  - You can also include a default expression (ED) if none of the cases are met: ``` ELSE ED END ```
   - All returned expressions must be of the same data type
   - You can return whatever you want in the output expressions, including a subquery or correlated subquery
 - Simple Case Expressions:
-  - Follows the syntax: CASE V0 WHEN V1 THEN E1 WHEN... [ELSE ED] END
+  - Follows the syntax: ``` CASE V0 WHEN V1 THEN E1 WHEN... [ELSE ED] END ```
     - V0 is the column name, V1 is when the value equals a certain value, E1 is the return expression
   - This is less flexible because it limits the opportunity to define your own conditions because the equality comparison is assumed (i.e. searched expressions can be things like > 1 or != 0, whereas a simple expressions always assumes that the value passed V0 must be equal to the VN in order to return the E1)
 - Case Expression Examples:
@@ -416,7 +416,7 @@ WHERE condition
   - Selective Aggregation:
     - If you wanted to only sum/count when a certain condition is met, such as a table spitting out errors when the sum is not equal to the result from another table/query
     - If you wish to compare more than one item, you can do the following:
-      - (<column_name_1>,..,<column_name_N>) <operator_like_=_or_!=> (<expression_1>, <expression_2>)
+      - ``` (column_name_1, .., column_name_N) operator (expression_1, expression_2) ```
   - Checking for Existence:
     - If you wanted to make sure that a customer has a checking account, but you don't care if they have more than one, you could set up a case that returns true if such an account exists
   - Division by Zero Errors:
@@ -452,27 +452,27 @@ WHERE condition
       - If the active transaction is associated with a single database session, then there is no explicit way to start and end transaction, a new session will start a new transaction automatically
       - Unless otherwise stated, each statement is executed as a single transaction
   - Ending a Transaction:
-    - Once a command is started, you must end the transaction with the COMMIT command
-    - If you wish to undo the transactional changes, you can issue the ROLLBACK command to undo the whole transaction and release resources
+    - Once a command is started, you must end the transaction with the _COMMIT_ command
+    - If you wish to undo the transactional changes, you can issue the _ROLLBACK_ command to undo the whole transaction and release resources
   - Transaction Savepoints:
-    - If you want to have the ability to rollback due to an error, but don't want to restart your entire transaction, you may insert a SAVEPOINT into the transaction that the server can rollback to
+    - If you want to have the ability to rollback due to an error, but don't want to restart your entire transaction, you may insert a _SAVEPOINT_ into the transaction that the server can rollback to
     - All savepoints must be named as you can have more than one in a transaction
-    - To roll back to a savepoint you can issue: ROLLABCK TO SAVEPOINT <name>
-    - SQL Server uses the commands SAVE TRANSACTION and ROLLBACK TRANSACTION rather than the SAVEPOINT commands for the same functionality
+    - To roll back to a savepoint you can issue: ``` ROLLABCK TO SAVEPOINT name ```
+    - SQL Server uses the commands _SAVE TRANSACTION_ and _ROLLBACK TRANSACTION_ rather than the _SAVEPOINT_ commands for the same functionality
 - Exercises on pg. 225
 
 ## Chapter 13 – Indexes and Constraints
 
 - The purpose of an index is to provide the server with information regarding the columns and rows so that it doesn't need to search all rows of the column to find the desired data
 - Index Creation:
-  - ALTER <table> ADD INDEX <index_name> (<column_name>)
-    - Oracle and SQL Server use: CREATE INDEX <index_name> ON <table> (<column_name>)
-  - MySQL provides the SHOW INDEX command for viewing the indexes on a specific table
+  - ``` ALTER table ADD INDEX index_name (column_name) ```
+    - Oracle and SQL Server use: ``` CREATE INDEX index_name ON table (column_name) ```
+  - MySQL provides the _SHOW INDEX_ command for viewing the indexes on a specific table
   - When creating a table and denoting the primary key, and index is automatically made for that column
 - Unique Indexes:
   - If you wish to ensure that a column only contains unique values, while also getting the benefits of a normal index, you can use a unique index
-  - MySQL: ALTER TABLE <table> ADD UNIQUE <index_name> (<column_name>)
-  - Oracle and SQL Server: CREATE UNIQUE INDEX <index_name> ON <table> (<column_name>)
+  - MySQL: ``` ALTER TABLE table ADD UNIQUE index_name (column_name) ```
+  - Oracle and SQL Server: ``` CREATE UNIQUE INDEX index_name ON table (column_name) ```
 - Multicolumn Indexes:
   - You can pass more than one column to the index, however, you must carefully consider the ordering, as it is much like a phone book
   - If using two columns then the first column alone, and the first and second column combined will see benefits, but only the second will be as if there was no index
@@ -504,7 +504,7 @@ WHERE condition
     - Check constraints: restrict to only certain allowable values
   - Constraint Creation:
     - Often created at the same time the table is by adding to the list of columns separated by columns
-    - You can also alter a table and add a constraint (e.g.: ALTER TABLE <table> ADD CONSTRAINT <constraint_name> PRIMARY KEY (<column_name>))
+    - You can also alter a table and add a constraint (e.g.: ``` ALTER TABLE table ADD CONSTRAINT constraint_name PRIMARY KEY (column_name) ```) 
   - Constraints and Indexes:
     - Depending on the server distribution, the types on constraints may or may not make indexes at the same time
   - Cascading Constraints:
@@ -529,7 +529,7 @@ WHERE condition
   - Joining Partitioned Data:
     - If you stored complete data in two tables you could combine them to appear as if the two tables were actually just one large table
 - Updatable Views:
-  - Views can modify the underlying table if certain conditions are met (see pages 251 for MySQL's set of rules)
+  - Views can modify the underlying table if certain conditions are met (see pg. 251 for MySQL's set of rules)
 - Exercises on pg. 256
 
 ## Chapter 15 – Metadata
@@ -548,5 +548,3 @@ WHERE condition
   - Dynamic SQL Generation:
     - Using languages like T-SQL or Java, you can inject SQL queries into the server by simply sending statements as strings
 - Exercises on pg. 270
-
-Page 25
