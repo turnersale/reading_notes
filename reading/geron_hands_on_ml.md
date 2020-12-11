@@ -14,12 +14,12 @@
 # Preface
 
 - Will be covering from the simple and regularly used (like linear regression) to the more advanced deep learning concepts
-- Using Scikit learning and TensorFlow:
-  - Scikit learn is better for learning and is an efficient implementation for common applications
+- Using Scikit-learn and TensorFlow:
+  - Scikit-learn is better for learning and is an efficient implementation for common applications
   - TensorFlow is more advanced and is designed to be implemented across a large cluster of GPU or TPU enabled servers if needed
-- This book assumes some familiarity with Python and it&#39;s primary libraries (NumPy, Pandas, Matplotlib)
+- This book assumes some familiarity with Python and it's primary libraries (NumPy, Pandas, Matplotlib)
 - Also useful is calculus, linear algebra, probabilities and stats
-- Code exampLes and additional material can be downloaded at [www.github.com/ageron/hanson-ml](http://www.github.com/ageron/hanson-ml)
+- Code examples and additional material can be downloaded at [www.github.com/ageron/hanson-ml](http://www.github.com/ageron/hanson-ml)
 
 # Part 1 - The Fundamentals of Machine Learning
 
@@ -54,7 +54,7 @@
         - Eclat
     - Dimensionality reduction is a good idea to do before feeding data to other algorithms as it will likely run faster, save space, and may also perform better
     - Feature extraction: merging two or more features that are highly correlated to achieve dimensionality reduction
-  - Semisupervised:
+  - Semi-supervised:
     - Some of the data is labeled and some is not
     - Good example is Google Photos. It can recognize the same face in photos, but you need to say who it is
     - Often a combination of the first two types
@@ -86,8 +86,8 @@
 - Main Challenge of ML:
   - Insufficient Quantity of Data:
     - Often requires thousands if not millions of examples (compared to a few or several examples for humans)
-    - A famous paper titled &quot;The Unreasonable Effectiveness of Data&quot; suggests that more effort should be spent on a proper corpus rather than a great model, as researchers found that many algorithms performed similarly once a sufficiently large data store was used
-  - Nonrepresentative Training Data:
+    - A famous paper titled "The Unreasonable Effectiveness of Data" suggests that more effort should be spent on a proper corpus rather than a great model, as researchers found that many algorithms performed similarly once a sufficiently large data store was used
+  - Non-representative Training Data:
     - Likely to train a model that only describes the samples and cannot generalize
     - Sampling bias: a flawed method of data collection that unduly biases the samples used for model training
     - Nonresponse bias: bias introduced by individuals not responding to requests for survey data
@@ -123,7 +123,7 @@
   - The more stable solution is to split the existing data into a training and a testing set
   - Generalization error: the error rate on the testing examples
   - Common to train on 80% and test with 20%
-  - It is possible that you don&#39;t get the accuracy you expect because you adjust the model to fit your specific testing set
+  - It is possible that you don't get the accuracy you expect because you adjust the model to fit your specific testing set
     - e. you tune the model to meet accuracy for the testing data, but the testing data may not be representative of your production samples
   - To help solve the problem above, many people also reserve a validation set
     - Train many models with new hyperparams, test many times against the validation set, then run a final test on the test set
@@ -149,19 +149,19 @@
   - Get the data:
     - Setup Python and necessary packages
     - Recommended to use virtualenv for isolated environments
-    - Pandas has a .info() method for dataframe structure and .describe() for a summary of numerical attributes
-    - To avoid &quot;data snooping bias&quot; make a test set before digging too deeply into your dataset
+    - Pandas has a _.info()_ method for dataframe structure and _.describe()_ for a summary of numerical attributes
+    - To avoid "data snooping bias" make a test set before digging too deeply into your dataset
   - Discover and visualize the data to gain insights:
-    - _pd.scatter\_matrix_ used to compare multiple scatterplots (can feed a subset of attributes to shrink the number of plots since they grow at N^2 where N is the number of attributes)
+    - _.scatter_matrix()_ used to compare multiple scatterplots (can feed a subset of attributes to shrink the number of plots since they grow at N^2 where N is the number of attributes)
   - Prepare the data for ML:
     - Common to write functions to handle transformations, that way you can reuse them in later projects
     - Scikit-Learn has a couple design decisions that make it easy to use:
       - Consistent: all objects share simple interfaces
-      - Estimators: objects like impute create their estimates with the _,fit()_ method and all other arguments are considered hyperparameters
-      - Transformers: objects that alter a dataset are run using the _.transform()_ method following their fitting and can usually be done in one step using the _.fit\_trannsform()_ method
+      - Estimators: objects like impute create their estimates with the _.fit()_ method and all other arguments are considered hyperparameters
+      - Transformers: objects that alter a dataset are run using the _.transform()_ method following their fitting and can usually be done in one step using the _.fit_transform()_ method
       - Predictors: objects like the linear regression model provide the _.predict()_ and _.score()_ methods used to create predictions and test the accuracy of those predictions
     - _pd.factorize()_ provides a way to convert text values into a numerical feature and provides a list of the text options (like a Navision option field actually)
-    - Sklearn has a _OneHotEncoder()_ object for converting categorical variables to one-hot encoding and outputs a sparse SciPy matrix (this is to save memory as it only stores the location of the 1&#39;s and ignores the many 0&#39;s)
+    - Sklearn has a _OneHotEncoder()_ object for converting categorical variables to one-hot encoding and outputs a sparse SciPy matrix (this is to save memory as it only stores the location of the 1's and ignores the many 0's)
     - Sklearn also has a _CategoricalEncoder()_ class that handles the text to integer and integer to one-hot vectors in a single go
     - You may also want to write custom classes that act like Sklearn classes (return to pg. 65)
     - Feature scaling the predictors is also very useful as most models learn better on features that are not dramatically different in scale
@@ -175,17 +175,17 @@
         - Does not bound to certain values
         - Less affected by outliers but not as good for certain algorithms that expect 0-1 value ranges
         - _sklearn.StandardScaler()_
-    - Sklearn also provides a _Pipeline()_ class that allows you to string multiple estimator/transformers as a single _.fit\_transform()_
+    - Sklearn also provides a _Pipeline()_ class that allows you to string multiple estimator/transformers as a single _.fit_transform()_
     - This type of pipeline is really useful for creating automatic routines for converting data quickly, all you need to do:
       - Import the data
       - Create a custom class that only pulls the numerical features (see pg. 68)
       - Create a custom class that only pulls the categorical features (see pg. 68)
       - Apply the unique pipelines to each set
     - The custom class that pulls only the numerical or categorical features can even be embedded inside the pipelines
-    - What&#39;s even cooler is you can setup a pipeline that handles other pipelines using the _sklearn.FeatureUnion()_ class
+    - What's even cooler is you can setup a pipeline that handles other pipelines using the _sklearn.FeatureUnion()_ class
   - Select and train models:
     - It is preferred not to immediately touch your test data until you are confident with the model, thus cross-validation is very useful in this phase
-    - _sklearn.cross\_val\_score()_ provides a simple way to do this and you can decide on the number of fold (it uses K-fold Cross-validation methods)
+    - _sklearn.cross_val_score()_ provides a simple way to do this and you can decide on the number of fold (it uses K-fold Cross-validation methods)
     - Cross-validation also provides multiple scores so you can see the mean of the scores and the standard deviation
     - Cross-validation does require multiple training runs so it is not always possible
     - It is best to test many models here and shortlist the best 2-5 models
@@ -193,14 +193,14 @@
     - _sklearn.GridSearchCV()_:
       - Allows you to pass along a model and will automatically tune the hyperparameters using cross-validation and a scoring method
       - You can also pass along a parameter grid that the model can test (such as the number of features, whether to bootstrap, etc.)
-      - _.best\_estimator_ provides the best estimator and the hyperparameters
+      - _.best_estimator_ provides the best estimator and the hyperparameters
       - The function automatically tries to train the best estimator with the full training dataset, as this can often improve model performance
     - If the search space for hyperparameters is very large, it is better to use the _sklearn.RandomizedSearchCV_ as this will iterate as many times as you define, allowing you to define the computation you are willing to give it
   - Present your solution:
     - Document all the phases of the project
     - Prepare presentations and justifications
   - Launch, monitor, and maintain your system:
-    - &quot;Rot&quot; of the data is likely to occur over time, to combat this:
+    - "Rot" of the data is likely to occur over time, to combat this:
       - Set up alerts for model performance degradation
       - Monitor the input data for faulty/poor quality data
       - Update the model regularly
@@ -217,30 +217,30 @@
 - Performance measures for classifiers:
   - Cross-validation:
     - In cases where you need more control than Sklearn provides, see pg. 85
-    - Provides some additional information since you are using Kfolds
+    - Provides some additional information since you are using K-folds
   - Accuracy:
     - Can be a useful measure but is poor for skewed datasets
   - Confusion Matrix:
-    - _sklearn.cross\_val\_predict()_ provides the predictions for each fold
-    - _sklearn.confusion\_matrix()_ can take the training data and the predictions and provide a matrix of actual (row) vs. predicted class (column)
+    - _sklearn.cross_val_predict()_ provides the predictions for each fold
+    - _sklearn.confusion_matrix()_ can take the training data and the predictions and provide a matrix of actual (row) vs. predicted class (column)
   - Precision:
-    - Can be &quot;fooled&quot; if you have a small number of predictions which are accurate, but not generalizable
-    -
+    - Can be "fooled" if you have a small number of predictions which are accurate, but not generalizable
+    - Precision = TP / (TP + FP)
     - Where TP = True Positives and FP = False Positives
   - Recall:
     - Also called sensitivity or true positive rate (TPR)
-    -
+    - Recall = TP / (TP + FN)
     - Where FN = False Negatives
   - F1 Score:
     - Harmonic mean of precision and recall
     - Gives more weight to low values, therefor it will only be high if both recall and precision are high
-    -
-- Sklearn has functions for _precision\_score_, _recall\_score_ and _f1\_score_
+    - F1 = 2 * ((Precision * Recall) / (Precision + Recall))
+- Sklearn has functions for _precision_score_, _recall_score_ and _f1_score_
 - Sklearn also allows you to see the decision function output
-  - _sklearn.decision\_function()_ provides an array just like the predictions
+  - _sklearn.decision_function()_ provides an array just like the predictions
   - You can use this to alter the decision threshold
-  - You can return the scores with _cross\_val\_predict()_ if you specify the method
-  - Then you can run this output through the _precision\_recall\_curve()_ function in order to see the interaction between the precision and recall curves
+  - You can return the scores with _cross_val_predict()_ if you specify the method
+  - Then you can run this output through the _precision_recall_curve()_ function in order to see the interaction between the precision and recall curves
   - See pgs. 90-91 for detailed code
 - ROC Curve:
   - Receiver Operating Characteristic
@@ -252,7 +252,7 @@
   - Area Under the Curve
   - Sometimes called ROC AUC
   - Perfect classifiers would have a measure of 1 and random would be 0.5
-- Some Sklearn classifiers do not have a _decision\_function_ method, instead providing a _predict\_proba()_ method
+- Some Sklearn classifiers do not have a _decision_function_ method, instead providing a _predict_proba()_ method
   - This provides a column for each class and a probability of being in that class for each row
 - Multiclass Classification:
   - Some algorithms are well suited for this (like RF and NB), but others are only binary (like SVM or Linear classifiers)
@@ -267,10 +267,10 @@
   - A system which outputs multiple binary labels (such as the presence of multiple faces in a single photo)
   - It is pretty common in such cases to score the model by averaging the F1 Score of all classification outputs
     - This assumes all labels are equally important, which may not be true
-    - Can be changed in the _f1\_score()_ function with the _average_ argument
+    - Can be changed in the _f1_score()_ function with the _average_ argument
 - Multioutput Classification:
   - A generalized form of multilabel classification where each label can be multiclass
-  - Example: turning an image into a pixel intensity representation\
+  - Example: turning an image into a pixel intensity representation
     - Each pixel receives an output (multilabel)
     - Each label can have multiple values (multioutput)
 - Exercises on pgs. 104-105
@@ -279,8 +279,7 @@
 
 - Closed Form Solution:
   - A mathematical equation that gives the result directly
-  - Example: normal equation for linear regresion
-    -
+  - Example: normal equation for linear regression
     - Provides the vector of bias term and feature weights
   - Computational complexity for this is typically between O(n2.4) to O(n3)
     - In other words, if you double the number of features n, then you increase the computation by a factor of 22.4=5.3 to 23=8
@@ -294,7 +293,7 @@
   - Not all functions are convex (meaning you may converge to a local minimum rather than a global, or stop at a plateau)
   - Parameter space: the dimensions that must be searched, more features means more dimensions
   - Batch Gradient Descent:
-    - In order to reduce the cost function, we have to calculate the partial derivative of each parameter independently to see which way to &quot;step&quot;
+    - In order to reduce the cost function, we have to calculate the partial derivative of each parameter independently to see which way to "step"
     - This gradient vector can be calculated all together (see pg. 117 for equation)
     - This is called batch gradient descent because we use the entire set of data X for each step
     - This means it does not scale very well for large datasets, but is very scalable for many features
@@ -302,15 +301,15 @@
     - In order to compensate for too many iterations, you can use a high number of iterations and break when the gradient vector becomes smaller than some tiny number (called tolerance)
   - Stochastic Gradient Descent:
     - The batch methodology uses all data at each step, while stochastic just picks a random instance
-    - This allows for far larger datasets, but it also means the model never has true convergence as it continues to &quot;bounce around&quot;
+    - This allows for far larger datasets, but it also means the model never has true convergence as it continues to "bounce around"
     - This bouncing does have a good chance of finding the global minima though, as batch will be caught in the local minima
     - In order to get the global finding benefits along with the ability to converge, it is common to use simulated annealing, where the learning rate starts large and shrinks over time (annealing coming from the slow cooling metallurgy process)
-    - The rate of learning rate change is called the learning schedule and is important in order to match sure iterations aren&#39;t wasted and we don&#39;t get stuck in local minima
+    - The rate of learning rate change is called the learning schedule and is important in order to match sure iterations aren't wasted and we don't get stuck in local minima
     - Each time we iterate through the set is called an epoch
       - This is different from batch in that the epoch is only capturing a single instance rather than using the whole dataset each time
   - Mini-batch Gradient Descent:
     - This is a mix of both methodologies in that instead of using the whole set (batch) or a single instance (stochastic) we use a subset of the data
-    - This has a performance improvement as hardware like GPU&#39;s are optimized for matrix operations that run on such a method
+    - This has a performance improvement as hardware like GPU's are optimized for matrix operations that run on such a method
     - Table 4-1 on pg. 122 shows the comparison between methods
 - Polynomial Regression:
   - This allows us to use linear regression models to fit multiple features
@@ -349,7 +348,7 @@
     - Also called Multinomial Logistic Regression
     - The class with the highest softmax score is the response that the regression returns
     - Cross Entropy is used as the cost function for this model as it penalizes the model for generating a low probability for the target class
-    - In order to run this methodology, you can use _sklearn.LogisticRegression_ but you must set the _multi\_class_ argument to multinomial and the _solver_ to a solver that supports softmax (such as lbfgs)
+    - In order to run this methodology, you can use _sklearn.LogisticRegression_ but you must set the _multi_class_ argument to multinomial and the _solver_ to a solver that supports softmax (such as lbfgs)
 - Exercises on pg. 145
 
 ## Chapter 5 – Support Vector Machines
