@@ -24,7 +24,6 @@
 # Part 1 - The Fundamentals of Machine Learning
 
 ## Chapter 1 - The Machine Learning Landscape
-
 - Supervised/Unsupervised Learning:
   - Supervised:
     - The training set includes the desired solution (usually called labels)
@@ -133,7 +132,6 @@
 - No Free Lunch Theorem: if you make no assumptions about the data, then there is no reason to prefer one model over another
 
 ## Chapter 2 - End-to-End Machine Learning Project
-
 - Main steps for an ML project:
   - Look at the big picture:
     - Frame the problem: what do you want to know or solve?
@@ -208,7 +206,6 @@
 - Exercises on pg. 79
 
 ## Chapter 3 – Classification
-
 - Binary classifier: a classifier task where there are only two classes
 - Stochastics Gradient Descent (SGD):
   - Well suited for large datasets
@@ -276,7 +273,6 @@
 - Exercises on pgs. 104-105
 
 ## Chapter 4 – Training Models
-
 - Closed Form Solution:
   - A mathematical equation that gives the result directly
   - Example: normal equation for linear regression
@@ -352,5 +348,4 @@
 - Exercises on pg. 145
 
 ## Chapter 5 – Support Vector Machines
-
 -
