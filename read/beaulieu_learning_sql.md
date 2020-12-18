@@ -37,8 +37,8 @@
   - Entity: something of interest to the database user community (users, locations, etc.)
   - Column: an individual piece of data stored in a table
   - Row: a set of columns that together completely describe an entity or some action on an entity (also called a record)
-  - Table: a set of rows, held either in memory (nonpersistent) or on permanent storage (persistent)
-  - Result set: another name for a nonpersistent table, generally the result of a query
+  - Table: a set of rows, held either in memory (non-persistent) or on permanent storage (persistent)
+  - Result set: another name for a non-persistent table, generally the result of a query
   - Primary key: unique identifier for each row (can be multiple columns)
   - Foreign key: much like primary but stored in another table
 - SQL arose from the progression of SQUARE to SEQUEL and then was abbreviated, it does not in fact stand for Structured Query Language as many people believe

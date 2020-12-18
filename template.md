@@ -9,6 +9,7 @@
 ## Section (If applicable)
 
 ### Chapter number - chapter title
+
 - unordered lists for bullet points
   - indents are useful for subsections or related points
 - _function_ is best italicized to draw some attention

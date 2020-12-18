@@ -25,6 +25,14 @@ In addition to a markdown file of notes (markdown is used for portability and ca
   * Publisher: Packt
   * Purchase link: https://www.amazon.com/Mastering-Microsoft-Power-techniques-intelligence/dp/1788297237/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=&sr=
   * Tags: Power_BI, DAX, M, analytics, reporting
+* R for Data Science: Import, Tidy, Transform, Visualize, and Model Data 1st Edition
+  * Author: Garrett Grolemund, Hadley Wickham
+  * ISBN: 1491910399
+  * Publication date: January 10, 2017
+  * Publisher: O'Reilly
+  * Purchase link: https://www.amazon.com/Data-Science-Transform-Visualize-Model/dp/1491910399
+  * Tags: r, data_science, ggplot, tidyverse, rStudio
+  * Currently updated through chapter 1
 
 ## Ongoing Reading List
 * Hands-On Machine Learning with Scikit-Learn and TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems 1st Edition
