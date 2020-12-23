@@ -11,34 +11,13 @@ Each set of notes takes the last name of the first author (if multiple authors a
 In addition to a markdown file of notes (markdown is used for portability and can be easily converted to docx or html if desired), there is a reading list below that shows the books that are completed and metadata such as authors, ISBN, tags and publication date. This list is not the only one though, as I also have a list of books that I am currently reading as well. This list will look much the same, and as books are completed they will be transferred to the completed list.
 
 ## Completed Reading List
-* Learning SQL: Master SQL Fundamentals 2nd Edition
-  * Author: Alan Beaulieu
-  * ISBN: 9780596520830
-  * Publication date: May 5, 2009
-  * Publisher: O'Reilly Media
-  * Purchase link: https://www.amazon.com/Learning-SQL-Master-Fundamentals/dp/0596520832
-  * Tags: SQL, databases
-* Mastering Microsoft Power BI: Expert techniques for effective data analytics and business intelligence
-  * Author: Brett Powell
-  * ISBN: 1788297237
-  * Publication date: March 29, 2018
-  * Publisher: Packt
-  * Purchase link: https://www.amazon.com/Mastering-Microsoft-Power-techniques-intelligence/dp/1788297237/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=&sr=
-  * Tags: Power_BI, DAX, M, analytics, reporting
-* R for Data Science: Import, Tidy, Transform, Visualize, and Model Data 1st Edition
-  * Author: Garrett Grolemund, Hadley Wickham
-  * ISBN: 1491910399
-  * Publication date: January 10, 2017
-  * Publisher: O'Reilly
-  * Purchase link: https://www.amazon.com/Data-Science-Transform-Visualize-Model/dp/1491910399
-  * Tags: r, data_science, ggplot, tidyverse, rStudio
-  * Currently updated through chapter 1
+| Title                        | Author(s)                         | ISBN          | Tags                                               | Notes                 |
+| :--------------------------- | :-------------------------------- | :------------ | :------------------------------------------------- | :-------------------- |
+| Learning SQL, 2nd Edition    | Alan Beaulieu                     | 9780596520830 | SQL, databases                                     |                       |
+| Mastering Microsoft Power BI | Brett Powell                      | 1788297237    | Power_BI, DAX, M, analytics, reporting, dashboards |                       |
+| R for Data Science           | Garrett Grolemund, Hadley Wickham | 1491910399    | r, data_science, ggplot, tidyverse. rStudio        | updated through ch. 1 |
 
 ## Ongoing Reading List
-* Hands-On Machine Learning with Scikit-Learn and TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems 1st Edition
-  * Author: Aurélien Géron
-  * ISBN: 1491962291
-  * Publication date: April 18, 2017
-  * Publisher: O'Reilly Media
-  * Purchase link: https://www.amazon.com/gp/product/1491962291/ref=dbs_a_def_rwt_bibl_vppi_i3
-  * Tags: machine_learning, TensorFlow, Scikit-Learn, python
+| Title                                                      | Author(s)      | ISBN       | Tags                                               | Notes |
+| :--------------------------------------------------------- | :------------- | :--------- | :------------------------------------------------- | :---- |
+| Hands-On Machine Learning with Scikit-Learn and TensorFlow | Aurélien Géron | 1491962291 | machine_learning, TensorFlow, Scikit-Learn, python |       |
