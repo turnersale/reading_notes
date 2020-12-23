@@ -11,11 +11,12 @@ Each set of notes takes the last name of the first author (if multiple authors a
 In addition to a markdown file of notes (markdown is used for portability and can be easily converted to docx or html if desired), there is a reading list below that shows the books that are completed and metadata such as authors, ISBN, tags and publication date. This list is not the only one though, as I also have a list of books that I am currently reading as well. This list will look much the same, and as books are completed they will be transferred to the completed list.
 
 ## Completed Reading List
-| Title                        | Author(s)                         | ISBN          | Tags                                               | Notes                 |
-| :--------------------------- | :-------------------------------- | :------------ | :------------------------------------------------- | :-------------------- |
-| Learning SQL, 2nd Edition    | Alan Beaulieu                     | 9780596520830 | SQL, databases                                     |                       |
-| Mastering Microsoft Power BI | Brett Powell                      | 1788297237    | Power_BI, DAX, M, analytics, reporting, dashboards |                       |
-| R for Data Science           | Garrett Grolemund, Hadley Wickham | 1491910399    | r, data_science, ggplot, tidyverse. rStudio        | updated through ch. 1 |
+| Title                                    | Author(s)                         | ISBN          | Tags                                               | Notes                 |
+| :--------------------------------------- | :-------------------------------- | :------------ | :------------------------------------------------- | :-------------------- |
+| Learning SQL, 2nd Edition                | Alan Beaulieu                     | 9780596520830 | SQL, databases                                     |                       |
+| Mastering Microsoft Power BI             | Brett Powell                      | 1788297237    | Power_BI, DAX, M, analytics, reporting, dashboards |                       |
+| R for Data Science                       | Garrett Grolemund, Hadley Wickham | 1491910399    | r, data_science, ggplot, tidyverse. rStudio        | updated through ch. 5 |
+| The Definitive Guide to DAX, 1st Edition | Alberto Ferrari, Marco Russo      | 073569835X    | dax, Power_BI, M, ETL                              | updated through ch. 3 |
 
 ## Ongoing Reading List
 | Title                                                      | Author(s)      | ISBN       | Tags                                               | Notes |

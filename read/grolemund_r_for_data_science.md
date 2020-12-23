@@ -1,6 +1,6 @@
 # R for Data Science
 ### Garrett Grolemund, Hadley Wickham <!-- omit in toc -->
-### ISBN <!-- omit in toc -->
+### 1491910399 <!-- omit in toc -->
 
 - [R for Data Science](#r-for-data-science)
 - [Preface](#preface)
@@ -176,7 +176,7 @@ facet_function
 ## Chapter 2 - Workflow: Basics
 
 - Assignment statements: all R statements where you create objects, all have the same form:
-  - _object_name <- value_
+  - ``` object_name <- value ```
   - Can be read as 'object name gets value'
   - It can be a pain to write this over and over so you can use the default shortcut of (Alt-).
 - Object names must start with a letter, and can only contain letters, numbers, (_), and (.).
@@ -197,7 +197,7 @@ facet_function
 
 - Rarely will you receive data in the exact manner that you would like, and thus you may need to transform it to get it in the format or order you want
 - We will use the dplyr package from the tidyverse for this task
-- dplyr does overwrite some of the functions in base R
+- _dplyr_ does overwrite some of the functions in base R
 - When viewing the data frame, you may notice that the rows and columns are limited by the viewport, and thus will tell you how many additional rows are in the dataset, as well as give a list of the column names and the type of each variable
   - int = integers
   - dbl = doubles, or real numbers
@@ -206,160 +206,157 @@ facet_function
   - lgl = logical, vectors that only contain TRUE or FALSE
   - fctr = factors, R uses them to represent categorical variables with fixed possible values
   - date = dates
-- 5 key dplyr basic functions:
-  - _filter()_ :
-  - _arrange()_ :
-  - _select()_ :
-  - _mutate()_ :
-  - _rize()_ :
-- _filter()_ :
+- 5 key _dplyr_ basic functions:
+  - _filter()_
+  - _arrange()_
+  - _select()_
+  - _mutate()_
+  - _rize()_
+- _filter()_
   - Allows you to subset observations based on their values
   - First argument is the name of the data frame
   - Second and subsequent arguments are the expressions that filter the data frame
   - R provides many common comparison operators like >, >=, <, <=, !=, and ==
 - All of the above 5 functions can be combined with _group_by()_, which changes the scope of each function from operating on the entire dataset to operating on it group-by-group
-- dplyr functions never modify the input, if you wish to save the output you must assign it to a variable
-- _near()_ :
+- _dplyr_ functions never modify the input, if you wish to save the output you must assign it to a variable
+- _near()_
   - Computers use finite arithmetic, so when evaluating a floating point number you should use this approximation operator
   - Used to surround the function that you are evaluating
-- _x %in% y_ :
+- _x %in% y_
   - Selects every row where x is one of the values in y
   - E.g. month %in% (11|12) would evaluate for any rows where the month is November or December
-- De Morgan's law:
-  - !(x &amp; y) is the same as !x | !y, and !(x | y) is the same as !x &amp; !y
+- De Morgan's law
+  - !(x & y) is the same as !x | !y, and !(x | y) is the same as !x & !y
 - _is.na()_ : to determine if a value is missing
 - Exercises on pg. 49
   - _between()_ : used to find numerical values between two bounds (inclusive)
-- _arrange()_ :
+- _arrange()_
   - Works similarly to filter() except that instead of selecting rows, it changes their order
   - If you provide more than one column name, each additional column will be used to break ties in the values of preceding columns
   - _desc()_ : reorders the column in a descending order
   - Missing values are always sorted at the end
-- _select()_ :
+- _select()_
   - Allows for the selection of a subset of the dataset (must like a select statement in SQL)
   - Can specify variables with a comma separated list
   - If you use a colon between two variables then it will include all variables between them (inclusive)
   - If you place a minus sign (-) and enclose the variables in parentheses, R will select everything other than the specified variables
   - There are some helper functions that you can use within the select function
-    - _starts_with(<characters>)_: matches names that begin with <characters>
-    - _ends_with(<characters>)_
-    - _contains(<characters>)_
-    - _matches(<expression>)_ : matches based on a regular expression, which will be elaborated upon in Ch. 11
-    - _num_range(<x>, <#>:<#>)_: matches x1, x2, … xn
-  - Select can be used to rename variables, but it will ignore any variable not explicitly mentioned, thus you should use rename()
-  - _rename(<dataset>, <new_name> = <old_name>)_ remaps a new name to an existing variables and leaves the remainder unaltered
+    - _starts_with(characters)_: matches names that begin with characters
+    - _ends_with(characters)_
+    - _contains(characters)_
+    - _matches(expression)_ : matches based on a regular expression, which will be elaborated upon in Ch. 11
+    - _num_range(x, #:#)_: matches x1, x2, … xn
+  - Select can be used to rename variables, but it will ignore any variable not explicitly mentioned, thus you should use _rename()_
+  - _rename(dataset, new_name = old_name)_ remaps a new name to an existing variables and leaves the remainder unaltered
   - _everything()_: can be used in conjunction with select, often used after the specifying certain variables that you wish to put before the others
-    - E.g. if you wish to put color and product type ahead of all other columns (like size, weight, description, etc.) the you would use:
-      - select(products, color, product_type, everything())
+    - E.g. if you wish to put color and product type ahead of all other columns (like size, weight, description, etc.) then you would use: ``` select(products, color, product_type, everything()) ```
   - Selecting a variable more than once will only display it one time
   - _one_of()_: evaluates if a variable name happens to fall within a character vector (a set of characters)
   - Select helpers default to being case insensitive, if you wish to make them case sensitive you must alter it by including the second argument _ignore.case = FALSE_
-- _mutate()_ :
+- _mutate()_ 
   - Adds new columns to the end of the dataset (by default) that are functions of existing columns (like a calculated column in DAX)
-  - You can reference a column that you are creating inside the same mutate() call, as long as the called variables precedes the reference
+  - You can reference a column that you are creating inside the same _mutate()_ call, as long as the called variables precedes the reference
   - _transmute()_ : if you only wish to keep the new variables in your new dataset
-  - All functions used within mutate() must be vectorized, meaning they take a vector as an input and output a new vector with the same number of outputs
-  - Useful/common functions that are paired with mutate()
-    - Arithmetic operators:
+  - All functions used within _mutate()_ must be vectorized, meaning they take a vector as an input and output a new vector with the same number of outputs
+  - Useful/common functions that are paired with _mutate()_
+    - Arithmetic operators
       - _+,-,/,^_
       - All of these are vectorized
       - 'Recycling rules' apply
       - Meaning they will automatically extend one parameter if it is shorter than another within the same function, i.e. it will give them the same granularity
       - Also useful in conjunction with the aggregate functions like sum() and mean()
-    - Modular arithmetic:
+    - Modular arithmetic
       - %/% : integer division
         - Returns the number of times the second parameter can fit inside the first parameter, and will always be an integer that ignores remainders and decimals
         - E.g. 550 %/% 100 returns 5
       - %% : remainder
         - Returns the remainder after an integer division, with the second parameter being the number by which you are dividing the first parameter
         - E.g. 550 %% 100 returns 50
-    - Logs:
+    - Logs
       - _log(), log2(), log10()_
       - Useful for transformation over data that has ranges over multiple orders of magnitude
       - Also convert multiplicative relationships to additive, which will be covered more in depth in Part 4
-      - All else being equal, log2() is often the easiest to use, as a difference of 1 on the scale is equivalent to doubling and -1 to halving
-    - Offsets:
+      - All else being equal, _log2()_ is often the easiest to use, as a difference of 1 on the scale is equivalent to doubling and -1 to halving
+    - Offsets
       - _lead()_ and _lag()_ : used to reference either leading or lagging variables (the variable before or after)
-      - Most useful when combined with a group_by()
-    - Cumulative and rolling aggregates:
+      - Most useful when combined with a _group_by()_
+    - Cumulative and rolling aggregates
       - R comes standard with certain running sums, products, mins, and maxes, namely: _cumsum(), cumprod(), cummin(), cummax()_
-      - dplyr also provides _cummean()_ for cumulative means
-      - If you need rolling aggregates then the R package RcppRoll can be used
-    - Logical comparisons:
+      - _dplyr_ also provides _cummean()_ for cumulative means
+      - If you need rolling aggregates then the R package _RcppRoll_ can be used
+    - Logical comparisons
       - _<, <=, >, >=, !=_
       - If creating a complex sequence of logical operators it is often best to store the interim values as new variables so you can check each step for correctness
     - Ranking:
       - _min_rank()_ : defaults to giving the smallest values the smallest ranks, use desc(x) to give the largest values the smallest rank
-      - Many other ranking, but min_rank() is the most common and accomplishes most tasks
-      - Some other variants:
+      - Many other ranking, but _min_rank()_ is the most common and accomplishes most tasks
+      - Some other variants
         - _row_number(), dense_rank(), percent_rank(), cume_dist(), ntile()_
         - Check help pages for more information if you need them
 - Exercises on pg. 58
   - In order to handle ties in the ranking functions, you can use _ties.method()_ on a vector of column names to establish the order by which you want to break ties
-  - Trigonometric functions:
+  - Trigonometric functions
     - _sin(), cos(), tan(), acos(), asin(), atan(), atan2( y, x), cospi(), sinpi(), tanpi()_
       - _a-_ the arc- of a function
-- Grouped Summaries with summarize():
+- Grouped Summaries with _summarize()_
   - _summarize()_ : collapses a data frame to a single row
-    - Not terribly useful unless using it with a group_by()
-      - This will group rows based on the group_by() then compute the summary by each group, rather than on the entire dataset (which may not give you the information you need)
-- Combining Multiple Operations with the Pipe:
+    - Not terribly useful unless using it with a _group_by()_
+      - This will group rows based on the _group_by()_ then compute the summary by each group, rather than on the entire dataset (which may not give you the information you need)
+- Combining Multiple Operations with the Pipe
   - _%>%_ : the pipe
     - Improves readability of code
-    - E.g. x %>% f(y) %>% g(z) would be the same as g(f(x, y), z)
+    - E.g. ``` x %>% f(y) %>% g(z) ``` would be the same as ``` g(f(x, y), z) ```
   - _na.rm_ : argument used in many aggregators to remove the missing values prior to computation
     - If = TRUE then it will remove the missing values
     - You can also filter out the missing values prior to computation using filters like _!is.na()_
-- Counts:
-  - Important to include either a count(), or a count of non-missing values {like sum(!is.na(x)) } in order to determine if you are drawing conclusions with small amounts of data
-  - _as_tibble(<package>::<dataset>)_ :
+- Counts
+  - Important to include either a _count(),_ or a count of non-missing values {like sum(!is.na(x)) } in order to determine if you are drawing conclusions with small amounts of data
+  - _as_tibble(package::dataset)_
     - Converts the dataset into a tibble to make printing easier
   - Important to remember that the variance decreases as more data points are added. So if you see outliers you may need to include a filter to remove them if they are truly outliers.
-- Useful Summary Functions:
+- Useful Summary Functions
   - Measures of location: useful to combine aggregation with logical subsetting (will be discussed in further detail on pg. 304)
-  - Measures of spread:
+  - Measures of spread
     - _sd(x)_ : the standard deviation, mean squared deviation
     - _IQR(x)_ : the interquartile range
     - _mad(x)_ : median absolute deviation
-    - mad(x) and IQR(x) are more robust version of sd(x) that can be useful when the dataset contains many outliers
-  - Measures of rank:
+    - _mad(x)_ and _IQR(x)_ are more robust version of _sd(x)_ that can be useful when the dataset contains many outliers
+  - Measures of rank
     - _min(x), max(x)_ : rank the smallest or largest
-    - _quantile(x, <n>)_ : quantile, will find the value that equals (<n>) < x < (1-<n>)
-  - Measures of position:
+    - _quantile(x, n)_ : quantile, will find the value that equals (n) < x < (1-n)
+  - Measures of position
     - _first(x), last(x)_ : the first or last data point based on position in dataset
-    - _nth(x, <n>)_ : returns the <n>th data point from a set
-  - Counts:
+    - _nth(x, n)_ : returns the nth data point from a set
+  - Counts
     - _n_distinct(x)_ : counts the number of unique values
-    - _count()_ :
-      - Provided by dplyr to give count if that is all you want
+    - _count()_
+      - Provided by _dplyr_ to give count if that is all you want
       - Can also be used with a weight variable to 'count' the variable (something like a sum)
-        - E.g. count(tailnum, wt = distance) would give you the number of miles that the specific plane has travelled in total
-  - Counts and proportions of logical values:
-    - When used in numeric functions, TRUE is converted to 1 and FALSE to 0, thus sum() and mean() can be very useful (sum() for giving the number of TRUEs and mean() for the proportion of TRUE/FALSE)
-- Grouping by Multiple Variables:
+        - E.g. ``` count(tailnum, wt = distance) ``` would give you the number of miles that the specific plane has travelled in total
+  - Counts and proportions of logical values
+    - When used in numeric functions, TRUE is converted to 1 and FALSE to 0, thus _sum()_ and _mean()_ can be very useful (_sum()_ for giving the number of TRUEs and _mean()_ for the proportion of TRUE/FALSE)
+- Grouping by Multiple Variables
   - When grouping by multiple variables, each summary 'peels off' one level of grouping, making it easy to progressively roll up a dataset
     - E.g.
-
+``` r 
 Daily <- group_by(flights, year, month, day)
-
 (per_day <- summarize(daily, flights = n()))
-
 #> output
 
 (per_month <- summarize(per_day, flights = sum(flights)))
-
 #> output
 
 (per_year <- summarize(per_month, flights = sum(flights)))
-
-    - Need to be careful when doing this, sums and counts work well, but you need to think about weighting means and variances. It's also not really possible to roll up rank based statistics like the median
+#> output
+```
+  - Need to be careful when doing this, sums and counts work well, but you need to think about weighting means and variances. It's also not really possible to roll up rank based statistics like the median
 - Ungrouping:
   - _ungroup()_ : used to remove the grouping before performing new calculations on the ungrouped dataset
 - Exercises on pg. 72
-  - Combining mutate() and the pipe %>% can add columns into the dataset you are using, which can then be referenced in later code blocks
-  - Passign the _sort_ argument to count() sorts the results in order of n. This can be used whenever you would use count() followed by arrange()
+  - Combining _mutate()_ and the pipe _%>%_ can add columns into the dataset you are using, which can then be referenced in later code blocks
+  - Passign the _sort_ argument to _count()_ sorts the results in order of n. This can be used whenever you would use _count()_ followed by _arrange()_
 - Grouped Mutates and Filters
-  - Grouping is most useful when used with summarise(), but you can also do convenient operations with mutate() and filter()
+  - Grouping is most useful when used with _summarise()_, but you can also do convenient operations with _mutate()_ and _filter()_
   - Generall grouped filters (a grouped mutate followed by an ungrouped filter) are avoided except for very quick and dirty manipulations
   - Functions that work best in grouped mutates and filters are know as window functions
     - Can learn more about them in _vignette('window-functions')_
@@ -368,103 +365,100 @@ Daily <- group_by(flights, year, month, day)
 ## Chapter 4 - Workflow: Scripts
 
 - Ctrl+Enter will run the current expression and moves the cursor to the next expression
-- It is best to include the libraries in the beginning of your code, but DO NOT include install.packages() as it will alter the other person's computer and that is a big no-no
+- It is best to include the libraries in the beginning of your code, but DO NOT include _install.packages()_ as it will alter the other person's computer and that is a big no-no
 - Ctrl+Shift+S runs the whole script
 
 ## Chapter 5 - Exploratory Data Analysis
 
 - Also abbreviated EDA
-- Iterative cycle:
+- Iterative cycle
   - Generate questions about your data
   - Search for answers by visualizing, transforming and modeling your data
   - Use what you learn to refine your questions and/or generate new questions
-- Two loose example questions can be written as:
+- Two loose example questions can be written as
   - What type of variation occurs within my variables?
   - What type of covariation occurs between my variables?
-- Some basic term definitions:
+- Some basic term definitions
   - Variable: a quality, quantity, or property that you can measure
   - Value: the state of the variable when you measure it
   - Observation/ case: a set of measurements made under similar conditions (sometimes refered to as a data point, even though it will likely contain multiple variables and values)
   - Tabular data: set of values, each associated with a variable and an observation
 - Variation: the tendency of values to change from measurement to measurement
-- Visualizing Distributions:
+- Visualizing Distributions
   - How you visualize will depend on whether the variable is continuous or categorical
   - Categorical are most frequently visualized as bar charts
   - Continuous variables are typically shown in histograms
   - In a histogram you can later the bin values (left and right bounds) by altering the _binwidth_ value
   - If you wish to stack histograms it is best to use _geom_freqpoly()_ as it will use lines instead of bars
-  - Good questions to ask when you make these graphs:
+  - Good questions to ask when you make these graphs
     - Which values are common? Why?
     - Which are rare? Why? Is this expected?
     - Are there any strange patterns?
     - Why are there clusters?
     - What would cause such clustering?
     - Why might clusters be misleading?
-- Unusual Values:
-  - Outliers:
+- Unusual Values
+  - Outliers
     - Data points that don't seem to fit the pattern
     - May be an error in data entry, important new science, or unusual values
     - Can zoom in on graphs with outliers by using the _coord_cartesian()_ function
-    - _coord_cartesian(ylim(<min>,<max>), xlim(<min>,<max>))_
-  - Missing values:
+    - ``` coord_cartesian(ylim(min,max), xlim(min,max)) ```
+  - Missing values
     - Two options if you have unusual data points in the set
       - Drop the entire row with strange values
         - Not recommended as you may end up removing all your rows due to bad data or poor collection methodologies
       - Replace the unusual values with missing values
-        - Can do this easily with mutate( <variable> = ifelse())
-        - _ifelse(<argument_test>, <value_if_TRUE>, <value_if_FALSE)_
-    - ggplot will allow you to use NA points, and it will not graph them, but it will tell you that there are NA points
-      - You can suppress this warning by setting na.rm = TRUE
+        - Can do this easily with ``` mutate( variable = ifelse()) ```
+        - _ifelse(argument_test, value_if_TRUE, value_if_FALSE)_
+    - _ggplot_ will allow you to use NA points, and it will not graph them, but it will tell you that there are NA points
+      - You can suppress this warning by setting _na.rm = TRUE_
 - Exercises on pg. 93
 - Covariation: the behavior between variables. Easiest way to see this is to plot the variables
-- A Categorical and Continuous Variable:
+- A Categorical and Continuous Variable
   - The best method for graphing the distribution of a continuous variable broken down by a categorical variable is a boxplot
   - Boxplot:
     - Box stretches from the 25th percentile (quartile 1) to the 75th percentile (q3), also called the interquartile range (IQR)
     - Visual points that fall 1.5xIQR from the edges of the box (below or above) are classified as outliers
     - A whisker that extends from the edge of the box to the last number that is not an outlier
-  - _reorder(<variable>, <order>, FUN = median)_ : reorder the categorical variable based on another variables or argument
+  - _reorder(variable, order, FUN = median)_ : reorder the categorical variable based on another variables or argument
   - _coord_flip()_ : flips the graph by 90 degrees
-
 - Exercises on pg. 99
-  - _ggstance_ is a package that allows for the creation of horizontal versions of the ggplot plots. They are the named the same except for an added _h_ at the end of the function
-    - E.g. geom_barh()
+  - _ggstance_ is a package that allows for the creation of horizontal versions of the _ggplot_ plots. They are the named the same except for an added _h_ at the end of the function
+    - E.g. _geom_barh()_
   - _lvplot_ is a package that allows for the use of letter plots
     - _geom_lv()_ will use the letter plot (similar to boxplot but more accurate and informative for large data sets above 1000 samples or so, splits into segments based on percentile ranges )
   - _geom_violin()_ : similor to a letter plot, but will smooth edges to show continuous variables rather than lettered segments
   - You can facet a histogram of continuous data with a discrete variable as your faceting argument to get multiple graphs and view the data more easily
-  - _ggbeeswarm_ is a package used for reducing the data loss in visualization normally seen due to overplotting (one point on top of another) similar to geom_jitter()
-    - Adds:
+  - _ggbeeswarm_ is a package used for reducing the data loss in visualization normally seen due to overplotting (one point on top of another) similar to _geom_jitter()_
+    - Adds
       - _geom_quasirandom()_ : uses van der Corput sequence or Tukey texturing to space dots to avoid overplotting
       - _geom_beeswarm()_ : uses the beeswarm library to do point_size offset
       - Can handle categorical variables on the y-axis
       - Automatically dodges if a grouping variable is categorical and dodge.width is specified
-- Two Categorical Variables:
+- Two Categorical Variables
   - Can use _geom_count()_ with a mapping of two variables, which will display circles whose sizes indicate the number of observations that occurred at each combination of values
-  - Can also use the count() feature in dplyr then use _geom_tile()_ and the fill aesthetic
-    - E.g. diamonds %>%
-
+  - Can also use the _count()_ feature in _dplyr_ then use _geom_tile()_ and the fill aesthetic
+``` r
+diamonds %>%
 count(color, cut) %>%
-
 ggplot(mapping = aes(x = color, y = cut)) +
-
 geom_tile(mapping = aes(fill = n))
-
-    - Creates a nice 'picture' with color gradient indicating the number of occurrences
+```
+  - Creates a nice 'picture' with color gradient indicating the number of occurrences
   - If the categorical variables are unordered, you may want to use the _seriation_ package to order them then look for patterns
   - Larger plots may be done with _d3heatmap_ or _heatmaply_ packages that allow for the creation of interactive plots
 - Exercises on pg. 101
-- Two Continuous Variables:
+- Two Continuous Variables
   - Simplest way is to use a scatter plot
   - As the data gets larger this becomes harder
   - _hexbin_ package includes _geom_hex()_
   - _geom_bin2d()_ : divides the coordinate plane into 2d bins then uses them with a fill color to display the number of points that fall into each bins
-  - _geom_hex()_ : similar to geom_bin2d() but instead of boxes it creates hexagons
+  - _geom_hex()_ : similar to _geom_bin2d()_ but instead of boxes it creates hexagons
   - You could also bin one variable as if it was continuous and use some of the techniques described above
     - If using a graph like a boxplot it may be useful to include a way to look at the number of observation inside each boxplot, thus you can use _varwidth = TRUE_, this will create the multiple boxplots as normal (one for each bin) but will adjust the width of each bin to represent the proportion of data that is contains compared to the other boxplots)
 - Exercises on pg. 104
   - _cut_number()_ : divides the continuous number into bins with the same number of observations based on how many bins you want
-    - _cut_number(<variable>, <number_of_bins>)_
+    - _cut_number(variable, number_of_bins)_
   - _cut_width()_ : divides a continuous variable into bins based on a defined width
     - E.g. you want all bins to have a range of $5000, so they would go 0-5000, 5001-10000, 10001-15000
 - Patterns and Models:
@@ -476,7 +470,7 @@ geom_tile(mapping = aes(fill = n))
     - Does this relationship change if you look at subgroups?
   - _modelr_ package has some useful tools for calculating things like residuals and will be covered later
 - Learning more:
-  - ggplot2 book from ggplot2.org, usually can get for free if in university at SpringerLink
+  - _ggplot2_ book from ggplot2.org, usually can get for free if in university at SpringerLink
   - R Graphics Cookbook by Winston Chang
   - Graphical Data Analysis with R by Antony Unwin
 

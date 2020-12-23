@@ -1,0 +1,797 @@
+# The Defitive Guide to DAX: Business intelligence with Microsoft Excel, SQL Server Analysis Services, and Power BI
+### Alberto Ferrari, Marco Russo <!-- omit in toc -->
+### 073569835X <!-- omit in toc -->
+
+- [The Defitive Guide to DAX: Business intelligence with Microsoft Excel, SQL Server Analysis Services, and Power BI](#the-defitive-guide-to-dax-business-intelligence-with-microsoft-excel-sql-server-analysis-services-and-power-bi)
+  - [Chapter 1 - What is DAX?](#chapter-1---what-is-dax)
+  - [Chapter 2 - Introducing DAX](#chapter-2---introducing-dax)
+  - [Chapter 3 - Using basic table functions](#chapter-3---using-basic-table-functions)
+  - [Chapter 4 - Understanding evaluation contexts](#chapter-4---understanding-evaluation-contexts)
+  - [Chapter 5 - Understanding CALCULATE and CALCULATETABLE](#chapter-5---understanding-calculate-and-calculatetable)
+  - [Chapter 6 - DAX examples](#chapter-6---dax-examples)
+  - [Chapter 7 - Time intelligence calculations](#chapter-7---time-intelligence-calculations)
+  - [Chapter 8 - Statistical Functions](#chapter-8---statistical-functions)
+  - [Chapter 9 - Advanced Table Functions](#chapter-9---advanced-table-functions)
+  - [Chapter 10 - Advanced Evaluation Context](#chapter-10---advanced-evaluation-context)
+  - [Chapter 11 – Handling Hierarchies](#chapter-11--handling-hierarchies)
+  - [Chapter 12 – Advanced Relationships](#chapter-12--advanced-relationships)
+  - [Chapter 13 – The VertiPaq Engine](#chapter-13--the-vertipaq-engine)
+  - [Chapter 14 – Optimizing Data Models](#chapter-14--optimizing-data-models)
+  - [Chapter 15 – Analyzing DAX Query Plans](#chapter-15--analyzing-dax-query-plans)
+  - [Chapter 16 – Optimizing DAX](#chapter-16--optimizing-dax)
+
+## Chapter 1 - What is DAX?
+
+- One-side vs. Multi-side: one-side is the table with unique values that a multi-side table refers to as a key
+- Key: a column with unique values in each row
+- Tabular models can only have a relationship on single columns
+- Filtering always takes place from the one-side to the multi-side
+- Filters can "propagate" to tables further down the relationship
+  - E.g. A <> B < C < D
+  - D can go to A, but A stops at B
+- DAX: tables and columns as Excel: cells
+- Excel expression for a column reference: _[@ColumnName](@=value of current row)_
+  - Requires the use of a table to do this
+- DAX referencing: _'TableName'[ColumnName]_
+  - No '' if there are not spaces, it doesn't start with a number, and it is not reserved as part of a DAX function call
+- To reference an entire column:
+  - Excel: remove the @ symbol
+  - DAX: default is to use a row context, so you must use an iterator like _SUM_
+- Functional Language: a language that is all expression based, there are no loops, jumps, etc.
+- Iterators: perform multiple steps in one action without multiple columns and memory bloat
+
+## Chapter 2 - Introducing DAX
+
+- Best practice is to not use spaces in table names
+- DAX data types (SQL equivalent)
+  - Whole number (integer)
+  - Decimal number (float)
+  - Currency (currency) – however, this is really just stored as a fixed decimal
+  - Date (DateTime)
+  - Boolean (Boolean) – True / False
+  - Text (String)
+  - Binary Large Object (also called BLOB)
+- &: operator that concatenates strings
+- Be wary of automatic conversions, they may alter data types when you don't want them to
+- DAX operators
+  - () – order and grouping of arguments
+  - + / - /  \* / / - arithmetic
+  - = / <> / > / < / >= / <= - comparisons
+  - & - text concatenation
+  - &&  - and condition between two Boolean expressions
+  - || - or condition between two Boolean expressions
+- In tabular, calculated columns are stored in the model and thus in memory (because of this, intermediate calculations are a bad habit as they eat up precious memory)
+- Measures are used to operate on aggregate values -  they operate on the "evaluation context"
+- Variables : can be defined so as to simplify code, use less "lazy evaluation" (meaning that it is only calculated if it is used, and subsequent used will refer to the first valuation, a good thing for optimization)
+- DAX expression evaluation errors
+  - Conversion errors: if DAX cannot convert an operand (part of the operation) to that required by the operator
+  - Arithmetical errors: such as dividing by zero
+  - Empty or missing values: returns a Blank(), which can then be propagated in certain circumstances
+- _IFERROR_: acts like an _IF_ function, but evaluates for error, no Boolean
+- _ISBLANK_: detects an empty value condition
+- DAXFormatter.com can be used to automatically format expressions to these conventions
+- Formatting conventions
+  - Keywords like _IF_, _COUNT_, etc. are separated from other terms with a space and are all caps
+  - Column references: _TableName[ColumnName]_ (always include a table)
+  - Measure reference: _[MeasureName]_ (no table name needed)
+  - Commas are always followed by (but never preceded by) a space
+  - If it fits on a single line, no other rules apply
+  - If multiple lines:
+    - Function name stands on a line by itself, with open parenthesis
+    - All the parameters are in separate lines, indented with 4 spaces and with the comma at the end of the expression
+    - The closing parenthesis is aligned with the function call and stands in a line by itself
+  - More rules can be found at [http://sql.bi/daxrules](http://sql.bi/daxrules)
+- = vs. := - calculated column vs. measure
+- Common DAX functions
+  - Aggregate functions
+    - _SUM, AVERAGE, MIN, MAX, STDEV, VAR_
+    - Can only operate only on numerical values
+    - For calculating with non-numeric values you must add the suffix "A" (these are really only useful for Boolean columns)
+    - For counting, not just aggregating
+      - _COUNT, COUNTA, COUNTBLANK, COUNTROWS, DISTINCTCOUNT_
+    - For aggregating an expression: add the suffix "X"
+      - _SUMX, AVERAGEX, PRODUCTX, COUNTX, CONCATENATEX, MINX, MAXX_
+  - Logical functions
+    - _AND, FALSE, IF, IFERROR, NOT, TRUE, OR_
+    - _SWITCH_: creates a set of nested _IF_ functions
+  - Information functions: all return a TRUE/FALSE value
+    - _ISBLANK, ISERROR, ISLOGICAL, ISNONTEXT_
+    - Mathematical functions
+      - _ABS, EXP, FACTM LN, LOG, LOG10, MOD, PI, POWER, QUOTIENT, SIGN, SQRT, RAND, RANDBETWEEN, EVEN, ODD, GCD, LCM_
+      - Includes rounding functions: _FLOOR, TRUNC, ROUNDDOWN, MROUND, ROUND, CEILING, ISO.CEILING, ROUNDUP, INT, FIXED_
+    - Trigonometric functions: _SIN, COS, TAN_, adding an A is the arc-version
+    - Text functions (like Excel)
+      - _CONCATENATE, EXACT, FIND, FIXED, FORMAT, LEFT, LEAN, LOWER, MID, REPLACE, REPT, RIGHT, SEARCH, SUBSTITUTE, TRIM, UPPER, VALUE_
+    - Conversion functions
+      - _CURRENCY, INT, DATE, TIME, VALUE, FORMAT, DATEVALUE_
+    - Date and Time functions
+      - _DATE, DATEVALUE, DAY, EDATE, EMONTH, HOUR, MINUTE, MONTH, NOW, SECOND, TIME, TIMEVALUE, TODAY, WEEKDAY, WEEKNUM, YEAR, YEARFRAC_
+    - Relational functions
+      - _RELATED, RELATEDTABLE_
+
+## Chapter 3 - Using basic table functions
+
+- Scalar expressions : functions call that returns only one value
+- Table expressions: function that uses or generates a table as output
+- Types are defined by their output, not input
+- _EVALUATE_ function: used to query (along with other expressions)
+- Complete DAX query
+``` DAX
+[DEFINE {Measure TableName[Name] = expression}]
+Evaluate Table
+[ORDER BY {expression[{ASC|DESC}]} [,…]
+[START AT {value|parameter} [,…]] ]
+```
+- Simplest query: ``` EVALUATE table ```
+- _ORDER BY_: controls the sort order
+- Sorting by column property (or properties) in the model doesn't affect the DAX query, order must be defined with the ORDER BY statement
+- _START AT_ requires a sort order to function (useful for pagination) and will work depending on the direction of order (ASC|DESC)
+- Table expressions: functions that are evaluated from innermost call outward
+- _FILTER_: returns the same table (with columns) but only the desired rows
+  - Syntax: ``` FILTER(table,condition) ```
+  - The granularity of the syntax will impact optimization
+- Nested _FILTER_'s will behave much like one filter with a logical expression referencing two conditions (like _AND_)
+- Nested calls may have different evaluation orders
+- _ALL_: returns all rows or values depending on parameters used, ignores existing filters
+- _ALLEXCEPT_: returns an entire table less the columns that you want to exclude
+- With no other filters, _DISTINCT_ is to _ALLNOBLANK_ as _VALUES_ is to _ALL_
+- _VALUES_ returns all cells, with the possibility of a blank, that are unique
+- _DISTINCT_ returns all unique cells like _VALUES_ but without a possible blank row (so it could be the same as _VALUES_ or one row less)
+
+## Chapter 4 - Understanding evaluation contexts
+
+- Reread this chapter if it suddenly feels as if DAX "works like magic" because there is something that you may be missing
+- "Context" in "Evaulation Context" is the environment in which a formula is evaluated
+
+  - Example: sales amount can be a sum for the whole table, or when you use a PivotTable to slice the data you can get the sum for color
+- The change in context alters the calculation, like the example above
+- All context changes alter the computation, including: columns, rows, filters and slicers
+- There are two contexts:
+  - Filter: the above
+  - Row: easiest to see in calculated columns, DAX essentially evaluates row by row as if creating a new context for each row
+- There are always these two contexts
+- Measure do not provide a row context innately
+- Iterators like SUMX behave thusly:
+  - Create a new row context for each row of the table received as the first parameter
+  - Evaluate the second parameter inside the new context (plus any other context established beforehand), for each row
+  - Aggregate values for step 2
+- If there is an existing row context, iterators will overwrite it
+- FILTER is an iterator
+- EARLIER: retrieves the value of a column by using the previous row context instead of the last one
+- RELATED works when you have a row context on the many-side table
+- RELATEDTABLE works from the one-side table
+- Both functions can chain relationships as long as they are the saem type and direction (a 1:1 is also ok)
+- Row context doesn't propagate over relationships, you need RELATED or RELATEDTABLE to create the context
+- If the filter context allows it, it can propagate across relationships
+- VALUES returns a table with only one column that contains all the rows of  the current filter context
+- ISFILTERED and ISCROSSFILTERED: returns a TRUE/FALSE if the current cell has a filter on the column used as an argument or if the column has a filter due to propagation
+- Parameter table: used internally for functions but not related to the rest of the model
+- Parameter tables can be linked in Excel, but storage in a database is superior
+
+## Chapter 5 - Understanding CALCULATE and CALCULATETABLE
+
+- CALCULATE is the only function able to alter a filter context (ALL removes it, but cannot edit it)
+- DAX is built on VertiPaq
+
+  - VertiPaq is a columnar database, not tabular
+- When applying a filter it only attaches to 1 column, but because it is part of a table it will propagate the filter
+- CALCULATE(Expression, Condition 1, Condition 2,...Condition N)
+  - Conditions are called "filter arguments" and can be:
+
+    - A list of values
+    - A boolean condition
+  - Essentially applies the new filters on columns at the same time removing the other filters, then evaluates the expression
+- Filtering over more than one column may not return the same data ass calculate with multiple parameters
+- CALCULATETABLE works like CALCULATE but returns a table rather than a scalar expression
+- If you use CALCULATE with only the first parameter then it will transfer the current row context to the equivalent filter context
+  - This behavior is called "context transition"
+- When invoking a measure inside another formula, DAX automatically encapsulates the measure inside a CALCULATEW function
+- Standard procedure is to omit table names for a measure when writing DAX code and always give a table name for calculated columns
+- CALCULATE's automatic context transition creates a filter that corresponds to the row context, but if there are duplicate, identical rows, it will return a value that is incorrect
+- Filters from CALCULATRE override the context transition that it creates
+- DAX computes variables in the way you define them, not when they are used
+- Linear dependencies are not an issue in DAX, it will internally define the order of operations
+- CACLULATE can introduce a subtle form of the circular dependency as it converts row context into a filter context including calculated columns
+- If each row has a "row identifier" (primary key) then the filter context is on the primary key and thus calculated columns are not dependencies
+- To set a row identifier you can:
+  - Create any relationship with the desired column to be the key as the destination
+  - Manually set the property in the Table Behavior properties
+- CALCULATE rules summary:
+  - pg.12-123 come back and type in
+- ALLSELECTED: returns only the values that are visible in the original filter context
+- Three types of parameters:
+  - Single column: as in ALLSELECTED(Product[Color]) returning originally selected colors
+  - Full table: returns rows originally selected with and ALLSELECTED operation on all columns
+  - No parameters: all tables in the model
+- USERELATIONSHIP: activates an inactive relationship for calculation
+
+## Chapter 6 - DAX examples
+
+- Calculating percentages: always expressed as division, you must be very careful when creating the denominator and make sure you are calculating what you want
+- Cumulative totals:
+
+  - Determine the end of the current visible dates/period/etc (for example: <1/1/2019)
+  - Create a filter that will show this fact
+- ABC (Pareto) classification:
+  - Products in A are 70% of revenue, B=20% and C=10%
+  - Forces you to think outside the box
+  - Calculate profit per row then use >= as a way to accumulate for each line that fits the parameters and use the accumulation to gain the cumulative # or % per item with all the more profitable items added to it
+- Granularity can significantly alter functions and their outputs, you must match the granularity of the measure to that of the data design
+
+## Chapter 7 - Time intelligence calculations
+
+- Best practice is to use a separate date table stored in the database
+- Star schema
+- Always use or create at least one date table in a model that uses dates
+- After creating a column with your dates, it's best to create other columns inside the data source, as imported columns result in better data compression than calculated columns
+- CALENDAR and CALENDARAUTO: automatically creates a date table inside the model (some DAX products don't allow this)
+- CALENDARAUTO (#): creates a table with the first day of the following calendar month (e.g. 6 would start with July 1)
+
+  - Used to shift fiscal calendars if not the same as solar year
+- CALENDAR(DATE( ),DATE( ))
+- If there are multiple date columns in a table:
+  - Multiple relationships to the same date table
+
+    - May require USRELATIONSHIP
+    - Best if using many relationships
+  - Multiple date tables
+    - Good for maintenance and it lowers the # of measures
+    - Important to rename tables for clarity and ease of use
+- Mark as Date Table: tells DAX to remove previous filters
+- Year to date functions:
+  - DATESYTD( ): returns all tables from Jan 1 of the current calendar year to the last day in the filter context
+  - TOTOALYTD("expression for aggregation",'DateColumn'): is the same as CALCULATE and DATESYTD together
+  - Both functions have quarterly and monthly versions (e.g. TOTLQTD)
+  - If calculating for a fiscal year that doesn't end Dec 31, then add a third parameter to any of these functions that corresponds to the last date of the fiscal year
+    - Some other time intelligence functions use an optional last parameter to change the year end date, such as:
+
+      - STARTOFYEAR, ENDOFYEAR, PREVIOSYEAR, NEXTYEAR, DATESYTD, TOTALYTD, OPENINGBALANCEYEAR, CLOSINGBALANCEYEAR
+- SAMEPERIODLASTYEAR('table'[column]): returns a period shifted 1 year back
+- DATEADD('date'[date],#, a/m/d): can allow for more specific calculation in the past or future periods
+- PARALLELPERIOD: returns values for the entire previous period (such as all of last year) rather than the partial period of DATEADD
+- Previous functions cannot operate on weeks, these require more complex DAX expressions
+- Semi-additive measures: measures that cannot aggregate over time
+- LASTNONBLANCK: returns the last value for which a particular expression is not blank
+  - Also the reverse: FIRSTNONBLANK
+- OPENINGBALANCE and CLOSINGBALANCE: used like a LASTDATE and CALCULATE for a certain time period by adding MONTH, QUARTER, or YEAR to the end
+- If more date and calendar functions information is needed then return to chapter 7 and reread the subsections
+
+## Chapter 8 - Statistical Functions
+
+- RANKX: show the rank of a value according to a sort order
+  - Syntax: RANKX( <table>, <expression>, [<value>[,<order>[<ties>]]] [,<expression>[,<value>[<order>[<ties>]]]]...)
+  - If <order> = 0 then FALSE (descending order), if = 1 then TRUE (ascending order)
+  - <ties> is a string that is DENSE (the next value after the tied values) or SKIP (skip as many rankings as the number of tied values
+    - E.g. 4 values tie at the rank of 5, the next value would then be 6 for a DENSE <tie> or 9 for SKIP
+- RANKX will give you an absolute rank if using ALL, but will only rank the visible (selected) values if usi9ng ALLSELECTED
+- Common pitfalls:
+  - Forget to use ALL/ALLSELECTED in the first argument when it is on a table
+  - Forget to use a CALCULATE in the expression, thus missing a context transition and the formula will pass only the single row, meaning all values rank against only themselves and thus all receive a ranking of number 1
+- RANK.EQ similar to Excel equivalent, returning the value ranking from a list of values
+  - Syntax: RANK.EQ(<value>,<column>[,<order>])
+  - Mostly for Excel compatibility
+- AVERAGE AND AVERAGEX: returns the average of all the numbers in a numeric column, and returns the average of an expression evaluated over a table
+- Variance: insert function here on computer
+- Standard Deviation: insert function here on computer
+- x bar= average, A(with squiggle on top) = standard deviation
+- Functions:
+  - S= sample, P=Population
+  - VAR.<S/P> (<column>)
+  - VARX.<S/P> (<table>, <expression>)
+  - STDEV.<S/P>(<column>)
+  - STDEVX.<S/P> (<table>, <expression>)
+  - when using the std. dev. method 1/N becomes 1/(N-1)
+- MEDIAN and MEDIANX: the value from a numeric column, median values over an expression per row
+- PERCENTILE.<EXC/INC> : returns the k-th percentile in a range, where k is in the range 0..1 exclusively (with EXC) or k is is in the range 0..1 inclusively (with INC)
+- PERCENTILEX.<EXC/INC> : returns the k-th percentile of an expression evaluated for each row in a table, where k is in the range 0..1 exclusively (with EXC) or k is is in the range 0..1 inclusively (with INC)
+- PRODUCT: returns the product of numbers in a numeric column
+- PRODUCTX: calculates the product of an expression evaluated for each row in the table
+- GEOMEAN: returns the geometric mean of numbers in a numeric column
+  - With the set {a1,a2,a3,..an} the geomean is calculated as g=nthroot(a1\*a2\*a3…\*an)
+- XIRR: effective interest rate
+  - Syntax: XIRR(<table>,<value>,<date>[,<guess>])
+  - <guess> is used to help with performance as it will use a heuristic method to get the estimate anyway, so a guess will help reduce the number of calculations
+- XNPV: net present value, used to calculate the current value of the capital of a scheduled cash flow, such as the remaining principal on a loan
+  - Syntax: XNPV(<table>,<value>,<date>,<rate>}
+- Excel stats functions that have similar functions in DAX:
+  - BETA.DIST: beta distribution
+  - BETA.INV: inverse of the beta cumulative probability function
+  - CHISQ.DIST: CHI squared distribution
+  - CHISQ.DIST.RT: right tail probability of the the CHISQ.DIST
+  - CHISQ.INV: inverse of the left tail probability of CHISQ.DIST
+  - CHISQ.INV.RT: inverse of the CHISQ.DIST.RT
+  - COMBIN: number of combinations of a given number of items
+  - COMBINA: same as COMBIN but also includes the repetitions of the same order whereas COMBIN doesn't
+  - CONFIDENCE.NORM: confidence interval for a population mean with a student's T-distribution
+  - EXPON.DIST: exponential distribution
+  - PERMUT: number of permutations for a given number of objects that can be selected from a group of objects
+  - POISSON.DIST: Poisson distribution
+- SAMPLE: returns a defined number of rows from either a table or the table generated by a function
+
+## Chapter 9 - Advanced Table Functions
+
+- DEFINE MEASURE: useful for formula debugging and assigning a measure in SSMS or DAX Studio
+  - Syntax: [DEFINE {MEASURE <table>[name] = <expression>}] EVALUATE <table>
+- When defining a measure with EVALUATE, using the same reference name will overwrite the previous measure or column, but if you overwrite in a query, the references in the data model will remain
+- VAR in EVALUATE:
+  - Syntax:
+    - VAR <variablename> = <expression> RETURN <ExpressionConsumingTheVariable>
+  - If used in the DEFINE code block the RETURN is unnecessary
+- Best to consider the order of function calls to optimize performance, for example, using a more restrictive filter condition in the innermost context so that later filter will already have less
+- TOPN: returns the first N number of elements returned by an expression
+  - Will return tied rows even if you specify N=1
+  - Query Syntax: EVALUATE TOPN( <n.value>,<table>,<orderByExpression>[,<order>[,<orderByExpression>[,<order>]]...] )
+  - <order> = 0 then DESC, if =1 then ASC
+  - FIRSTNONBLANK can be used to limit the TOPN output to 1
+- ADDCOLUMNS:
+  - Syntax: (<table>,"<columnName1>", <columnExpression> [,"<columnName2>", <columnExpression>]... )
+  - Cannot be used for filter context in CALCULATE(TABLE)
+  - Best to use fully qualified names
+- SELECTCOLUMNS:
+  - Same syntax as ADDCOLUMNS
+  - All columns correspond to physical columns of the data model (and thus are not in italics)
+  - Maintains the data lineage unless using an expression
+  - Any reference to columns defined by SELECTCOLUMNS must use the exact same name, so if unqualified names are created then they must be referenced as such in future code blocks
+- ROW:
+  - Syntax: ROW( <columnName1>, <column1Expression> [,<columnName2>,<columnExpression>]... )
+  - Creates a table with defined columns and 1 row containing a scalar value
+- SUMMARIZECOLUMNS: useful for summarizing over a table column within a query
+- When trying to write a scalar expression it is better to use an aggregation function rather than SUMMARIZE
+- You should only use GROUPBY to aggregate intermediate/aggregate results returned by SUMMARIZE or ADDCOLUMNS rather than using it over the base columns
+- SUMMARIZE: used to produce a summary table by grouping data by one or more columns and evaluating unique expressions for each row used for hte summarization
+  - Syntax: SUMMARIZE( <table>,<groupByColumn1> [,<groupByColumn2>][,...] [,ROLLUP( <groupByColumnX> [,<groupByColumnY>] [,...] ) ] [,<columnName1>, {columnExpression> | ISSUBTOTAL( <groupByColumn>) }] [,...]  )
+  - To optimize performance it is better not to is SUMMARIZE in evaluation expressions
+  - If using ROLLUP, don't assume that the BLANK value in a rollup column is the rollup row
+  - ISSUBTOTAL: used for identifying which row is the rollup value
+- SUMMARIZECOLUMNS: better implementation of SUMMARIZE that is less performance heavy
+  - Syntax: SUMMARIZECOLUMNS( <groupByColumn1>, [,<groupByColumn2>] [,...] [,<filterTable1>[,<filterTable2>] [,...] ] [,<columnName1>, {<columnExpression1> |IGNORE( <groupByColumn> ) }] [,...]  )
+  - You cannot specify an outside filter context using SUMMARIZECOLUMNS, you can however use filter tables that would correspond to filter arguments
+  - Automatically eliminates rows that have a BLANK value in them
+- GROUBPBY: designed to apply an iterator over the rows of a group
+  - Similar to SUMMARIZECOLUMNS but it does not have a filter context
+- ADDMISSINGITEMS: adds the row that would otherwise be hidden by SUMMARIZECOLUMNS
+  - To use over SUMMARIZECOLUMNS, wrap it over the expression and include the columns from which you want to include previously missing item
+- NATURALINNERJOIN: used to connect two tables together, using at least one column that is shared between the two
+  - You do not need a relationship in the data model
+  - Syntax: (<leftJoinTable>, <rightJoinTable> )
+- NATURALLEFTOUTERJOIN: same as above except it passes forward two table expressions
+- CROSSJOIN: generated a Cartesian product between two or more tables
+  - Syntax: CROSSJOIN (<tableExpression1>,<tableExpressionN> )
+  - You can have columns with the same lineage ig you rename the column in advance
+- UNION: created a single table using all the rows of other tables as arguments
+  - Must have the same number of columns
+  - First expression defines the names of the resulting columns
+  - Similar syntax to CROSSJOIN
+- INTERSECT: returns a table containing only the rows that exist in both table expressions passed as arguments
+  - Syntax: INTERSECT( <tableExpression1>, <tableExpression2> )
+- EXCEPT: returns only the rows that exist within the first expression but not the second
+  - Must be the same data type and number of columns
+- GENERATE(ALL): evaluates expression2 for each row in expression1, returning a Cartesian product between each row in expression1 and the corresponding generated rows from expression2
+  - Syntax: GENERATE( <tableExpression!>, <tableExpression2> )
+- CONTAINS: used to check if a column(s) has the value(s) in at least one row without iterating a complex block over the whole table
+  - Syntax: CONTAINS( <table>,<columnName1>,<columnExpression1> [,<columnNameN>,<columnExpressionN>] )
+  - Preferable for simple filter context, when dealing with more complex filter CALCULATE is better optimized
+  - Can be used as a filter condition when you want to obtain a list of elements that
+- LOOKUPVALUE: used for matching, much like VLOOKUP in Excel
+  - LOOKUPVALUE( <resultColumnName>, <searchColumnName>, <searchColumnExpression> [, <searchColumnName2>,...] [,...] )
+  - Useful if you cannot use RELATED
+- SUBSTITUREWITHINDEX: return here if you need it in the future
+- ISONORAFTER: used to return TRUE when all argument conditions are met
+  - ISONORAFTER( <scalarExpression>, <scalarExpression>, [<sortOrder] [,<scalarExpression>...][,...] )
+
+## Chapter 10 - Advanced Evaluation Context
+
+- ALLSELECTED:
+  - If used outside a Pivot Table, will it still work?
+  - It doesn't even know a PivotTable exists, so how does it work?
+  - It removes from the context, the last filter generated from a context transition
+  - This means it may not always return the original filter context
+- Context transition creates two new filter contexts, applied one right after the other:
+  - The outer filter (first)
+  - The inner filter (second)
+  - Always happens, whether you notice it or not
+- ALLSELECTED cont.:
+  - It removes the inner filter, only leaving the outer
+- KEEPFILTERS: used to keep the previous filter, add an AND, and then add the new filters
+  - Can be used only within CALCULATE or as a top level iterator
+- Complex filter reduction: beginning with a complex filter ending with a simple filter that removes the relationship
+- When to use KEEPFILTERS:
+  - You are using iterations and leveraging context transition inside as formula
+  - The next user is likely to use the same columns you iterate as a complex filter
+- Auto Exists: a feature of the MDX query engine that avoids calculating over nonexistent sets
+  - Reduces the execution time by eliminating the unnecessary or impossible calculations
+  - Server side feature, not accessible from the client side
+- Empty Row Removal: automatically hides row if all measures are BLANK
+  - PivotTable feature that can be toggled by the user in the options menu
+- Evaluation contexts revisited:
+  - So far:
+    - 2 contexts: row and filter
+    - Row context does not propagate across the relationship
+    - Row context always contains 1 row and is introduced by calculated columns or iterators
+    - Filter context propagates as indicated by the relationship definition
+    - Filter context can operate either on a table or a column, if working on a column it filters that column only, but working on a table it filters all the columns of the table
+  - To build on this understanding, one needs to learn about expanded tables
+- Expanded Tables:
+  - Every table has an expanded version, which contains all the original columns as well as any columns that can filter the original table due to relationships
+  - When filtering is bidirectional, expanded columns are not used, rather we talk about filtering columns
+    - They behave very similarly, but they are not identical
+  - DAX will apply any filter on the expanded table to the fitler context
+  - There are three types of columns in an expanded table
+    - Native: originally belong to the table
+    - Derived: added to the expanded table following relationships
+    - Filtering: columns that can filter the table, if if they do not belong to the expanded version of the table
+  - Expansion only happens from the many-side to the one-side
+  - Even if the relationship is bidirectional it does not expand the one-side table
+  - If using SUMMARIZE, you must perform the grouping on the expanded table and not the filtering columns, or it will return an error
+  - If the relationship is a one-one, then both tables are expanded into the other
+- Tuple: a row containing columns from different tables
+  - A list of tuples is a filter, not yet a context though
+- A set of filter is then what creates a filter context
+  - Much like a set of tables that contain the filters applied
+- Filter context intersection:
+  - Given two filters A and B, the intersection is computed by adding the filters of A to that of B
+  - Essentially a set of filters are combined with an AND statement to create a complete context
+- OVERWRITE: operator called by CALCULATE when it merges the new filter context
+  - If A is the new context and B is the old, DAX removes from all the filters in B the columns filtered in A, created a B-Cleaned
+    - Then CALCULATE intersects A with the new B-Cleaned
+- Arbitrarily shaped filters:
+  - Well shaped filters can be expressed as the CROSSJOIN of single-column filters
+  - An arbitrarily shaped filter cannot be expressed as the CROSSJOIN of filters on individual columns
+  - This essentially defined a relationship between its columns
+  - Creates a problem with OVERWRITE
+  - Intersect and overwrite work well with well shaped filter, but arbitrarily shaped filters may be preserved by intersect but can be disrupted by the overwrite function
+
+- ALL revisited:
+  - When used as a filter argument in CALCULATE it really should have been called REMOVEFILTER
+  - If used inside of CALCULATE, it does return all the values of a column, rather it removes the column from the filter context
+  - It only behaves this way if you use it as a top level function in CALCULATE, so if you call it as a regular table function it will act normally
+- A filter that does not have a lineage (no relationship to a physical table in the data) used inside CALCULATE will not be used and as such is effectively useless
+
+## Chapter 11 – Handling Hierarchies
+
+- DAX does not know how the hierarchies have been created or how the report was created inside the client tool (such as Excel)
+- A simple way to handle hierarchies is to use nested IF functions along with ISFILTERED to calculate based on a set of conditions as DAX will not recognize the hierarchy itself
+  - Can be fooled by other sets of filters such as slicers
+  - One way around this is to create a new set of duplicate columns (H columns for hierarchy for example) and write the functions to use those, as ISFILTERED will now only operate on the real column and not the H column
+- Parent-Child Hierarchy (P/C hierarchy):
+  - Two unique qualities:
+    - The number of levels in a hierarchy is not always the same
+    - The hierarchy is normally represented by a single table, storing for each row a link to the parent
+    - Normal/canonical representations are typically a table with the NoteID, the NodeName, and the ParentNodeID
+  - DAX does not work with a self-referenced, that is, the two tables that define a node and reference the parent node are the same table
+- PATH: used to map the path as a list of keys separated by the pipe (|) character
+
+    - First parameter is the key of the table, the second parameter is the name of the column that holds the parent node ID
+- PATHITEM: returns the nth item in a column created with PATH
+  - This can be used in order to return the requested level of depth in a P/C relationship, and can separate out each node step so DAX can operate on a single value and not the string returned by PATH
+  - You must have a calculated column for each level, and thus you must know the number of levels that the model has as its max
+- Once PATHITEM's are separated out, you can then create a hierarchy in DAX
+  - This will leave some strange visualizations, namely, all nodes will contain a BLANK value underneath that represents themselves, and if for example there are 3 levels and the node only has 1 depth, it will still show the 3 levels as BLANKS
+  - In order to remove the BLANKS you can used IF functions, evaluating if the PATHLENGTH is >= the level you are calculating, then you can return the PATH value for that level if the evaluation is TRUE, or return the previous level's value if FALSE
+- In order to hide nodes based on their depth, we need three things:
+  - The depth of each node, which can be stored in a calculated column
+    - Can be done with PATHLENGTH in a calculated column
+  - The current browsing depth of the PivotTable, which is dynamic because it depends on the filter context
+    - Need to create a new calculated column for the depth using a similar idea as before the separating the PATH, namely, you can use ISFILTERED on each level that exists and adding them together
+    - E.g. If there are 3 levels, you use 3 ISFILTERED argument with addition between them, if a row stops at depth 2 then it will add the first TRUE from the first ISFILTERED as well as the second and stop there
+  - A way to hide unwanted columns, by means of blanking the results (then the PivotTable will remove the row as it defaults to eliminating BLANK rows)
+    - You can created a new calculated column that compares the MAX depth of the node, and the current browsing depth for each row, then SUM rows where the MAX is greater than or equal to the browsing depth. This will blank any row that has a depth less than the browsing depth
+- All of the above will create a nice PivotTable, but you may still want to show the non-leaf nodes (nodes that have a child)
+  - You must then create a new calculated column that identifies if a node is a leaf or not
+    - CALCULATE is used to COUNTROWS those that have the current node as a parent, if it equals zero then the node is a leaf
+  - You must also edit the formula by adding 1 to MaxNodeDepth so that values we are interested in are not hidden
+- Unary operators: each item in the hierarchy can be associated with an operator that controls how the total for that member aggregates up to its parent
+  - Can use the following:
+    - + : the value of the current item is added to the aggregate sum of its siblings (all items with the same parent) that occurs before the current item on the same level of hierarchy
+    - : the value of the current item is removed from the aggregate
+    - : the value of the current item is multiplied by the aggregate
+    - / : the value of the current item is divided by the aggregate
+    - ~ : the value of the current item is ignored during aggregation
+    - A value between 0 and 1 : value of the current item is multiplied by this value when aggregation takes place, then the result is added to the aggregation of its siblings
+  - The best way to handle unary operators in DAX is to handle them before ever pulling it into DAX rather than writing the code once imported
+  - How to handle + and – operators:
+    - You must first create a parent child hierarchy following the same method as before, this way DAX can understand the hierarchy
+    - Next you need to make a multiplier that is either 1 for positive or -1 for negative unary operators
+      - Can then create a calculated column that SWITCHes the operator with the multiplier
+    - Create new calculated column that evaluates the sign at each level
+      - Return to pages 362 and 363 for example code
+    - Then create an AmountParentChild column for the summation
+      - Page 364 for example
+      - Similar to the handling of parent child hierarchies
+    - New ways to handle these calculations can be seen on pages 365 and 366
+
+## Chapter 12 – Advanced Relationships
+
+- Calculated physical relationships:
+  - VertiPaq does not allow for relationships to be based on multiple columns, only single columns, as such you must create calculated columns with the composition of keys making up the new key, or you can denormalize the columns of the target table (the one side of a one-many) using LOOKUPVALUE
+    - Calculated has the benefit of being simple and straightforward, but takes up ram because of the calculated columns
+    - LOOKUPVALUE does not create a relationship, just adds a column to the many sided table, which can reduce memory usage
+    - It depends on the number of columns you wish to use in the code, whichever method reduces the total number of new calculated columns will save memory and performance
+  - Static segmentation:
+    - Allows the partition of values into ranges for simpler or more insightful analysis (such as a price range rather than every possible value for price, or age range rather than an exact birthdate)
+    - Range relationships are not supported by DAX, so after you create the table of ranges you must write a calculated column that CALCULATEs the VALUES FILTERed by the new denormalized columns that you pulled from the range table and added to the target table
+      - Example found on page 370
+      - As long as the range table is well defined, and does not contain overlap or holes then VALUES will return only a single row and give the appropriate name or value that you want to return (like a complex VLOOKUP)
+        - You can include an error handling function like IFERROR such that the function can only return the correct answer or a defined error notation
+- Virtual relationships:
+  - When you cannot define the relationship in a static manner like those above or using the engine itself, you must dynamically establish relationships inside of measures, these are called virtual relationships
+  - Dynamic segmentation:
+
+      - If the segmentation can be dynamic (such as selecting a year on a slicer) you must dynamically calculate the segmentation, as this is the only way to take into account the filter context
+      - You can do this by using COUNTROWS FILTERed on the segment table to remove lines you don't want
+      - Because measures have an implicit CALCULATE they use the current filter context and thus can define the variable from the code based on the filters being used (for example max and min sales amount for a segment of consumers that are "high" spenders if filtered for high, or "low" for filtering on low, giving the PivotTable accurate values depending on the filters)
+      - If not careful, partial selection can cause totaling and value calculation to show the wrong values
+- Many to Many relationships:
+  - You must create a bridge table between the two, as the relationships cannot be many-many inside of DAX
+    - Necessary because one table may have impact on the other, while at the same time being affected by its counterpart
+  - Not all clients support bidirectional relationships that are required to make a bridge table
+  - Sometimes it is better to use ETL (Extract, Transform and Load) such as SQL or Power Query transformations
+  - If the client tool does not allow bi-directional relationships then return to page 377 for code examples, the long and short is the use of CALCULATE and SUMMARIZE in a measure to retain control on all the filters you want
+- Virtual relationships are processed at query time, whereas physical are processes when the data is refreshed and then stored in memory
+- For best performance:
+  - Physical relationships get the best performance and use of the VertiPaq engine
+  - Bidirectional relationships or many-many with table expansion is slightly less performant
+  - Virtual relationships may have poor performance, and as such more careful attention must be placed on their creation
+- Missing relationships:
+  - There are times where it is not enough to know what is in the fact table (such as product sales) but also those values that are not know (such as items that have not sold)
+  - Examples include calculating products that have never sold or new or returning customers
+- Complex relationships examples:
+  - Currency conversion
+    - Return to 389 for large code block examples that would take too long to write
+  - Frequent itemset search
+    - Basket analysis, which checks the correlation between sales of different products, is typically done with machine learning techniques, but it can be simplified and done in DAX to decent results
+    - E.g. for customers who bought product A (Support(A)), what percentage also bought product B (Support(A,B)) (the result would then be called Confidence(A,B))
+
+## Chapter 13 – The VertiPaq Engine
+
+- Both Power Pivot and Power BI are implementations of SSAS and will referred to as such unless there are specifics that relate to one language or the other
+- When SSAS loads the source data tables into memory we say that it is processed
+  - This is done during the process operation of SSAS or the refresh in Power Pivot or Power BI
+  - The steps that occur during processing are:
+    - Reading the source dataset, transformation into a columnar data structure of VertiPaq, encoding and compressing each column
+    - Creation of dictionaries and indexes for each column
+    - Creation of data structures for relationships
+    - Computation and compression of all the calculated columns
+- Intro to columnar databases:
+  - VertiPaq is an in memory columnar database, meaning all data is stored in RAM
+  - Row store: the most natural visualization of a table structure, a simple set of rows
+  - In a columnar database, columns are separated and each has its own data structure, thus allowing vertical scanning to be more efficient as opposed to scanning row by row
+  - If you wanted to use a filter on one column to SUM another, a human would likely look at the filtering column, find the value they want, then look over to the value that they want to SUM, they would then add that value and move down the filtering column again, repeating the process. Computers behave more efficiently. They go down the filtering column, and hold the row number in memory whenever they find the desired value, then they go to the SUMming column and use the row index to SUM the values found therein, thus reducing time
+  - This method change does make it more difficult for computers to calculate over multiple columns though, as it requires many random reads and needs to store the temporary data
+- VertiPaq compression:
+  - Makes better use of expensive hardware (think reduction in RAM with the current exorbitant pricing)
+  - Faster to scan when the size is smaller
+  - Value encoding:
+    - Searches the column and determines if there are any mathematical operations that can reduce the bits requires to store each row
+    - Increases the CPU usage but reduces the amount of reads, which is a positive trade off (at least right now)
+    - Can only be used on integers and not floats or strings
+    - Currency is stored as an integer
+  - Dictionary encoding:
+    - Builds a dictionary of the unique values in a column and uses it to store the index rather than the actual value
+    - The index is stored as an integer, which makes the engine effectively datatype agnostic
+    - Minimum number of bits is the number required to store the index entry, drastically reducing the original size
+    - Cardinality: the number of distinct values found in a column
+    - The most important factor in designing a data model is its cardinality
+      - The smaller it is the smaller the compressed footprint is, and as a result it will also take less time to scan
+  - Run Length Encoding:
+    - If you have a column with many repeating values, VertiPaq may then store the consecutive values as one, with a start position and count of repeats, then come across the next value and repeat the indexing
+    - Sorting of data is extremely important for this type of compression: the more consecutive matching values the higher the compression rate. If values change rapidly then compression will suffer
+  - The worst compression could possibly be is the same size as the original column
+  - The factors to consider are:
+    - The cardinality, which will determine the number of bits used to store a value
+    - The number of repetitions, the higher the repetitiveness; the better the compression will be
+    - The total number of rows in the table
+    - The datatype of the column (only affects dictionary size)
+  - Re-encoding:
+    - SSAS will intelligently decide on how to encode by looking at a sample, if it makes a mistake and needs to change to a new encoding technique, it will do so on the fly
+    - Best practice is to provide a good sample in the first grouping of rows so it can decide on the best encoding method
+  - You can alter the time that SSAS has to decide on the sorting order by altering the option: ProcessingTimeboxSecPerMRow in the SSAS configuration file, but PowerPivot does not allow this flexibility
+  - SSAS then builds two additional data structures:
+    - Hierarchies: which DAX does not compute and are not discussed here
+    - Relationships: VertiPaq maps ID's in one table to the row numbers in another table
+- Segmentation:
+  - SSAS defaults to 8 million rows per segment, Power Pivot is 1 million
+  - SSAS uses segments as the basis for parallelism, pushing each segment to a different core
+  - Larger segments can lead to better compression, so it is important to test methods if using very large datasets
+  - If segments are small then parallelism is increased, but may come at the cost of performance due to task switching and partial aggregation
+- Dynamic Management Views:
+  - See how your model is compressed, space used by columns or tables, number of segments in a table, or number of bits used by columns in different segments
+  - Can be run inside SSMS or DAX Studio
+  - Two main types:
+    - Schema: return info about SSAS metadata, like database names, tables, columns, without statistical information
+    - Discover: gather info about the SSAS engine and/or stats about objects in the database
+  - DISCOVER\_OBJECT\_MEMORY\_USAGE: used to find the memory usage of all objects in all the databases in the current SSAS instance
+    - Hard to read the table that is output, but there is an Excel workbook designed to make it easier to read at:
+      - [https://www.powerpivotblog.nl/what-is-using-all-that-memory-on-my-analysis-server-instance/](https://www.powerpivotblog.nl/what-is-using-all-that-memory-on-my-analysis-server-instance/)
+  - DISCOVER\_STORAGE\_TABLES: quickly discover tables in the model, returning only the tables of the current model
+  - DISCOVER\_STORAGE\_TABLE\_COLUMNS: returns info about the individual columns, such as size of dictionary, datatype, type of encoding, etc.
+  - DISCOVER\_STORAGE\_TABLE\_COLUMN\_SEGMENTS: reports on individual segments and partitions of columns, extremely detailed and very hard to read, only useful in very large datasets and heavy optimization
+- Materialization: the process of scanning, building a new data structure, then using that new structure to scan again or compute a final value
+  - It can happen that the code will end up making materialization take up more space than the database itself, in which case you must find new methods to solve the problem
+- Choosing hardware:
+  - Hardware sizing guide can be found at:
+    - [https://blogs.msdn.microsoft.com/karang/2013/01/11/hardware-sizing-a-tabular-solution-sql-server-analysis-services/](https://blogs.msdn.microsoft.com/karang/2013/01/11/hardware-sizing-a-tabular-solution-sql-server-analysis-services/)
+  - The big question is: can you choose the hardware? Is it already built and prepared? Can changes be made? Can you convince the right people that alterations are necessary?
+  - Priorities are as follows:
+    - CPU clock speed and model
+    - Memory speed
+    - Number of cores
+    - Memory size
+  - Disk I/O performance is unimportant, especially if you size your RAM such that the only factor affecting I/O (paging) is nonexistent
+  - Clock rate will have a significant impact on performance, but must be matched with a decent IPC, otherwise a faster, older processor will suffer compared to a slower but better IPC model
+  - The larger the tables the more important L2 and L3 cache will become
+  - Gaming machines are often top performers for VertiPaq because of the high clock speed and fast RAM (2400mhz+)
+  - High core count is only important for large tables, as segments are split every 8 million row
+  - VertiPaq does not recognize NUMA architectures and thus suffers greatly when using multi-socket solutions
+  - Memory size must be large enough to store the entire database that you wish to access, as well as the processing operations and queries
+    - Remember: materialization can create large tables at execution, and will be stored in RAM
+  - Servers designed for scalability are typically ill-suited for a SSAS machine
+
+## Chapter 14 – Optimizing Data Models
+
+- Gather info about the model:
+  - You should determine:
+
+    - Table:
+      - Number of rows
+    - Column:
+      - Number of unique values
+      - Size of dictionary
+      - Size of data
+    - Hierarchy:
+      - Size of structure
+    - Relationship:
+      - Size of structure
+  - To determine unique values you can query the table in SSMS or DAX Studio using syntax similar to:
+
+    - SELECT DIMENSION\_NAME, TABLE\_ID, ROWS\_COUNT   FROM $SYSTEM.DISCOVER\_STORAGE\_TABLES
+
+    - Then subtract 3 from rows count (they are used internally in the engine)
+  - You must us e DMV's in order to determine size of objects, DAX queries and the like can only demonstrate cardinality
+  - There is a premade tool that will show the size and other relevant information from a database using Excel and PowerPivot that can be found at:
+    - [https://www.sqlbi.com/tools/vertipaq-analyzer/](https://www.sqlbi.com/tools/vertipaq-analyzer/)
+- Denormalization:
+  - The first major optimization that can be made is to denormalize the data, removing unnecessary columns and relationships from the model
+  - In a relational model, it is to your benefit to reduce values and connect them to new relationship tables from which you can retrieve the true value (such as assigned the value 1 to mean "credit card", rather than having "credit card" repeated many times), but VertiPaq automatically creates things like dictionaries, so these optimizations may not be necessary
+  - One example could be creating a new table with the columns you want to allow users to select on (such as gender for a customer table) and hiding the original table, this way you can only allow the selection of low cardinality items and hide the other options so users do not select from the old columns (which may have high cardinality)
+- Cardinality:
+  - Scenarios to consider:
+    - Key of a relationship
+      - Cannot alter the cardinality unless you use denormalization techniques
+    - Numeric value aggregated in a measure
+      - You may not be able to reduce the number of digits for quantity or sales amount, but some columns may allow you to reduce the decimals (e.g. temperature, you may have 5 digits, but the accuracy of the instrument may only be 2 decimals, so you can reduce it greatly)
+    - Text description
+      - No benefit of moving to a new table, but if users will not be using it, then you may be able to remove it
+    - Text notes
+      - Potentially different for each row
+      - No reason to remove if most rows are blank
+    - Pictures
+      - Can consider lower resolutions for better compression
+    - Transaction ID
+      - If this is not necessary then it can be removed, however, it is often used for drill down operations (e.g. see the sales lines that make up a quantity ordered)
+      - You can split the line into two or more columns, each with a lower order of cardinality
+    - Date and time
+      - Consider splitting into two parts (later in chapter)
+    - Audit columns
+      - Best to remove from a data model unless absolutely necessary for drill down operations
+  - Reducing cardinality may improve performance and memory, but it can also reduce accuracy if done incorrectly or with too great vigor
+- Handling date and time
+  - Always split date and time into two separate columns
+    - This should be done at the reading time, not in DAX itself
+  - You may want to create a times table, with the same level of granularity as you defined during the read operation
+  - Granularity will quickly increase cardinality, so minute or second is usually the limit of granularity
+  - Examples of truncation and rounding can be found on pages 444-446
+- Calculated columns
+  - Only consider using a calculated columns in the following scenarios
+    - Group or filter data (e.g. grouping pricing of a product into "low","med","high" requires a calculation after the reading of data and must be stored as a calculated column)
+    - Pre-calculate complex formulas: must measure the performance at query time to see if there is truly a computational benefit, which is not easy to determine beforehand
+  - Expensive due to memory usage (especially when not using optimal compression) and duration of refresh (non-scalable as the calculations are single core)
+  - Some calculations (such as using Boolean calculated columns) may be useful in compressing the model on filters that you need (e.g. you calculate if the item has more than 10 sales lines and use TRUE to filter for those fast movers) but it will come at the cost of extra execution time
+- It may be optimal to split columns at the read time in order to reduce cardinality and thus the storage requirements
+
+## Chapter 15 – Analyzing DAX Query Plans
+
+- The DAX query engine can accept queries in from both DAX and MDX
+- If writing in DAX there are two modes:
+  - DirectQuery: turns the code into one SQL statement and passes it along to the external data source
+
+    - Does not do any computation, just received information from the data source, including the data source's calculations
+  - In-Memory: more common, and is the focus of this book
+    - Retrieves information from the VertiPaq engine
+    - Steps:
+      - Transforms the expression from a string into an expression tree
+      - Builds a logical query plan, which is a list of the logical expressions needed to execute the query
+      - Builds a physical query plan, which converts the logic into a physical set of processes
+      - Executes the physical query plan
+    - Steps 2 and 3 are where optimizations can be made\
+- Formula engine:
+  - Higher level execution unit of the DAX query engine
+  - This is where the higher level functions and operators from the physical query plan are executed
+  - The engine requests data from the storage engine, which will return the information in a datacache (temporary storage area made by the storage engine, important to note that these caches are not compressed)
+  - Does not contain a caching system to share results between queries on the same instance, but the datacache does persist for use in other queries (it persists within the storage engine)
+  - Single threaded, will only run on one thread of one core as all processes are serialized
+- Storage engine (VertiPaq):
+  - All queries are converted into a SQL like languages for internal use called xmSQL
+  - Multithreaded, can benefit from parallelism by spreading segments across threads
+  - The FE speaks to the SE sequentially, so you cannot benefit from multiple queries on the same segment, but if shared across segments then the SE can move ahead with other processes as the FE processes the single thread sequentially
+  - If the SE recognizes a query that is identical to one that is stored in the cache (up to around 512 of the last queries) then it will serve up the cached data without rereading the data
+- Logical Query Plan:
+  - Close representation of the DAX query expression
+  - Each line is an operator, which is then followed by the parameters
+  - If you ignore parameters, you can see the operations that are used
+- Physical Query Plan:
+  - Similar layout to Logical Query Plan, but uses different operators
+  - This is where the plan is converted to xmSQL for the SE to process
+  - If aggregation or similar iterators are running slowly (such as on tables with many rows) you can see where the function lies in this plan
+- Storage engine query:
+  - Runs the xmSQL generated by the Physical Query Plan
+  - The only calculations that run are those indicated by the xmSQL, so if a table has 100 columns, but you are only summing on one, then it ignores the other 99, giving a faster run time and better optimization
+  - xmSQL does depend on the size of the columns and on the rows in the columns, thus optimizations to the xmSQL can have major impacts on the scanning (especially if compression is poor on the column)
+- Tracing and measuring:
+  - SQL Server Profiler tool allows you to view all the trace events and can be accessed in DAX Studio, or saved to a file by Power BI or Power Pivot
+  - You need to capture 4 classes of events:
+    - Query end: returns when the query is resolved, also contains runtime, so the query start is not necessary
+    - DAX Query Plan: fired after the query engine computed the query plan, creates both the logical and the physical plan
+    - VertiPaq SE Query Cache Match: fired when VertiPaq query is resolved by looking at cache data, can be useful to determine how much of the query is performing real computations vs. cache lookups
+    - VertiPaq Query End: fired when the VertiPaq Engine answers a query
+  - If using this in a production environment it is important to specify for a single user and single session, otherwise it will return multiple users or sessions intermixed
+  - Will return the duration and CPU time, if duration is less than CPU then it would demonstrate parallelism, if CPU is less than duration then the operation had to wait for other events before it could run
+- Analysis of the timings:
+  - First we want to know if the optimizations need to occur in the FE or SE, as they will be optimized differently
+  - SE duration=SUM(VertiPaq Scan Duration)
+  - FE duration=(Query End Duration)-(SE Duration)
+  - Cores used in VertiPaq Operation=(VertiPaq Scan CPU Time)/(VertiPaq Scan Duration)
+- To measure in Excel you must go to settings and enable Power Pivot Tracing (will generate a TRC (tracing) file)
+- In DAX Studio under the Server Timings page, you will find:
+  - On the left:
+    - Total: elapsed time for the whole query
+    - SE CPU: sum of CPU time for all VertiPaq scan events (will also report parallelism)
+    - FE: time elapsed in the formula engine
+    - SE: time elapsed in the storage engine
+    - SE Queries: number of queries sent to the SE
+    - SE Cache: number of SE queries resolved by the SE cache
+  - In the middle:
+    - The SE queries executed
+  - On the right:
+    - Complete xmSQL code for the selected SE query
+- Reading SE queries
+  - All xmSQL queries have a GROUP BY clause, even if not explicitly stated in the syntax
+  - All xmSQL queries also return all rows, even if they do not have a unique value (in this case they will create a row number column which is inaccessible to DAX but is used in the SE)
+  - xmSQL functions:
+    - Aggregation:
+      - SUM, MIN, MAX, COUNT, DCOUNT
+    - Arithmetical:
+      - +, -, \*, /
+    - Filter operation:
+      - WHERE, IN
+    - JOIN operators:
+      - JOIN, LEFT OUTER JOIN, ON
+- Scan time: VertiPaq scans across all rows in a column, but the time is not just dependent on the number of rows, it is also affected by the memory footprint, the cardinality, and the distribution of values in the column
+- Parallelism: the data can be  pulled from the columnar storage into the datacache using parallel processes (each creates a partial result which is returned in the datacache as a complete result), after this parallel process the FE will then iterate through the datacache with a single thread
+  - The efficiency of multiple scans should be balanced against the overhead of the consolidation of the many partial results
+- VertiPaq ignores row level security settings, DAX itself manages role based security and bases queries on credentials and access
+- When analyzing performance you should remember to clear the cache, giving the processes the hardest version of the task, and to elongate the time for more accurate estimates
+- CallbackDataID: when the SE cannot operate on the rows (if using SQRT for example), then it will call upon the FE on a row by row basis to provide the calculation then returns the output in memory
+  - Multiple instances of the FE can be called, thus parallelism can still be used
+  - Higher overhead than just the SE inherent operators
+  - The SE does not persist any datacache produced by an xmSQL query containing one or more CallbackDataID call
+
+## Chapter 16 – Optimizing DAX
+
+- Optimizing DAX code may not always provide the greatest benefit, the biggest determiner is often with data distribution (the higher the cardinality and larger the dataset, obviously it will run slower, even if your formulas are the fastest version)
+- Simple to-do list:
+  - Identify a single DAX expression to optimize
+  - Create a query that reproduces the issue
+  - Analyze server timing and query plan information
+  - Identify bottlenecks in the storage engine or formula engine
+  - Implement changes and rerun the test query
+- Things to consider:
+  - Optimization of filter conditions
+  - Reduction in CallbackDataID calls
+  - Optimization of IF conditions
+  - Reduce the number of datacache creations
+  - Reduce scans needed when making new storage engine queries
+  - Remove calls to measures inside the iterator
+  - Avoid nested iterators
+  - Avoid large materialization by removing filter context transitions and addition columns that are unnecessary
+- MDX optimizations: return to page 527 to reread in greater detail
