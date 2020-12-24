@@ -49,7 +49,6 @@
   - Spend some time making sure others can read your code easily
 
 # Part 1 - Explore
-
 - The goal is to generate many possible, promising leads to then investigate further
 - The primary order when doing data science with R is the following:
   - Import the data
@@ -60,7 +59,6 @@
 - Modeling is an important part of the exploratory process, but we will return to it later when we have better tools to handle it
 
 ## Chapter 1 - Data Visualization with ggplot2
-
 - _ggplot_: one of many ways to build visualization, but as one of the most supported, it is best to begin and become proficient with it in order to apply it in many ways
 - In order to retrieve the necessary members of the _tidyverse_ that we will use, run:
   - _library(tidyverse)_
@@ -174,7 +172,6 @@ facet_function
 ```
 
 ## Chapter 2 - Workflow: Basics
-
 - Assignment statements: all R statements where you create objects, all have the same form:
   - ``` object_name <- value ```
   - Can be read as 'object name gets value'
@@ -194,7 +191,6 @@ facet_function
   - Alt+Shift+K: opens the keyboard shortcut quick reference
 
 ## Chapter 3 - Data Transformation with dplyr
-
 - Rarely will you receive data in the exact manner that you would like, and thus you may need to transform it to get it in the format or order you want
 - We will use the dplyr package from the tidyverse for this task
 - _dplyr_ does overwrite some of the functions in base R
@@ -363,13 +359,11 @@ Daily <- group_by(flights, year, month, day)
 - Exercises on pg. 75
 
 ## Chapter 4 - Workflow: Scripts
-
 - Ctrl+Enter will run the current expression and moves the cursor to the next expression
 - It is best to include the libraries in the beginning of your code, but DO NOT include _install.packages()_ as it will alter the other person's computer and that is a big no-no
 - Ctrl+Shift+S runs the whole script
 
 ## Chapter 5 - Exploratory Data Analysis
-
 - Also abbreviated EDA
 - Iterative cycle
   - Generate questions about your data
@@ -475,7 +469,6 @@ geom_tile(mapping = aes(fill = n))
   - Graphical Data Analysis with R by Antony Unwin
 
 ## Chapter 6 - Workflow: Projects
-
 - What is Real?
   - Best to consider your R scripts as real, as you can return to them without having to recreate every line and function
   - Removed RStudio's autosave feature
@@ -501,7 +494,6 @@ geom_tile(mapping = aes(fill = n))
 #
 
 # Part 2 - Wrangle
-
 - Three main parts: Import, Tidy, Transform
 - Chapter 7 focuses on the tibble
 - Chapter 8 discusses how to pull from the disk into R, focused on plain-text rectangular format with tips for other types of data
@@ -512,38 +504,33 @@ geom_tile(mapping = aes(fill = n))
 - Chapter 13 focuses on dates and date-times
 
 ## Chapter 7 - Tibbles with tibble
-
-- _tibble_ package helps to overwrite some of base R to perform better in the modern world, comes packed in tidyverse
+- _tibble_ package helps to overwrite some of base R to perform better in the modern world, comes packed in _tidyverse_
 - _data.frame_ will be used to differentiate tibbles from data frames when necessary, otherwise they are interchangeable
 - Creating Tibbles:
   - _as_tible()_ : converts a standard data frame into a tibble
   - _tibble()_ : creates a tibble from individual vectors
-    - E.g. tibble(x = 1:5, y = 1, z = x ^2 + y)
+    - E.g. ``` tibble(x = 1:5, y = 1, z = x ^2 + y) ```
     - It's possible to assign non-syntactic names to R that are not normally valid names, but you need to surround them with backticks
       - E.g. `:)` = 'smile'
-    - Backticks are also needed in other packages like ggplot2 and dplyr
+    - Backticks are also needed in other packages like _ggplot2_ and _dplyr_
     - _tribble()_ : short for transposed tibble, often used for data entry inside of the code
-      - E.g. tribble(
-
+``` r
+ tribble(
 ~x, ~y, ~z,
-
 #--/--/----
-
 'A', 2, 3.6,
-
 'B', 1, 8.5
-
 )
-
-      - Many people use the comment line to show where the headers are compared to the data
-- Tibbles Versus data.frame:
-  - Two main differences:
-    - Printing:
+```
+  - Many people use the comment line to show where the headers are compared to the data
+- Tibbles Versus data.frame
+  - Two main differences
+    - Printing
       - Tibbles show only the first 10 rows and the columns that fit in the viewing window only, as well as showing the column type
         - You can alter the output using _print()_
-        - _print(n = <number_of_rows>, width = <width>)_
+        - _print(n = number_of_rows, width = width)_
         - _width = Inf_ will show all columns
-    - Subsetting:
+    - Subsetting
       - _$_ : extracts by name
       - _[]_ : extracts by name or position
       - Can see these behaviors on pg. 123
@@ -553,9 +540,8 @@ geom_tile(mapping = aes(fill = n))
   - _tibble::enframe()_ : converts named vectors to a data frame with the names and values as separate columns
 
 ## Chapter 8 - Data Import with readr
-
-- readr is part of the tidyverse package
-- Most readr functions are concerned with turning flat files into data frames:
+- _readr_ is part of the _tidyverse_ package
+- Most _readr_ functions are concerned with turning flat files into data frames
   - _read_csv()_ : reads comma-delimited files
   - _read_csv2()_ : reads semicolon-separated files (more common in countries where the , is used as the decimal point)
   - _read_tsv()_ : reads tab-delimited files
@@ -564,35 +550,35 @@ geom_tile(mapping = aes(fill = n))
   - _read_table()_ : reads a common variation of fixed-width files where columns are separated by whitespace
   - _read_log()_ : reads Apache style log files
     - _webreadr_ package is built on this function but provides many more tools
-- We will focus on read_csv() as most functions have similar syntax and CSV is very common
-- _read_csv_ :
+- We will focus on _read_csv()_ as most functions have similar syntax and CSV is very common
+- _read_csv_ 
   - First argument is the path to the file to read
-  - Once read_csv() is run it will first print out a column specification detailing the columns and the types
+  - Once _read_csv()_ is run it will first print out a column specification detailing the columns and the types
   - You can also supply an inline CSV file (rows separated by line and columns by commas)
   - You can use another argument to either skip lines or use a certain character to comment out lines
-    - s_kip = <n>_ : will skip the first n lines from the input
-    - _comment = '<character>'_ : any line that starts with the character will be commented out
+    - _skip = n_ : will skip the first n lines from the input
+    - _comment = 'character'_ : any line that starts with the character will be commented out
   - If the data doesn't have column names you can use _col_names = FALSE_ to tell it not to treat the first row as headers, and instead label them X1, X2…, Xn
     - col_names can also take a vector that R will then use as the column names
-      - E.g. col_names = c('x', 'y', 'z')
+      - E.g. ``` col_names = c('x', 'y', 'z') ```
   - _na =_ : used to define which character represents NA values in your imported file
 - Compared to Base R
-  - readr functions tend to be much faster (around 10x)
+  - _readr_ functions tend to be much faster (around 10x)
   - They produce tibbles, and don't convert character vectors to factors
   - More readily reproducible
 - Exercises on pg. 128
-  - read_csv() and read_tsv() share all the same arguments as they are specified forms of the generic read_delim()
-  - The most important argument for fwf_widths() is _col_positions_, as this tells the function where the data columns begin and end
-  - If you are passing a value that contains a comma inside of it, read_csv() will default to using ' to read the text as a value and not additional columns
+  - _read_csv()_ and _read_tsv()_ share all the same arguments as they are specified forms of the generic _read_delim()_
+  - The most important argument for _fwf_widths()_ is _col_positions_, as this tells the function where the data columns begin and end
+  - If you are passing a value that contains a comma inside of it, _read_csv()_ will default to using ' to read the text as a value and not additional columns
   - _\n_ : used to tell read functions when to start a new row
 - Parsing a Vector
-  - _parse_\*()_ functions take a character vector and return a more specialized vector, such as logical, integer or date
-  - Uniform much like the read_\*() functions
+  - _parse_*()_ functions take a character vector and return a more specialized vector, such as logical, integer or date
+  - Uniform much like the _read_*()_ functions
     - First argument is the character vector to parse
     - na argument specifies which string should be treated as missing
   - If parsing fails, you will get an error warning
     - The subsequent output will be missing the values that appear in the error warning
-  - You can use _problems(<x>)_ to retrieve all the errors from the set
+  - You can use _problems(x)_ to retrieve all the errors from the set
   - The 8 most important parsers:
     - _parse_logical()_
     - _parse_integer()_
@@ -608,10 +594,10 @@ geom_tile(mapping = aes(fill = n))
       - Numbers are often surrounded by other charaters like % or $
       - Often have grouping characters that may differe across the world, such as '1,000,000'
     - In order to compensate for the difference in decimal marks, you can create a new 'locale' in the parse function and assign the mark you choose (a period is te default) solving the first problem
-      - E.g. parse_double('1,23', locale = locale(decimal_mark = ','))
-    - parse_number() ignores any characters before or after the numbers, eliminating hte second problem
-    - In order to solve the third problem and remove grouping marks, you can combine parse_number() with locale to remove them
-      - E.g. parse_number('$123.456.789', locale = locale(grouping_mark = '.')) #> 123e+08
+      - E.g. ``` parse_double('1,23', locale = locale(decimal_mark = ',')) ```
+    - _parse_number()_ ignores any characters before or after the numbers, eliminating hte second problem
+    - In order to solve the third problem and remove grouping marks, you can combine _parse_number()_ with locale to remove them
+      - E.g. ``` parse_number('$123.456.789', locale = locale(grouping_mark = '.')) #> 123e+08 ```
   - Strings:
     - Converting from character to character may not be as easy as it seems
     - In R you can see the underlying hexadecimal number by using _charToRaw()_ which will output the hexadecimal number for each character in the string
@@ -619,37 +605,36 @@ geom_tile(mapping = aes(fill = n))
     - UTF-8 is now the global standard and can handle most characters used in the world today
     - readr uses UTF-8 universally, but this can fail if the data is produced by an older system that does not understand UTF-8
       - In order to correct for this you need to establish a locale and define the encoding method
-        - E.g. parse_character(<x1>, locale = locale(encoding = 'Latin1'))
-    - If you do not know the proper encoding (it is sometimes in the data documentation) then you can use readr's _guess_encoding()_ function to help you determine which type of encoding to use
+        - E.g. ``` parse_character(x1, locale = locale(encoding = 'Latin1')) ```
+    - If you do not know the proper encoding (it is sometimes in the data documentation) then you can use _readr_'s _guess_encoding()_ function to help you determine which type of encoding to use
       - The more text you have the better it does, and the higher the confidence will be
       - The first argument can be a file or a raw string
   - Factors:
     - Used to define a set of possible categorical values that the data must conform to
     - You must include a vector of known levels in order for _parse_vector()_ to generate a warning whenever a value does not match the criteria
-      - E.g. fruit <- c('apple', 'banana')
-
+``` r
+fruit <- c('apple', 'banana')
 parse_factor(c('apple', 'banana', 'bananas'), levels = fruit)
-
 #> a warning regarding 'bananas' (too long to type total output)
-
-  - Dates, Date-Times, and Times:
-    - parse_datetime() expects the data to be in ISO8601 format, which is an international standard that arranges time from largest to smallest blocks, i.e. year, month, day, hour, minute, second
+```
+  - Dates, Date-Times, and Times
+    - _parse_datetime()_ expects the data to be in ISO8601 format, which is an international standard that arranges time from largest to smallest blocks, i.e. year, month, day, hour, minute, second
       - ISO8601 is the most imporant standard and most frequently used, if using it often it may be helpful to read the Wikipedia entry
-    - parse_date() expects a four digit year, a - or /, the month, a - or /, then the day
-    - parse_time() expects the hour, :, minutes, optionally :, and seconds, and an optinoal am/pm specifier
+    - _parse_date()_ expects a four digit year, a - or /, the month, a - or /, then the day
+    - _parse_time()_ expects the hour, :, minutes, optionally :, and seconds, and an optinoal am/pm specifier
       - Base R's time data class is not very good, so we typically use the one provided in the hms package
     - If defauls don't work for your data then you can use the following components to define your own
-      - Year:
+      - Year
         - %Y (4 digits)
         - %y (2 digits, 00-69 -> 2000-2069, 70-99 -> 1970-1999)
-      - Month:
+      - Month
         - %m (2 digits)
         - %b (abbreviated name, like 'Jan')
         - %B (full name, 'January')
-      - Day:
+      - Day
         - %d (2 digits)
         - %e (optional leading space)
-      - Time:
+      - Time
         - %H (0-23 hour format)
         - %I (12 hour format, must be used with %p)
         - %p (am/pm indicator)
@@ -658,33 +643,33 @@ parse_factor(c('apple', 'banana', 'bananas'), levels = fruit)
         - %OS (real seconds)
         - %Z (time zone, a name, not abbreviaitons)
         - %z (an offset from UTC, e.g. +0800)
-      - Nondigits:
+      - Nondigits
         - %. (skips one nondigit character)
-        - %\* (skips any number of nondigit characters)
+        - %* (skips any number of nondigit characters)
 - Exercises on pg. 136
   - The locale argument will not allow you to set the decimal_mark and grouping_mark to the same mark
   - If decimal_mark = ',' then grouping_mark is set to '.' and vice versa (each one will alter the otherr accordingly)
   - Wikipedia has a list of common encodings that can be accessed if need be
-- Parsing a File:
-  - Strategy:
-    - readr uses a heuristic to figure out the type of each column (using the first 1000 rows)
+- Parsing a File
+  - Strategy
+    - _readr_ uses a heuristic to figure out the type of each column (using the first 1000 rows)
       - To view how this works you can use _guess_parser()_ to get readr's best guess, then _parse_guess()_ which uses the guess to parse the column in question
-    - The heurstic tries each of the following types, stopping when it finds a match:
+    - The heurstic tries each of the following types, stopping when it finds a match
       - Logical, integer, double, number, time, date, date-time
       - If not of the parsers work properly, then it will remain a vector
-  - Problems:
-    - Defaults do not always work for larger files:
+  - Problems
+    - Defaults do not always work for larger files
       - The first thousand rows may not be indicative of the entire dataset
       - The column may contain a lot of NA values, which will lead it to guess a character string
-    - Every parse_\*() has a corresponding _column_\*()_ functions
-      - parse_\*() is used when the data is a character vector is R already
-      - column_\*() functions tell readr how to load the data
-  - Other strategies:
-    - You can include the argument _guess_max(<n>)_ in the read_\*() call in order to extend the guess beyond the 1000 value default
+    - Every p_arse_*()_ has a corresponding _column_*()_ functions
+      - _parse_*()_ is used when the data is a character vector is R already
+      - _column_*()_ functions tell readr how to load the data
+  - Other strategies
+    - You can include the argument _guess_max(n)_ in the _read_*()_ call in order to extend the guess beyond the 1000 value default
     - Sometimes it is easier to read in all columns as character vectors
       - If you then define a data frame (such as a tribble of your imported data) then you can use _type_convert()_ which will apply the heuristics to the character columns in the data frame itself
     - If reading a very large file you may want to set n_max to a smaller number (like 10,000) in order to work out the problems before importing the entire list
-- Writing to a File:
+- Writing to a File
   - To increase the probability of the output file being read correctly back in to the program is by using _write_csv()_ or _write_tsv()_:
     - They encode all strings with UTF-8
     - All dates are stored as ISO8601
@@ -877,7 +862,7 @@ parse_factor(c('apple', 'banana', 'bananas'), levels = fruit)
 - Repetition: you can specify the number of matches
   - ?: 0 or 1
   - +: 1 or more
-  - \*: 0 or more
+  - *: 0 or more
   - High precedence, so parentheses are preferred
   - {n}: exactly n
   - {n,}: n or more
@@ -1104,11 +1089,11 @@ _#> 365_ #for a non-leap year of 2018
     - Allows you to assign a set of operations to a dataframe without requiring an explicit assignment call
       - g. _mtcars <- mtcars %>%_
 
-_transform(cyl = cyl \*2)_
+_transform(cyl = cyl *2)_
 
 Would be:
 
-_Mtcars %<>% transform(cyl = cyl \*2)_
+_Mtcars %<>% transform(cyl = cyl *2)_
 
 ## Chapter 15 - Functions
 
@@ -1305,7 +1290,7 @@ _Mtcars %<>% transform(cyl = cyl \*2)_
   -
   - All purr functions are written in C, so they are a bit faster but are slightly less readable
   - The second argument (.f or function) can be a formula, character vector, or an integer vector
-  - _map_\*()_ uses … to pass along additional arguments to the function (.f) each time it's called
+  - _map_*()_ uses … to pass along additional arguments to the function (.f) each time it's called
 - Shortcuts for _map()_ on pg. 326-327
 - Exercises on pg. 328
 - _safely()_ : used as a wrapper to always return your output, but will also return an error value
@@ -1369,10 +1354,10 @@ _Mtcars %<>% transform(cyl = cyl \*2)_
     - _expand = 0.1_ : opposite of the trim argument
   - Transformations:
     - To wrap a formula transformation you must use _I()_, otherwise R will evaluate the functions as part of the formula expression
-      - g. _y ~ x + I(x ^ 2)_ becomes _y = a_1 + a_2 \* x + a_3 \* x^2_
-        - Without the I, it would become _y ~ x \* x + x_, which would turn to _y ~ x_ when R drops the redundant _x \* x_ (which represents x's interaction with itself). This would then be _y = a_1 + a_2 \* x_
+      - g. _y ~ x + I(x ^ 2)_ becomes _y = a_1 + a_2 * x + a_3 * x^2_
+        - Without the I, it would become _y ~ x * x + x_, which would turn to _y ~ x_ when R drops the redundant _x * x_ (which represents x's interaction with itself). This would then be _y = a_1 + a_2 * x_
     - _poly()_ : used to speed up the typing of a polynomial sequence
-      - g. _poly(x, 2)_ would turn into _y = a_1 + a_2 \* x + a_3 \* x^2_
+      - g. _poly(x, 2)_ would turn into _y = a_1 + a_2 * x + a_3 * x^2_
       - This does have the negative effect of rapidly shooting off to positive or negative infinity when outside the range of data
     - _spline()_ : used in place of poly() to provide much the same functionality without the rapid expansion
 - Exercises on pg. 371
@@ -1454,15 +1439,15 @@ _Mtcars %<>% transform(cyl = cyl \*2)_
 - The general flow would be: Rmd file -> knitr -> md file -> pandoc -> end file
 - Exercises on pg. 426
 - Text Formatting with Markdown:
-  - \*italic\* or _italic_
-  - \*\*bold\*\* or _bold_
+  - *italic* or _italic_
+  - **bold** or _bold_
   - 'Code'
   - superscript^2^
   - subscript~2~
   - # 1st level header
   - ## 2nd level header
   - ### 3rd level header
-  - \* bulleted list item
+  - * bulleted list item
   - numbered list item
   - <link>
   - [linked phrase](link)
