@@ -1,8 +1,10 @@
 # Learning Python
-### Mark Lutz <!-- omit in toc -->
-### 1449355730 <!-- omit in toc -->
+### Mark Lutz !-- omit in toc --
+### 1449355730 !-- omit in toc --
 
 - [Learning Python](#learning-python)
+    - [Mark Lutz !-- omit in toc --](#mark-lutz----omit-in-toc---)
+    - [1449355730 !-- omit in toc --](#1449355730----omit-in-toc---)
 - [Preface](#preface)
 - [Part 1 – Getting Started](#part-1--getting-started)
   - [Chapter 1 – A Python Q&amp;A Session](#chapter-1--a-python-qa-session)
@@ -184,14 +186,14 @@
 - The Grander Module Story: Attributes
   - Namespace: a package of variable names
   - Attributes: names inside the namespace
-  - You can use _import_ to then use the entire module with its attributes by calling them with a period in between (e.g. ``` import my_module my_module.my_function_1 ```)
-  - You can also use the _from_ statement to import a unique attribute from a module then call that attribute in your code (e.g. ``` from my_module import my_function_1 my_function_1 ```)_
+  - You can use _import_ to then use the entire module with its attributes by calling them with a period in between (e.E.g. ``` import my_module my_module.my_function_1 ```)
+  - You can also use the _from_ statement to import a unique attribute from a module then call that attribute in your code (e.E.g. ``` from my_module import my_function_1 my_function_1 ```)_
   - _dir(module)_: creates a list of the namespace held in square brackets and separated by commas
     - Items that are preceded by and succeeded by double underscores are variable defined in Python itself and are not useful to the conversation at this point
 - Using exec to Run Module Files
-  - Pg. 74 if needed
+  - pg. 74 if needed
 - The IDLE User Interface
-  - Pg. 75-81 if needed
+  - pg. 75-81 if needed
 - Other Launch Options
   - Embedding Calls: when Python is run by another enclosed system, usually contained in another language or as a component of a program (like a game modification tool)
   - Frozen Binary Executables: packages your bytecode and the python interpreter into a single executable, typically packaged as such just prior to shipping
@@ -202,7 +204,7 @@
 
 ## Chapter 4 - Introducing Python Object Types
 
-- The Python Conceptual Hierarchy:
+- The Python Conceptual Hierarchy
   - Programs are composed of modules
   - Modules contain statements
   - Statements contain expressions
@@ -212,127 +214,124 @@
   - They are components of extensions
   - Often more efficient than custom data structures
   - Standard part of the language
-- Python's Core Data Types:
+- Python's Core Data Types
   - Literals: expressions that generate objects
   - Program units: functions, modules, classes
   - Dynamically typed: Python stores the types for you automatically without requiring declarations
   - Strong typed: you can perform on an object only operations that are valid for its type
-  - Numbers:
+  - Numbers
     - Includes integers, floating point numbers, complex numbers with imaginary parts, decimals with fixed precision, rationals with numerator and denominator, and full-featured sets
-    - Supports common arithmetic operations like + for addition, \* for multiplication, and \*\* for exponentiation
+    - Supports common arithmetic operations like + for addition, * for multiplication, and ** for exponentiation
     - _math_ module: provides more advanced numeric tools (as functions)
     - _random_ module: performs random number generation and random selections
-  - Strings:
+  - Strings
     - Sequence: a positionally ordered collection of other objects that maintain a left-to-right order among the items they contain
-    - Sequence Operations:
+    - Sequence Operations
       - Indexing: coded list from the front, the first position is 0
       - You can also index from the end of a string using negative integers
-      - You can also slice a selection using [<n_1>:<n_2>]
+      - You can also slice a selection using _[n_1:n_2]_
         - The end position is non-inclusive (exclusive)
       - You can also concatenate using the + sign
       - Repetition can be achieved with the string (or variable that the string is assigned to) being multiplied by an integer
     - Immutability: cannot be changed in place after they are created, but we can reassign a variable if we so choose
-      - Numbers, strings, and tuples are immutable, while list s, dictionaries, and sets are not
-    - You can alter a string to make a list of all the characters if you use _list(<variable_assigned_to_string>)_
-    - Type Specific Methods:
+      - Numbers, strings, and tuples are immutable, while lists, dictionaries, and sets are not
+    - You can alter a string to make a list of all the characters if you use _list(variable_assigned_to_string)_
+    - Type Specific Methods
       - Method: operations that are attached to and act upon a specific object which are triggered with a call expression
-      - Usually looks like _<object>.<method>_
-      - Examples of string methods: _.find('<substring>'), .replace('<substring_old>',"<substring_new>'), .split('<delimiter>'), .upper(), .rstrip()_ (rstrip removes whitespaces at the end of a string)
+      - Usually looks like _object.method_
+      - Examples of string methods: _.find('substring'), .replace('substring_old','substring_new'), .split('delimiter'), .upper(), .rstrip()_ (rstrip removes whitespaces at the end of a string)
       - This do not change the original object, as it is immutable, however, you can create a new object with the method as part of its definition
-    - _dir(<object>)_: shows all the functions and methods that can be assigned to the object
-    - _help(<object>.<method>)_: shows the documentation
-    - Unicode strings:
+    - _dir(object)_: shows all the functions and methods that can be assigned to the object
+    - _help(object.method)_: shows the documentation
+    - Unicode strings
       - Return to pg. 108 if needed
     - Pattern matching is available in the _re_ package
-  - Lists:
+  - Lists
     - No fixed size as well as mutable
-    - Sequence operations:
+    - Sequence operations
       - We can index, slice, match, repeat, etc. just like with strings
-    - Type Specific Operations:
+    - Type Specific Operations
       - Can contain many different types
       - Can resize on demand
-      - _.pop(<position>)_: deletes the specified position
-      - _.append(<object>)_: adds to the end of a list
+      - _.pop(position)_: deletes the specified position
+      - _.append(object)_: adds to the end of a list
     - Bounds Checking: although lists have no defined size, lists cannot return objects that are not in the range, nor can you modify a list to add items outside of the range (hence the append method)
-    - Nesting:
+    - Nesting
       - You can nest all types of objects in python, and to any arbitrary depth you wish
       - This allows for the creation of matrixes using a list as a list object (if you bracket a sub-list, then python can display on multiple lines to give a matrix type view)
-    - Comprehensions:
+    - Comprehensions
       - List comprehensions are derived from set notation and they provide a way to create new lists by running expressions over old lists
-      - Comprehensions are coded in brackets and follow the convention: _[<row_n> <optional expression> for row in <matrix>]_
+      - Comprehensions are coded in brackets and follow the convention: _[row_n optional expression for row in matrix]_
       - You can also include more complex operators, such as if statements (because the definition will repeat itself for all objects in the list)
       - This can also be used to select multiple values, as long as we wrap those values in a nested collection
-      - g. _list(range(5))_ can be imbedded into a list, then we can select on that embedded list inside a list to grab multiple values
+      - E.g. ``` list(range(5)) ``` can be imbedded into a list, then we can select on that embedded list inside a list to grab multiple values
       - List comprehensions can also be used to create sets and dictionaries
-        - g. _{sum(row) for row in M}_ (where M is a matrix)
-  - Dictionaries:
+        - E.g. ``` {sum(row) for row in M} ``` (where M is a matrix)
+  - Dictionaries
     - Similar to lists in that they are mutable and are ways to store collections of objects
     - Do not store the objects in a reliable left-to-right order, rather they store based on key (also called mapping)
-    - Mapping Operations:
-      - When written as a literal, they follow the convention: _{'<label>':'<object>', '<label_2>':'<object>',…)_
+    - Mapping Operations
+      - When written as a literal, they follow the convention: _{'label':'object', 'label_2':'object',…}_
       - Rather than using the relative position of the object, we reference the intended object by using the defined label
       - It is more common for dictionaries to be assigned not by literals, but rather by functions that add the new label and item to the dictionary
-        - g. _D = {}_
-
-_D['name'] = 'Bob'_
-
+  ``` python 
+D = {}_
+D['name'] = 'Bob'
+```
       - You can easily use this functionality to search a dictionary, by using the key (label) to return the desired object
-    - Nesting Revisited:
+    - Nesting Revisited
       - You can imbed a dictionary into a object in another dictionary, this can create a table like structure
-    - Missing Keys: if Tests:
+    - Missing Keys: if Tests
       - Like other data types, dictionaries also have certain methods that are type specific
       - Fetching an object that doesn't exist will still return an error, as fetching non-existent objects will inherently come up as NULL
       - _in_: used to search for a key in a dictionary
-        - _E_.g. _'name' in D_ (looking for the name key in dictionary D)
-    - Sorting Keys: for Loops:
+        - E.g. ``` 'name' in D ``` (looking for the name key in dictionary D)
+    - Sorting Keys: for Loops
       - If you needed a dictionary to be ordered with some logic, you could use a sort and a for loop to recreate the output
-        - g. _Ks = list(D.keys())_
-
-_Ks.sort()_
-
-_for key in Ks:_
-
-_print(key, ',', D[key])_
-
-Output would be an ordered dictionary based on the sort order
-
+``` python
+Ks = list(D.keys())
+Ks.sort()
+for key in Ks:
+print(key, ',', D[key])
+```
+  - Output would be an ordered dictionary based on the sort order
       - Recent versions of Python have included a new built-in function called _sorted_
-        - g. _for key in sorted(D):_
-
-_print(key, ',', D[key])_
-
-      - Iteration and Optimization:
-        - An object is iterable if it is either a physically stored sequence in memory, or an object that generates on item at a time in the context of an iteration operation
-        - Tools such as map and filter are often faster in modern version of Python that using a for loop (up to twice as fast)
-        - To test some of the performance, Python has a few tools defaulted: _time, timeit, profile,_ etc.
-  - Tuples:
+``` python 
+for key in sorted(D):
+print(key, ',', D[key])
+```
+  - Iteration and Optimization:
+    - An object is iterable if it is either a physically stored sequence in memory, or an object that generates on item at a time in the context of an iteration operation
+    - Tools such as map and filter are often faster in modern version of Python that using a for loop (up to twice as fast)
+    - To test some of the performance, Python has a few tools defaulted: _time, timeit, profile,_ etc.
+  - Tuples
     - Essentially an immutable list (a sequence)
     - They are syntactically created with parentheses, can contain arbitrary types, arbitrary nesting, and common sequence operators
     - Why Tuples?
       - The immutability of the object makes it ideal for large programs where you mass pass the object around multiple times, if you had a list it may be changed at any point, but a tuple cannot be altered, hence offered a type of integrity constraint
-  - Files:
+  - Files
     - There is no real default method to creating an object, rather, we typically use the _open_ function and an optional processing mode as strings
     - If you omit the processing mode it will assume you are in read mode
-  - Binary Bytes Files:
+  - Binary Bytes Files
     - Represents data in a special byte format that allows you to access file content unaltered
     - Most useful when accessing things like media files, data created by C and other languages, or other non-text data
-  - Unicode Text Files:
+  - Unicode Text Files
     - Can be used to process things like memos and emails, all the way to JSON and XML documents
     - You can easily encode or decode text that is not your machine's default by passing along the encoding name you wish to use
-      - g. _file = open('unidata.txt', 'w', encoding = 'utf-8')_
-  - Other File-Like Tools:
+      - E.g. ``` file = open('unidata.txt', 'w', encoding = 'utf-8') ```
+  - Other File-Like Tools
     - _Open_ is the workhorse of Python file processing
     - There are other types, namely: pipes, FIFOs, sockets, keyed-access files, persistent object shelves, descriptor-based files, relational and object oriented database interfaces, etc.
-  - Other Core Types:
+  - Other Core Types
     - Sets: an unordered collection of unique, immutable objects (neither a mapping nor a sequence)
       - Often used for things like filtering out duplicates, isolating differences, or performing order neutral equality tests
     - Decimals: floating points with fixed precision
     - Fractions: contain both a numerator and a denominator in order to avoid the inherent inaccuracies of converting to a floating point
     - Booleans: a simple TRUE/FALSE object, abbreviated to "bool" when defining
-- How to Break Your Code's Flexibility:
+- How to Break Your Code's Flexibility
   - The _type_ operator returns the type of the identified object, including itself if you so choose
   - This is really not a good thing to do, as Python uses interfaces to transform types, it doesn't really care what type the object is, rather we care about what we can do with the object. If we check all types we limit our ability to transform them
-- User-Defined Classes:
+- User-Defined Classes
   - These are newly defined types that are made with the function _class_
   - These can include new methods that can be user defined
   - Often these classes build upon built in types
@@ -359,7 +358,7 @@ _print(key, ',', D[key])_
   - If you wish to use a function to convert to these literals, you can use _hex(), oct()_ or _bin()_
   - _complex(real, imaginary)_: used to create complex numbers
 - Built-in Numeric Tools:
-  - Expression Operators: +, -, \*, /, >>, \*\*, &amp;, etc.
+  - Expression Operators: +, -, *, /, , **, &amp;, etc.
   - Built-in mathematical functions: _pow, abs, round, int, hex, bin,_ etc.
   - Utility modules: _random, math,_ etc.
 - Python Expression Operators:
@@ -369,7 +368,7 @@ _print(key, ',', D[key])_
     - Lower in the table found on 141, higher the precedence
     - If they fall on the same level of precedence, they are evaluated left to right
     - Parentheses circumvent the levels of precedence (just be careful)
-    - Types are converted up to the level of the most complex operand (e.g. integer multiplied by a float, would first convert up to a float, then multiply)
+    - Types are converted up to the level of the most complex operand (e.E.g. integer multiplied by a float, would first convert up to a float, then multiply)
       - In numbers, it is typically integer, then float, then complex
       - You can also force the conversion by calling built in functions
     - Python typically only converts operand of the numeric types, a string and a float will return an error
@@ -386,7 +385,7 @@ _print(key, ',', D[key])_
 - Comparisons: Normal and Chained:
   - Comparison operators perform exactly as would be expected, including type conversion to the most complex operand
   - Chaining multiple comparisons can produce more complex comparisons
-    - g. _a < b < c_ would be equivalent to (_a < b) and (b < c)_
+    - E.g. _a  b  c_ would be equivalent to (_a  b) and (b  c)_
   - You can chain an arbitrary number of comparisons together, but they can become unintuitive if you do not pay attention to the method by which Python evaluates these expressions
   - You must be careful when using comparisons for floats, the storage of an object may have a certain precision limitation that could alter your comparison
 - Division: Classic, Floor, and True:
@@ -396,11 +395,11 @@ _print(key, ',', D[key])_
   - If your programs depend on integer division, you can use // in both branches
   - If you need floating point division you can specify this by using / and converting one of the variables/objects to a float (this will guarantee it saves the output as a float)
   - You can also import the 3.X division standards into 2.X by using the __future__ import statement
-    - g. _from _future_ import division_
+    - E.g. _from _future_ import division_
 - Floor vs. Truncation:
   - // is technically called truncating division, but it is also accurate to call it floor division in that it truncates the result down to its floor
   - The use of floor division is more accurate, in that it will truncate but it's essentially rounded down to the nearest whole number
-    - g. 2.5 would be 2, -2.5 would be -3
+    - E.g. 2.5 would be 2, -2.5 would be -3
   - Truncation is the same as floor for positive numbers, but for negative it is always floor, hence this section
   - If you wish to actually use truncation for negative numbers, then you can use _math.truncate_ from the _math_ package
 - Integer Precision:
@@ -417,32 +416,32 @@ _print(key, ',', D[key])_
     - Functions: _sin, sqrt, pow, abs, min, round_ etc.
     - Method: _.floor, .trunc, .format,_ etc.
   - These functions allow for multiple ways to compute the same thing
-    - g. to find the square root you could use _math.sqrt(), x \*\* .5, pow(x, .5)_
+    - E.g. to find the square root you could use _math.sqrt(), x ** .5, pow(x, .5)_
   - Standard libraries must always be imported, but built-in functions do not require imports
 - Other Numeric Types:
   - Decimal:
     - Essentially a fixed precision float
     - Because floats have certain limitations in precision, we can compensate by using the decimal type and specifying the number to the accuracy we determine
     - Decimals have seen a substantial increase in performance but they are still slower than floating point calculations
-    - You can define the number of decimals globally by using _decimal.getcontext().prec = <n>_
+    - You can define the number of decimals globally by using _decimal.getcontext().prec = n_
     - You can also locally define precision using a _with_ statement as follows:
 
 _with decimal.localcontext() as ctx:_
 
-_ctx.prec = <n>_
+_ctx.prec = n_
 
-_<expression>_
+_expression_
 
   - Fraction:
     - Because fractions do not map to hardware as well as floats, there may be performance penalties, but their usefulness make them worth exploring
-    - Syntax: _fraction(<numerator>,<denominator>)_
+    - Syntax: _fraction(numerator,denominator)_
     - Fractions can also be made using floats or strings
     - Fractions will also simplify the results (3/6 to ½ for example)
     - Can convert from float to fraction or vice versa:
-      - _<float_or_variable_of_type_float>.as_integer_ratio()_ returns two arguments (numerator and denominator)
-      - _Fraction(\*<float_or_variable_of_type_float>.as_integer_ratio())_ returns the fraction type with two arguments
-      - _float(<fraction_or_variable_of_type_fraction>)_ returns a float
-      - _Fraction.from_float(<float_or_variable_of_type_float>)_ returns fraction
+      - _float_or_variable_of_type_float.as_integer_ratio()_ returns two arguments (numerator and denominator)
+      - _Fraction(*float_or_variable_of_type_float.as_integer_ratio())_ returns the fraction type with two arguments
+      - _float(fraction_or_variable_of_type_fraction)_ returns a float
+      - _Fraction.from_float(float_or_variable_of_type_float)_ returns fraction
   - Sets:
     - Sets are a grouping of unordered, unique, immutable objects, hence it behaves similarly to a valueless dictionary
     - Sets allow for iterable logic tests, such as:
@@ -450,7 +449,7 @@ _<expression>_
       - _x | y_ union
       - _x &amp; y_ intersection
       - _x ^ y_ symmetric difference (XOR)
-      - _x > y_ superset (or subset if using <)
+      - _x  y_ superset (or subset if using )
     - Sets also have methods such as _.intersection, .add,_ and _.remove_
     - Generally these expressions require two sets, but the methods tend to be more flexible and work better with all types of iterable objects
     - Sets can now be called as literals in 3.X
@@ -458,7 +457,7 @@ _<expression>_
     - Lists and dictionaries cannot be imbedded in sets, because they are mutable, but tuples can be stored
     - Because sets are mutable themselves, they cannot be nested inside other sets, in order to do this you must use _frozenset_ which makes an immutable set
     - Set comprehension can also be used similarly to list comprehensions
-      - g. _{x \*\* 2 for x in [1, 2, 3, 4]}_ outputs the set _{16, 1, 4, 9}_
+      - E.g. _{x ** 2 for x in [1, 2, 3, 4]}_ outputs the set _{16, 1, 4, 9}_
     - Because sets only store a value once, they can be used for things such as filtering out duplicates
     - The ordering may alter when converting to or from a set due to the unordered nature of sets themselves
   - Booleans:
@@ -482,7 +481,7 @@ _<expression>_
   - Python also contains a cycle-detector that makes sure items with a circular reference are also removed, even though they would not be caught by the reference counter
 - Shared References:
   - Shared reference: when more than one variable references the same object in the background
-    - g. _a = 3 b = a_ the net effect of which is both a and b reference 3
+    - E.g. _a = 3 b = a_ the net effect of which is both a and b reference 3
   - It is impossible to link a variable to another variable, because in the background the reference are to the objects
   - If you assign a variable a, then assign a variable b as a reference to a, you are actually assigning a reference to the object a represents. If you assign a to a new value, b will retain the original reference unless overwritten
 - Shared References and In-Place Changes:
@@ -524,21 +523,21 @@ _<expression>_
 - Raw Strings Suppress Escapes:
   - It is common to see programmers reference things like "C:\new\test.txt" but this will have both a newline escape and a newtab escape
   - In order to use the text without escaping, the string literal must be preceded by an _r_
-    - g. _r'C:\new_folder\test_file.txt'_
+    - E.g. _r'C:\new_folder\test_file.txt'_
   - In this example you could also use to backslashes to save one of them in the output, but it is cleaner to use a raw string
 - Strings in Action:
   - Basic Operations:
     - + can be used for concatenation
-    - \* is used for repetition
+    - * is used for repetition
     - These are a clear example of operator overloading: we are using the same operators that accomplish addition and multiplication for concatenation and repetition, based on operand types
   - Indexing and Slicing:
     - Python starts positioning with a zero, so the first item is indexed to position 0
     - Using a negative in your index is actually adding the negative to the length of the string to essentially count backwards from the end of a string
-    - g. _S[1:]_ returns all characters in string S starting with position 1 (the second character) and ending at the end of the string
+    - E.g. _S[1:]_ returns all characters in string S starting with position 1 (the second character) and ending at the end of the string
     - When slicing, the offset pair (used to define the beginning and end of a slice) is inclusive for the lower bound (left side) and exclusive for the upper bound (right)
     - Slice boundaries default to 0 as the lower bound and the length as the upper
     - Extended slicing takes a third argument that accepts a stride (allows skipping of characters and can count backwards if using a negative value)
-      - g. _S[1:10:-1]_ slices characters from 2 to 9, but backwards
+      - E.g. _S[1:10:-1]_ slices characters from 2 to 9, but backwards
   - String Conversion Tools:
     - Considering that Python will not guess the type an intent of operands, you must explicitly convert items that are not compatible (like str and int)
     - You can also convert a character to its underlying byte representation
@@ -555,7 +554,7 @@ _<expression>_
     - These are current as of 3.3, but they are subject to change. Consult the standard library manual if need be
     - _.capitalize, .casefold, .ljust, .lower, .center,_ etc.
   - Changing Strings II:
-    - g. _S = 'spammy'_
+    - E.g. _S = 'spammy'_
 
 _S = S.replace('mm', 'xx')_
 
@@ -567,28 +566,28 @@ _S_ outputs 'spaxxy'
   - Original string Module's Functions were deprecated in 3.X, to see a few return to pg. 222
 - String Formatting Expressions:
   - Two common methods:
-    - String formatting expressions: _'...%...' % (<values>)_
+    - String formatting expressions: _'...%...' % (values)_
       - Revisit table 7-4 on pg. 226 to view all the special string formatting codes that can take the place of %
-        - g. %e takes a floating point with an exponent
-    - String formatting method calls: _'...{}...'.format(<values>)_
+        - E.g. %e takes a floating point with an exponent
+    - String formatting method calls: _'...{}...'.format(values)_
   - Examples of formatting expressions on pg. 227
 - Dictionary-Based Formatting Expressions:
   - You can use a dictionary (defined after the string) and use the index to format a string
-    - g. _'%(qty)d more %(food)s' % {'qty' : 1, 'food' : 'spam')_ outputs '1 more spam'
+    - E.g. _'%(qty)d more %(food)s' % {'qty' : 1, 'food' : 'spam')_ outputs '1 more spam'
   - You can also define a string with the % contained inside of it and assign it to a variable, then assign a variable for the dictionary you want to reference, they use these as argument for print, of simply call one or the other to do string formatting
-    - g. _reply = '<text> %(number)d <text>'_
+    - E.g. _reply = 'text %(number)d text'_
 
 _values = {'number' : 1}_
 
 _print(reply % values)_
 
-Output: '<text> 1 <text>'
+Output: 'text 1 text'
 
 - String Formatting Method Calls:
   - Curly brackets in the string contain the variables that will be inserted (either by position in the value dictionary or the index name or by the relative position [requires that the string ordering and value ordering are matched])
   - Examples on pg. 230 (too long to rewrite)
   - This method can also be used to include keys, attributes, or offsets
-    - g. _'My {1[Kind]} runs {0.platform}'.format(sys = sys, {'kind' : 'laptop'})_
+    - E.g. _'My {1[Kind]} runs {0.platform}'.format(sys = sys, {'kind' : 'laptop'})_
 
 Output: 'My laptop runs Windows 10'
 
@@ -615,11 +614,11 @@ Output: 'My laptop runs Windows 10'
       - Lists have similar operators to strings
       - Things like the + operator work as one would expect strings to, save for the fact that we are creating a new list
       - These operations include list iterations and list comprehensions
-        - g. _res = {}_
+        - E.g. _res = {}_
 
 _for c in 'SPAM':_
 
-_res.append(c \* 4)_
+_res.append(c * 4)_
 
 Output: ['SSSS', 'PPPP', 'AAAA', 'MMMM']
 
@@ -703,7 +702,7 @@ Output: ['SSSS', 'PPPP', 'AAAA', 'MMMM']
     - Python will return the characters written to the file in 3.X
     - You can use the print function to return the file contents with the formatting from the file
     - If you wish, you could also iterate line by line with a _for line_ loop
-      - g. _for line in open('my_file.txt'):_
+      - E.g. _for line in open('my_file.txt'):_
 
 _print(line, end = '')_
 
@@ -721,7 +720,7 @@ _print(line, end = '')_
   - Storing Python Objects in JSON Format:
     - JSON is a program language agnostic data storage format
     - _json_ package allows for easy conversion of objects into JSON, which has a similar structure to Python lists and dictionaries
-    - _json.dumps(<name>)_ to convert a named object into a JSON file
+    - _json.dumps(name)_ to convert a named object into a JSON file
     - All JSON text is Unicode
   - Storing Packed Binary Data:
     - _struct_ package is used to pack and unpack binary data from sources like C or a network connection
@@ -798,23 +797,23 @@ _Nested statement block_
       - Extended sequence assignment functions in much the same way, but it allows for more complex assignments
     - Multiple-target assignments:
       - Python assigns names to the object (which appears furthest on the right)
-        - g. _a = b = c_ assigned object c to both name a and name b
+        - E.g. _a = b = c_ assigned object c to both name a and name b
     - Augmented assignments:
       - Use a simplified syntax to perform a modification to the variable and can actually run faster
-        - g. _i += 1_ is the same as _i = i +1_
+        - E.g. _i += 1_ is the same as _i = i +1_
   - Advanced sequence assignment examples on pgs. 352-353
   - Extended sequence packing allows for the use of an asterisk and a name to create a list of objects to assign to that name
-    - g. _seq = [1, 2, 3, 4]_
+    - E.g. _seq = [1, 2, 3, 4]_
 
-_a, \*b = seq_
+_a, *b = seq_
 
 _a_
 
 _b_
 
-_#> 1_
+_# 1_
 
-_#> [2, 3, 4]_
+_# [2, 3, 4]_
 
     - Boundary cases:
       - The starred name may only reference one variable, but it is still assigned a list
@@ -825,25 +824,25 @@ _#> [2, 3, 4]_
     - _x &amp;= y_
     - _x -= y_
     - _x |= y_
-    - _x \*= y_
+    - _x *= y_
     - _x ^= y_
     - _x /= y_
-    - _x >>= y_
-    - _x <<= y_
+    - _x = y_
+    - _x = y_
     - _x %= y_
-    - _x \*\*= y_
+    - _x **= y_
     - _x //= y_
   - Augmented assignment offer 3 benefits:
     - Less to write
     - The left side is only evaluated once
     - Optimal technique is automatically chosen
 - Variable Name Rules:
-  - Syntax: <underscore or letter> + <any number of letters, digits, or underscores>
+  - Syntax: underscore or letter + any number of letters, digits, or underscores
   - Case matters, Python will treat X and x differently
   - Reserved words cannot be used in assignment (like _class_)
     - Table 11-3 on pg. 364 contains the reserved words found in 3.X
   - Common naming conventions:
-    - Names that begin with a single underscore are not imported by a _from <module> import \*_ statement
+    - Names that begin with a single underscore are not imported by a _from module import *_ statement
     - Names that have two leading and trailing underscores are system defined names that have special meaning to the interpreter
     - Names that begin with two underscores but not trailing underscores are localized ("mangled") to enclosing classes
     - The name that is a single underscore retains the result of the last expression in an interactive session
@@ -863,22 +862,22 @@ _#> [2, 3, 4]_
   - Python lets you combine statements in a program sequentially and nest them arbitrarily
   - General format:
 
-_if <test_1>:_
+_if test_1:_
 
-_<statement_1>_
+_statement_1_
 
-_elif <test_2>:_
+_elif test_2:_
 
-_<statement_2>_
+_statement_2_
 
 _else:_
 
-_<statement_3>_
+_statement_3_
 
   - The nested nature of the elif function allows for multiway branching (like a tree root)
   - There is an alternative to this multiway branching:
     - Using a dictionary to and an input variable, you can use the input variable as a key to look up the desired mapped value in the dictionary
-    - g. _choice = 'ham'_
+    - E.g. _choice = 'ham'_
 
 _print({'spam':1,_
 
@@ -917,17 +916,17 @@ _'Eggs':3} [choice])_
   - Once the test evaluates to false the code block is no longer executed and control is given to the next block
   - General format:
 
-_while <test>:_
+_while test:_
 
-_<statements>_
+_statements_
 
-_if <test>: break_
+_if test: break_
 
-_if <test>: continue_
+_if test: continue_
 
 _else:_
 
-_<statements>_
+_statements_
 
 - _break, continue, pass_ and the Loop _else_
   - _break:_ jumps out of the closest enclosing loop (past the entire loop statement)
@@ -940,36 +939,36 @@ _<statements>_
 - _for_ Loops:
   - General format:
 
-_for <target> in <object>:_
+_for target in object:_
 
-_<statements>_
+_statements_
 
-_if <test>: break_
+_if test: break_
 
-_if <test>: continue_
+_if test: continue_
 
 _else:_
 
-_<statements>_
+_statements_
 
   - _break, continue,_ and _if_ all function just as they would in a while loop
   - Any sequence can be used in a for loop as it processes all sequences
   - Tuples are also very useful in for loops as they are typically how Python interacts with databases such as SQL
-    - g. _T = [(1, 2), (3, 4), (5, 6)]_
+    - E.g. _T = [(1, 2), (3, 4), (5, 6)]_
 
 _for (a, b) in T:_
 
 _print(a, b)_
 
     - Here, T (the outer list) is the database table, the nested tuples are the rows in the table, and each item in the tuple is one value in a column
-  - Starred names can also work in for loops (such as (a, \*b, c))
+  - Starred names can also work in for loops (such as (a, *b, c))
 - Loop coding techniques:
   - _range_:produces a series of successively higher integers, which can be used as indexes in a for loop
-    - g. _for i in range(3):_
+    - E.g. _for i in range(3):_
 
 _print(i, 'pythons')_
 
-_#>0 pythons_
+_#0 pythons_
 
 _1 pythons_
 
@@ -987,7 +986,7 @@ _2 pythons_
     - _zip:_ allows for parallel processing of multiple list objects (not at the same instance in time, such as over multiple cores, but in the same loop)
     - _zip_ will automatically truncate any iterable objects to the length of the shortest
     - zip is also useful when creating dictionaries from list objects
-      - g. _keys = ['spam', 'eggs']_
+      - E.g. _keys = ['spam', 'eggs']_
 
 _vals = [1, 2]_
 
@@ -995,17 +994,17 @@ _D1 = dict(zip(keys, vals))_
 
 _D1_
 
-_#> {'spam': 1, 'eggs': 2}_
+_# {'spam': 1, 'eggs': 2}_
 
   - _enumerate()_:
     - Returns a generator object that essentially give us a counter in a for loop without requiring the generation of a new named object beforehand
-    - g. _S = 'spam'_
+    - E.g. _S = 'spam'_
 
 _for (offset, item) in enumerate(S):_
 
 _print(item, 'appears at offset', offset_
 
-_#> s appears at offset 0 …_
+_# s appears at offset 0 …_
 
 - Summary and exercises on pgs. 429-430
 
@@ -1017,18 +1016,18 @@ _#> s appears at offset 0 …_
   - We can use the _readlines()_ method call multiple times to iterate through a file line by line, or we can use the __next__ method to simply pull the next line from the file
     - _next_ will raise a StopIteration exception at the end-of-file rather than returning an empty string like readlines() would
 - Manual Iteration: _iter_ and _next_:
-  - _next(<name>)_: is the same as calling the named object with the name method call
-    - g. _next(f)_ is the same as _f._next_()_
+  - _next(name)_: is the same as calling the named object with the name method call
+    - E.g. _next(f)_ is the same as _f._next_()_
   - Figure 14-1 on pg. 436 shows Python's internal iteration protocol in detail
   - For objects like list and some other built-ins, we must first call iter to generate an iterable object, and use next to iterate over that new object
 - List Comprehensions: A Detailed First Look:
-  - g. _L = [1, 2, 3]_
+  - E.g. _L = [1, 2, 3]_
 
 _L = [x + 10 for x in L]_
 
 _L_
 
-_#> [11, 12, 13]_
+_# [11, 12, 13]_
 
   - There can be a large performance increase using comprehensions rather than typical for loops as these operations are done at C speed
   - Extended List Comprehension Syntax:
@@ -1038,7 +1037,7 @@ _#> [11, 12, 13]_
   - _map_: an iterable that applies a function call to each item in the passed in iterable object
     - Returns an iterable itself, so it should be wrapped in a list
   - Many tools utilize the iteration protocol, including sequence assignment, _in_ membership tests, slice assignments, and the _extend_ method
-  - Using _\*<arg>_ in a function call you can pass along an iterable objects values into the function call, rather than writing them out explicitly
+  - Using _*arg_ in a function call you can pass along an iterable objects values into the function call, rather than writing them out explicitly
 - New Iterables in Python 3.X:
   - Stronger emphasis on iterable than 2.X versions
   - Some functions like _range_ produce result sets that can have multiple _iter()_'s running at the same time, while others like _zip_ do not
@@ -1106,7 +1105,7 @@ _def name(arg1,... argN):_
 _statements_
 
 - _return_ ends a function call once called, even if the rest of the function has not completed
-- Because Python supports polymorphism, code is intended to operate on interfaces (like \*) rather than on data types, so do not do type error correction or you will limit utility
+- Because Python supports polymorphism, code is intended to operate on interfaces (like *) rather than on data types, so do not do type error correction or you will limit utility
 - You must define a function before calling it, either in the script or in a module file
 
 ## Chapter 17 - Scopes
@@ -1127,9 +1126,9 @@ _statements_
   - Local scopes in class statements
 - _builtins_ is its own module and named as such, in order to view it you must import it first
   - You can use this knowledge to directly call built-in functions if needed
-    - g. _zip is builtin.zip_ returns _true_
+    - E.g. _zip is builtin.zip_ returns _true_
 - Because the LEGB rule takes the first occurrence, it is possible to assign overtop a higher scope in the lower levels, thus hiding function
-  - g. assigning a text value to a name called _open_ will override the ability to use _open_ in that scope for its normal use
+  - E.g. assigning a text value to a name called _open_ will override the ability to use _open_ in that scope for its normal use
   - The interactive prompt acts as a global, module scope
   - Keep this fact in mind as it may come back as a bug if you in fact require the name that you overwrote
 - Aside: True and False are reserved names in the _builtins_ package, but can be reassigned, this could be funny as a prank, but is nightmarish to use
@@ -1180,29 +1179,29 @@ _statements_
   - Positionals: matched from left to right
   - Keywords: callers can specify which argument in the function is to receive a value by using the argument's name in the call with _name=value_ syntax
   - Defaults: specify default values for functions in the advent that the caller does not have enough (with _name=value_ syntax as well)
-  - Varargs collecting: can collect arbitrarily many positional or keyword arguments when preceded with one or two \* characters
-  - Varargs unpacking: can take the \* syntax and reverse the operation by unpacking a collection into separate arguments
+  - Varargs collecting: can collect arbitrarily many positional or keyword arguments when preceded with one or two * characters
+  - Varargs unpacking: can take the * syntax and reverse the operation by unpacking a collection into separate arguments
   - Keywords only arguments: arguments must be passed by name, not by position
   - Table 18-1 on pg. 550 can help show examples of these behaviors
 - Details on the how Python interprets these different methods (for package designers more than developers) can be found on pgs. 551-552
 - Why use keyword names rather than just positionals? They are far more self documenting and clearly show the purpose/utility
 - Defaults (as defined in the def header) allow us to skip over certain arguments that would otherwise be required
 - The _name=value_ syntax means keyword in a call but default in a def
-- \* is used for positionals while \*\* is used for keywords
+- * is used for positionals while ** is used for keywords
   - Example:
-    - _def f(a, \*posargs, \*\*keyargs): print(a, poargs, keyargs)_
+    - _def f(a, *posargs, **keyargs): print(a, poargs, keyargs)_
 
 _f(1, 2, 3, x=1, y=2)_
 
 _output: 1 (2, 3) {'y': 2, 'x': 1}_
 
-- When calling a function, the \* can be used to unpack the collection of arguments instead of combining them
+- When calling a function, the * can be used to unpack the collection of arguments instead of combining them
 - These methods of arbitrarily long arguments are great for times when you do no know the function's arguments and must pass along an unknown number of them
   - For example, having a function that allows you to call multiple functions with different argument sets
 - _apply_ in Python 2.X is now defunct, see pg. 558 for more detail
-- You can use the \* in the definition to tell Python that all subsequent arguments must be called using keyword syntax
+- You can use the * in the definition to tell Python that all subsequent arguments must be called using keyword syntax
   - Example:
-    - def kwonly(a, \*, b, c):
+    - def kwonly(a, *, b, c):
   - These can also contain default values if desired
 - Example wakeup call on pgs. 562-565
 - Example intersection on pgs. 565-568
@@ -1264,7 +1263,7 @@ _output: 1 (2, 3) {'y': 2, 'x': 1}_
   - The syntax is an expression with a defined variable, then what looks like a for loop, all surrounded in brackets
     - Example: _res = [ord(x) for x in 'spam']_
   - This syntax also allows for if statements to be employed without requiring filter
-    - Example: _[x \*\* 2 for x in range(10) if x % 2 == 0]_
+    - Example: _[x ** 2 for x in range(10) if x % 2 == 0]_
     - This example returns the square of even numbers between 0 and 9
   - List comprehensions are also very useful for matrix operations like selecting rows, diagonals, etc.
   - List comprehensions are often faster than map calls, which in turn are often faster than for loops that all do the same task
