@@ -7,7 +7,7 @@
     - [1449355730 !-- omit in toc --](#1449355730----omit-in-toc---)
 - [Preface](#preface)
 - [Part 1 – Getting Started](#part-1--getting-started)
-  - [Chapter 1 – A Python Q&amp;A Session](#chapter-1--a-python-qa-session)
+  - [Chapter 1 – A Python Q&A Session](#chapter-1--a-python-qa-session)
   - [Chapter 2 – How Python Runs Programs](#chapter-2--how-python-runs-programs)
   - [Chapter 3 – How You Run Programs](#chapter-3--how-you-run-programs)
 - [Part 2 - Types and Operations](#part-2---types-and-operations)
@@ -81,7 +81,7 @@
 
 # Part 1 – Getting Started
 
-## Chapter 1 – A Python Q&amp;A Session
+## Chapter 1 – A Python Q&A Session
 
 - Why do people use Python?
   - Highly readable code, which makes it far more reusable and maintainable
@@ -292,13 +292,13 @@ D['name'] = 'Bob'
 Ks = list(D.keys())
 Ks.sort()
 for key in Ks:
-print(key, ',', D[key])
+  print(key, ',', D[key])
 ```
   - Output would be an ordered dictionary based on the sort order
       - Recent versions of Python have included a new built-in function called _sorted_
 ``` python 
 for key in sorted(D):
-print(key, ',', D[key])
+  print(key, ',', D[key])
 ```
   - Iteration and Optimization:
     - An object is iterable if it is either a physically stored sequence in memory, or an object that generates on item at a time in the context of an iteration operation
@@ -340,7 +340,7 @@ print(key, ',', D[key])
 
 ## Chapter 5 - Numeric Types
 
-- Numeric Type Basics:
+- Numeric Type Basics
   - Integer and floating-point objects
   - Complex number objects
   - Decimal: fixed-precision objects
@@ -350,21 +350,21 @@ print(key, ',', D[key])
   - Built in function and modules: _round, math, random,_ etc.
   - Expressions: unlimited integer precision, bitwise operations, hex, octal, and binary formats
   - Third party extensions: vectors, libraries, visualization, plotting, etc.
-- Numeric Literals:
+- Numeric Literals
   - If you write a number with a decimal or exponent, then it is stored as a float
   - Hexadecimals can be coded with a leading 0x or 0X
   - Octals can be coded with a leading 0o or 0O
   - Binary literals can be coded with a leading 0b or 0B
   - If you wish to use a function to convert to these literals, you can use _hex(), oct()_ or _bin()_
   - _complex(real, imaginary)_: used to create complex numbers
-- Built-in Numeric Tools:
-  - Expression Operators: +, -, *, /, , **, &amp;, etc.
+- Built-in Numeric Tools
+  - Expression Operators: +, -, *, /, , **, &, etc.
   - Built-in mathematical functions: _pow, abs, round, int, hex, bin,_ etc.
   - Utility modules: _random, math,_ etc.
-- Python Expression Operators:
+- Python Expression Operators
   - Full table of expression operators on pg. 141
   - Mixed operators follow operator precedence in their calculation
-  - Operator Precedence follows these rules:
+  - Operator Precedence follows these rules
     - Lower in the table found on 141, higher the precedence
     - If they fall on the same level of precedence, they are evaluated left to right
     - Parentheses circumvent the levels of precedence (just be careful)
@@ -373,122 +373,120 @@ print(key, ',', D[key])
       - You can also force the conversion by calling built in functions
     - Python typically only converts operand of the numeric types, a string and a float will return an error
     - Polymorphism: the operation depends on the types of objects being operated on
-- Variables and Basic Expressions:
+- Variables and Basic Expressions
   - Variables are created when they are assigned values
   - Variables are replaced with their values when used in expressions
   - Variables must be assigned before they can be used in expressions
   - Variables refer to objects and are never declared ahead of time
-- Numeric Display Formats:
-  - There are other ways than the automatic echo or the _print_ function to display the stored bits of a number, namely: _num,_ using a string formatting expression, etc.
+- Numeric Display Formats
+  - There are other ways than the automatic echo or the _print_ function to display the stored bits of a number, namely: _num_ using a string formatting expression, etc.
   - _repr_: shows the as-code form of a string
   - _Str_: prints a user-friendly form of the string
-- Comparisons: Normal and Chained:
+- Comparisons: Normal and Chained
   - Comparison operators perform exactly as would be expected, including type conversion to the most complex operand
   - Chaining multiple comparisons can produce more complex comparisons
-    - E.g. _a  b  c_ would be equivalent to (_a  b) and (b  c)_
+    - E.g. _a > b > c_ would be equivalent to _(a > b) and (b > c)_
   - You can chain an arbitrary number of comparisons together, but they can become unintuitive if you do not pay attention to the method by which Python evaluates these expressions
   - You must be careful when using comparisons for floats, the storage of an object may have a certain precision limitation that could alter your comparison
-- Division: Classic, Floor, and True:
+- Division: Classic, Floor, and True
   - X / Y: classic and true division. In 2.X this would only perform classic division and store the results of the integer division. In 3.X it will perform true division, which will store the remainders in floating point results
   - X // Y: floor division. Truncates fractional numbers down to their floor, regardless of types (the result type is dependent on operand though)
-- Supporting either Python:
+- Supporting either Python
   - If your programs depend on integer division, you can use // in both branches
   - If you need floating point division you can specify this by using / and converting one of the variables/objects to a float (this will guarantee it saves the output as a float)
-  - You can also import the 3.X division standards into 2.X by using the __future__ import statement
-    - E.g. _from _future_ import division_
-- Floor vs. Truncation:
+  - You can also import the 3.X division standards into 2.X by using the _ _future_ _ import statement
+    - E.g. ``` from _future_ import division ```
+- Floor vs. Truncation
   - // is technically called truncating division, but it is also accurate to call it floor division in that it truncates the result down to its floor
   - The use of floor division is more accurate, in that it will truncate but it's essentially rounded down to the nearest whole number
     - E.g. 2.5 would be 2, -2.5 would be -3
   - Truncation is the same as floor for positive numbers, but for negative it is always floor, hence this section
   - If you wish to actually use truncation for negative numbers, then you can use _math.truncate_ from the _math_ package
-- Integer Precision:
+- Integer Precision
   - In 3.X, all integers are stored as the same type, in 2.X they are stored as short of long
     - Long integers in 2.X are only distinguishable by the trailing L after the integer
-- Complex Numbers:
+- Complex Numbers
   - Complex numbers are stored as two floating points: the real and the imaginary
-- Hex, Octal, Binary: Literals and Conversions:
+- Hex, Octal, Binary: Literals and Conversions
   - Return to pgs. 156-158
-- Bitwise Operators:
+- Bitwise Operators
   - Return to pgs. 158-160
-- Other Built-in Numeric Tools:
-  - From the _math_ module:
+- Other Built-in Numeric Tools
+  - From the _math_ module
     - Functions: _sin, sqrt, pow, abs, min, round_ etc.
     - Method: _.floor, .trunc, .format,_ etc.
   - These functions allow for multiple ways to compute the same thing
-    - E.g. to find the square root you could use _math.sqrt(), x ** .5, pow(x, .5)_
+    - E.g. to find the square root you could use ``` math.sqrt(), x ** .5, pow(x, .5) ```
   - Standard libraries must always be imported, but built-in functions do not require imports
-- Other Numeric Types:
-  - Decimal:
+- Other Numeric Types
+  - Decimal
     - Essentially a fixed precision float
     - Because floats have certain limitations in precision, we can compensate by using the decimal type and specifying the number to the accuracy we determine
     - Decimals have seen a substantial increase in performance but they are still slower than floating point calculations
     - You can define the number of decimals globally by using _decimal.getcontext().prec = n_
     - You can also locally define precision using a _with_ statement as follows:
-
-_with decimal.localcontext() as ctx:_
-
-_ctx.prec = n_
-
-_expression_
-
-  - Fraction:
+``` python
+with decimal.localcontext() as ctx:
+  ctx.prec = n
+  expression
+```
+  - Fraction
     - Because fractions do not map to hardware as well as floats, there may be performance penalties, but their usefulness make them worth exploring
     - Syntax: _fraction(numerator,denominator)_
     - Fractions can also be made using floats or strings
     - Fractions will also simplify the results (3/6 to ½ for example)
-    - Can convert from float to fraction or vice versa:
+    - Can convert from float to fraction or vice versa
       - _float_or_variable_of_type_float.as_integer_ratio()_ returns two arguments (numerator and denominator)
       - _Fraction(*float_or_variable_of_type_float.as_integer_ratio())_ returns the fraction type with two arguments
       - _float(fraction_or_variable_of_type_fraction)_ returns a float
       - _Fraction.from_float(float_or_variable_of_type_float)_ returns fraction
-  - Sets:
+  - Sets
     - Sets are a grouping of unordered, unique, immutable objects, hence it behaves similarly to a valueless dictionary
-    - Sets allow for iterable logic tests, such as:
+    - Sets allow for iterable logic tests
       - _x -y_ difference
       - _x | y_ union
-      - _x &amp; y_ intersection
+      - _x & y_ intersection
       - _x ^ y_ symmetric difference (XOR)
       - _x  y_ superset (or subset if using )
     - Sets also have methods such as _.intersection, .add,_ and _.remove_
     - Generally these expressions require two sets, but the methods tend to be more flexible and work better with all types of iterable objects
     - Sets can now be called as literals in 3.X
-      - e. _set([1, 2, 3, 4])_ and _{1, 2, 3, 4}_ are the same
+      - e. ``` set([1, 2, 3, 4]) ``` and ``` {1, 2, 3, 4} ``` are the same
     - Lists and dictionaries cannot be imbedded in sets, because they are mutable, but tuples can be stored
     - Because sets are mutable themselves, they cannot be nested inside other sets, in order to do this you must use _frozenset_ which makes an immutable set
     - Set comprehension can also be used similarly to list comprehensions
-      - E.g. _{x ** 2 for x in [1, 2, 3, 4]}_ outputs the set _{16, 1, 4, 9}_
+      - E.g. ``` {x ** 2 for x in [1, 2, 3, 4]} ``` outputs the set _{16, 1, 4, 9}_
     - Because sets only store a value once, they can be used for things such as filtering out duplicates
     - The ordering may alter when converting to or from a set due to the unordered nature of sets themselves
-  - Booleans:
+  - Booleans
     - _bool_ is effectively a class built on top of the class _int_ that has custom printing logic to treat 1 as TRUE and 0 as FALSE
-- Numeric Extensions:
+- Numeric Extensions
   - Libraries such as NumPy and SciPy
 - Summary and examples on pgs. 178-180
 
 ## Chapter 6 - Dynamic Typing Interlude
 
-- The Case of Missing Declaration Statements:
+- The Case of Missing Declaration Statements
   - Statically typed languages such as C, C++, or Java do not have the same flexibility that Python does because their code requires type declarations (thus, no polymorphism)
-- Variables, Objects, and References:
+- Variables, Objects, and References
   - Variable creation: first occurs when you assign a value to a name. Every subsequent reassignment alters the value assigned to the name
   - Variable types: variables contain no reference to type or constraints, the type information is stored with the object and not with the name
   - Variable use: variables must all be assigned before they are used, because as soon as they are called in later code they are immediately replaced with the object they reference
   - Reference: the link between names and objects
-- Objects are Garbage-Collected:
+- Objects are Garbage-Collected
   - When assigning a variable, the previous object it was referencing is remove from memory if the object is no longer referenced by another variable or object
   - Internally, Python stores a counter for each object based on the number of times it is referenced, when this counter reaches zero, the object is removed from memory to free up additional space
   - Python also contains a cycle-detector that makes sure items with a circular reference are also removed, even though they would not be caught by the reference counter
-- Shared References:
+- Shared References
   - Shared reference: when more than one variable references the same object in the background
     - E.g. _a = 3 b = a_ the net effect of which is both a and b reference 3
   - It is impossible to link a variable to another variable, because in the background the reference are to the objects
   - If you assign a variable a, then assign a variable b as a reference to a, you are actually assigning a reference to the object a represents. If you assign a to a new value, b will retain the original reference unless overwritten
-- Shared References and In-Place Changes:
+- Shared References and In-Place Changes
   - In-Place changes are only possible on mutable objects (altering the object itself)
   - When altering an object (such as a list) that has shared references, if it is mutable then you will be performing an in-place change, which will then affect all the variables that have referenced said object. We are not creating a new object for a reassignment, we are effectively altering the object behind the references
   - If you wish to avoid this, you can always have Python copy the first object and create a new one with the desired modification, leaving the original unchanged
-- Shared References and Equality:
+- Shared References and Equality
   - _==_ will test for the same values and return TRUE if they are equivalent
   - _is_ tests to see if the variables reference the same object, and will return TRUE if they do
   - Because small integers and strings are stored in cache, it is possible for _==_ and _is_ to both return TRUE even if they would otherwise show TRUE and FALSE (this is because although they may be referencing two different objects to the user, the object is stored in memory and thus retained for later use, reappearing for the second assignment and thus evaluating _is_ to TRUE)
@@ -497,14 +495,14 @@ _expression_
 
 ## Chapter 7 - String Fundamentals
 
-- String Basics:
+- String Basics
   - Python strings are categorized as immutable sequences, meaning they retain a left to right order and they cannot be changed in place
   - Triple quotes allow for multiline commenting
-- String Literals:
+- String Literals
   - You can use single quotes, double quotes, triple quotes, escape sequences, raw strings, bytes literals, and Unicode literals to write strings
   - Primarily, literals are written using the single or double quotes
   - Python with automatically concatenate any strings literals that are not separated by a comma, this can also be explicitly called using the + operator
-- Escape Sequences Represent Special Characters:
+- Escape Sequences Represent Special Characters
   - Identified by the \ character preceding the escaped text
   - \n creates a new line
   - \t creates a new tab
@@ -520,17 +518,17 @@ _expression_
     - \xhh - character with a hex value of hh
     - \ooo - character with octal value ooo
     - \0 - null, binary 0 character
-- Raw Strings Suppress Escapes:
+- Raw Strings Suppress Escapes
   - It is common to see programmers reference things like "C:\new\test.txt" but this will have both a newline escape and a newtab escape
   - In order to use the text without escaping, the string literal must be preceded by an _r_
     - E.g. _r'C:\new_folder\test_file.txt'_
   - In this example you could also use to backslashes to save one of them in the output, but it is cleaner to use a raw string
-- Strings in Action:
-  - Basic Operations:
+- Strings in Action
+  - Basic Operations
     - + can be used for concatenation
     - * is used for repetition
     - These are a clear example of operator overloading: we are using the same operators that accomplish addition and multiplication for concatenation and repetition, based on operand types
-  - Indexing and Slicing:
+  - Indexing and Slicing
     - Python starts positioning with a zero, so the first item is indexed to position 0
     - Using a negative in your index is actually adding the negative to the length of the string to essentially count backwards from the end of a string
     - E.g. _S[1:]_ returns all characters in string S starting with position 1 (the second character) and ending at the end of the string
@@ -538,61 +536,59 @@ _expression_
     - Slice boundaries default to 0 as the lower bound and the length as the upper
     - Extended slicing takes a third argument that accepts a stride (allows skipping of characters and can count backwards if using a negative value)
       - E.g. _S[1:10:-1]_ slices characters from 2 to 9, but backwards
-  - String Conversion Tools:
+  - String Conversion Tools
     - Considering that Python will not guess the type an intent of operands, you must explicitly convert items that are not compatible (like str and int)
     - You can also convert a character to its underlying byte representation
-  - Changing String I:
+  - Changing String I
     - Because strings are immutable, you cannot change in place, rather you can use tools like concatenation, slicing, and indexing to create a new object, which can then be assigned to the original variable name if so chosen
     - Some common tools include: _.replace_ and _.format_ which do not alter the original string, but rather create a new object based on the original string
-- String Methods:
-  - Method Call Syntax:
+- String Methods
+  - Method Call Syntax
     - Methods are technically attributes that are attached to object that happen to reference callable functions which always have an implied subject
     - Methods thus combine two operations: an attribute fetch and a function call
     - Attribute fetch: essentially tells Python to fetch the attribute of the object the method is acting upon
     - Call expressions: invokes the code of function x, passing along the proper arguments, and return the result value
-  - Methods of Strings:
+  - Methods of Strings
     - These are current as of 3.3, but they are subject to change. Consult the standard library manual if need be
     - _.capitalize, .casefold, .ljust, .lower, .center,_ etc.
   - Changing Strings II:
-    - E.g. _S = 'spammy'_
-
-_S = S.replace('mm', 'xx')_
-
-_S_ outputs 'spaxxy'
-
-    - The replace method is very common and it can take a third argument that specifies the number of replacements you want to take place
+``` python
+S = 'spammy'
+S = S.replace('mm', 'xx')
+S
+```
+Output: 'spaxxy'
+  - The replace method is very common and it can take a third argument that specifies the number of replacements you want to take place
   - Parsing text examples on pgs. 220-221
   - Other examples on pgs. 221-222
   - Original string Module's Functions were deprecated in 3.X, to see a few return to pg. 222
-- String Formatting Expressions:
-  - Two common methods:
+- String Formatting Expressions
+  - Two common methods
     - String formatting expressions: _'...%...' % (values)_
       - Revisit table 7-4 on pg. 226 to view all the special string formatting codes that can take the place of %
         - E.g. %e takes a floating point with an exponent
     - String formatting method calls: _'...{}...'.format(values)_
   - Examples of formatting expressions on pg. 227
-- Dictionary-Based Formatting Expressions:
+- Dictionary-Based Formatting Expressions
   - You can use a dictionary (defined after the string) and use the index to format a string
-    - E.g. _'%(qty)d more %(food)s' % {'qty' : 1, 'food' : 'spam')_ outputs '1 more spam'
+    - E.g. ``` '%(qty)d more %(food)s' % {'qty' : 1, 'food' : 'spam') ``` outputs _1 more spam_
   - You can also define a string with the % contained inside of it and assign it to a variable, then assign a variable for the dictionary you want to reference, they use these as argument for print, of simply call one or the other to do string formatting
-    - E.g. _reply = 'text %(number)d text'_
-
-_values = {'number' : 1}_
-
-_print(reply % values)_
-
+``` python 
+reply = 'text %(number)d text'
+values = {'number' : 1}
+print(reply % values)
+```
 Output: 'text 1 text'
-
-- String Formatting Method Calls:
+- String Formatting Method Calls
   - Curly brackets in the string contain the variables that will be inserted (either by position in the value dictionary or the index name or by the relative position [requires that the string ordering and value ordering are matched])
   - Examples on pg. 230 (too long to rewrite)
   - This method can also be used to include keys, attributes, or offsets
-    - E.g. _'My {1[Kind]} runs {0.platform}'.format(sys = sys, {'kind' : 'laptop'})_
-
+``` python
+ 'My {1[Kind]} runs {0.platform}'.format(sys = sys, {'kind' : 'laptop'}) 
+ ```
 Output: 'My laptop runs Windows 10'
-
   - Extended discussion comparing the two, not relevant to this reading (pgs. 231-242)
-- General Type Categories:
+- General Type Categories
   - Types share operations sets by categories
     - The three categories are Numbers, Sequences, and Mappings
     - Each category has operations that act in the same manner independent of the type
@@ -600,7 +596,7 @@ Output: 'My laptop runs Windows 10'
 
 ## Chapter 8 - Lists and Dictionaries
 
-- Lists:
+- Lists
   - Lists are both mutable and can contain any other objects (like strings, numbers, or lists)
   - Lists retain a left to right ordering and thus are considered sequences
   - This ordering can contain any number of arbitrary objects
@@ -609,50 +605,48 @@ Output: 'My laptop runs Windows 10'
   - Because lists can contain arbitrary objects, the objects themselves can be heterogeneous and arbitrarily nestable
   - Common list literals and operations can be found in table 8-1
     - Includes: _L = [], L = list(), len(L), L.append(), L.copy(),_ etc.
-  - Lists in Action:
+  - Lists in Action
     - Basic List Operations:
       - Lists have similar operators to strings
       - Things like the + operator work as one would expect strings to, save for the fact that we are creating a new list
       - These operations include list iterations and list comprehensions
-        - E.g. _res = {}_
-
-_for c in 'SPAM':_
-
-_res.append(c * 4)_
-
+``` python 
+res = {}
+for c in 'SPAM':
+  res.append(c * 4)
+```
 Output: ['SSSS', 'PPPP', 'AAAA', 'MMMM']
-
-    - Indexing, Slicing, and Matrixes:
+    - Indexing, Slicing, and Matrixes
       - These operations function exactly as they do for strings except that the result is of the same type as the object stored at the offset
         - e. a str while stay a str, a decimal will stay a decimal
-    - Changing Lists in Place:
+    - Changing Lists in Place
       - It is possible to change either a single object in a list or a slice of a list
       - These modifications have implications for all references to the amended list object
       - Modifying a slice of a list is best thought of as deleting the previous objects in those offsets and inserting new ones
       - If you are writing more objects in than you are replacing, it will modify the length of the list starting at the specified offset
-    - List Method Calls:
+    - List Method Calls
       - Include methods like: _.append, .sort,_ etc.
     - Sorting lists can be done with the _.sort()_ method, which can take a key argument (to define the sort order over things like capitalization), a reverse argument (for reversing the order), etc.
     - _.extend()_: iterates through and add each item in an iterable object to the list (append simply adds a single as is without iteration)
     - _.index()_: returns the position of the item in the argument
-- Dictionaries:
+- Dictionaries
   - The key difference between lists and key is that lists contain an ordered collection, while dictionaries have an unordered collection that is defined by a key rather than position
   - Dictionaries are part of the "mutable mapping" category
   - Internally, dictionaries are hash tables (data structures that support very fast retrieval)
   - Table 8-2 contains common literals and operations on pg. 260-261
-  - Dictionaries in Action:
+  - Dictionaries in Action
     - Indexing and other such operations are similar to lists, but because they are not sequences, certain functions like slicing and concatenation or not supported
     - Dictionaries can be changed in place using the key rather than the position
     - Dictionaries can contain arbitrary objects of arbitrary length much like lists
   - Dictionary methods include: _.values(), .items(), .get(),_ and _.update()_
   - _.pop_: common method that deletes the key and value, and returns the value to the user
   - Example on pgs. 265-266
-  - Dictionary Usage Notes:
+  - Dictionary Usage Notes
     - Sequence operation do not work
     - Assigning to new indexes adds entries
     - Keys need not always be strings
   - By using integers as keys in a dictionary, you can essentially create a more flexible version of a list
-  - Avoid Missing-Key Errors:
+  - Avoid Missing-Key Errors
     - Use an if to test for the key, otherwise return some other value
     - Use _try:_ to test for the key, otherwise return some other value
     - Use the _.get()_ method to return a key if it exists (the second argument specifies the value to return if the key is non-existent)
@@ -821,7 +815,7 @@ _# [2, 3, 4]_
       - Errors will appear if using more than one starred name in an assignment, if there are too few names compared to values and no star, or if the starred name is not itself part of a sequence
   - All augmented assignments:
     - _x += y_
-    - _x &amp;= y_
+    - _x &= y_
     - _x -= y_
     - _x |= y_
     - _x *= y_
