@@ -60,7 +60,7 @@ In addition to a markdown file of notes (markdown is used for portability and ca
  | High Performance Spark                     |           |      |      |       |
  | INSPIRED, 2nd                              |           |      |      |       |
  | Interactive Data Visualization for the Web |           |      |      |       |
- | Introduction to Deep Learning              |           |      |      |       |
+ | Intro to Deep Learning                     |           |      |      |       |
  | Intro to Evolutionary Computing            |           |      |      |       |
  | Intro to Partial Differential Equations    |           |      |      |       |
  | JavaScript The Definitive Guide            |           |      |      |       |
