@@ -26,6 +26,7 @@ In addition to a markdown file of notes (markdown is used for portability and ca
 | Data Mining               | Jiawei Han, Micheline Kamber, Jian Pei | 9780123814791 | data_mining, scraping                              |                                |
 | Financial Intelligence    | Karen Berman                           | 9781422144114 | finance, financial_reporting                       |                                |
 | Learning Python           | Mark Lutz                              | 1449355730    | python, programming                                | read - ch. 25, updated - ch. 8 |
+
 ## To Be Read List
  | Title                                      | Author(s) | ISBN | Tags | Notes |
  | :----------------------------------------- | :-------- | :--- | :--- | :---- |

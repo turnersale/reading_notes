@@ -3,6 +3,7 @@
         "english"
     ],
     "spellright.documentTypes": [
+        "markdown",
         "latex",
         "plaintext"
     ]

@@ -348,4 +348,55 @@
 - Exercises on pg. 145
 
 ## Chapter 5 – Support Vector Machines
--
+- Support Vector Machines (SVMs) are able to use linear or nonlinear classification, regression and outlier detection
+- SVM is particularly well suited for classification of complex, small-to-medium sized datasets
+- Linear SVM:
+  - Linearly seperable:
+    - Able to be divided by a single line
+    - This is a decision boundary
+    - SVM is very good at large margin classification: decision boundaries which are far from the training instances
+    - In this case, more instances which are far from the boundary have no impact on the boundary definition, only those which are nearby "support" the decision boundary
+    - SVM is sensitive to scaling, which can improve the accuracy
+  - Soft Margin Classification:
+    - Hard Margin: instances must be "off the street"
+      - This has two main issues:
+        - Only works if the data is linearly seperable
+        - Quite sensitive to outliers
+    - This leads to a superior method that balances keeping the street large and limiting margin violations (instances in the middle of the street or the wrong side)
+    - Sklearn has a control for this balance: the C hyperparameter
+      - Higher C = wider street but more violations
+      - If the model is overfitting it may be worth regularizing it by reducing C
+    - Sklearn can use the SGDClassifier class to help train a linear SVM classifier for huge datasets that don't fit in memory
+- Nonlinear SVM Classification:
+  - Sometimes datasets are nowhere near linearly seperable, so it can be useful to add features to improve seperability
+  - A pipeline with a PolynomialFeatures transformer could be useful in these scenarios
+  - Polynomial Kernel:
+    - Low polynomial degrees cannot handle large datasets, while high degrees slow the model down
+    - SVMs can use the "kernel trick" to improve this
+    - This trick acts as if you added high degree polynomial features without actually adding them
+    - Sklearn uses the SVC class for this
+    - High degrees may lead to overfitting, so altering the degrees may improve generalizability
+    - To improve the models and try many hyperparameters you can use a coarse grid search, then a finer one once the rough area is determined
+  - Adding Similarity Features:
+    - A similarity function determines how well an instance resembles a landmark
+    - Adding more landmarks is easy, but increases the feature set dramatically
+  - Gaussian RBF Kernel:
+    - Adding similarity features can be computationally expensive for large datasets
+    - We can use the kernel trick once again, just with another method
+    - A large gamma makes the bell curve narrower, thus the decision boundary is more "wiggly" but can overfit
+    - A small gamme widens the curve and smooths the decision boundary
+  - Other kernels do exist, but tend to be more use-case specific (such as string kernels)
+- Computational Complexity:
+  - Linear SVM uses an algorithm (_liblinear_ library) that cannot use the kernel trick, but it does scale almost linearly with the number of instances (m) and features (n) thus it is O(m * n)
+    - The algorithm does take longer if you require a higher precision as controlled by the ϵ (tol in Sklearn)
+  - SVC class uses the _libsvm_ library that supports the kernel trick and is usuall between O(m^2 * n) and O(m^3 * n)
+    - This means that the larger the instance count, the slower it gets
+    - Thus is it best for small but complex datasets
+    - This also scales well with many features and even sparse features
+  - SGDClassifier also scales nearly linearly but cannot use the kernel trick
+- SVM Regression:
+  - Instead of trying to widen a streat between two classes with minimal violations, we try to fit as many instances ON the street while limiting violations (off the street)
+  - Width of the street is controlled by ϵ
+  - LinearSVC becomes LinearSVR
+  - SVC becomes SVR
+- 
