@@ -30,14 +30,22 @@ In addition to a markdown file of notes (markdown is used for portability and ca
 ## To Be Read List
  | Title                                      | Author(s) | ISBN | Tags | Notes |
  | :----------------------------------------- | :-------- | :--- | :--- | :---- |
- | Advanced Analytics with Spark, 2nd         |           |      |      |       |
+ | Advanced Analytics with Spark, 2nd Edition |           |      |      |       |
  | Apache Pulsar Versus Apache Kafka          |           |      |      |       |
+ | API Security in Action                     |           |      |      |       |
+ | Applied Calculus 5th Edition               |           |      |      |       |
  | AWS Certified Solutions Architect          |           |      |      |       |
+ | Azure for Architects, 3rd Edition          |           |      |      |       |
+ | Building Microservices, 2nd Edition        |           |      |      |       |
+ | Building Progressive Web Apps              |           |      |      |       |
+ | Cassandra: The Definitive Guide, 3rd Ed.   |           |      |      |       |
+ | CISSP All-in-One Exam Guide, 8th Ed.       |           |      |      |       |
  | Clean Agile Back to Basics                 |           |      |      |       |
  | Clean Code                                 |           |      |      |       |
  | CompTIA Linux +                            |           |      |      |       |
  | CompTIA Security +                         |           |      |      |       |
  | Computer Vision                            |           |      |      |       |
+ | D3.js in Action, 2nd Edition               |           |      |      |       |
  | Dancing with Qubits                        |           |      |      |       |
  | Data Analysis                              |           |      |      |       |
  | Data Science for Business                  |           |      |      |       |
@@ -49,17 +57,20 @@ In addition to a markdown file of notes (markdown is used for portability and ca
  | Deep Learning with PyTorch                 |           |      |      |       |
  | Designing Data-Intensive Applications      |           |      |      |       |
  | Designing Event-Driven Systems             |           |      |      |       |
+ | Differential Equations...                  |           |      |      |       |
  | Django 3 by Example                        |           |      |      |       |
  | Elements of Quantum Computation...         |           |      |      |       |
  | Elements of Statistical Learning           |           |      |      |       |
  | Essential Scrum                            |           |      |      |       |
  | Feature Engineering for ML                 |           |      |      |       |
  | Flat Fluid                                 |           |      |      |       |
+ | Fundamentals of Software Architecture      |           |      |      |       |
  | Generative Deep Learning                   |           |      |      |       |
  | GCP for Architects                         |           |      |      |       |
  | Hands-On Deep Learning with Apache Spark   |           |      |      |       |
+ | Hands-On Recommendation Systems...         |           |      |      |       |
  | High Performance Spark                     |           |      |      |       |
- | INSPIRED, 2nd                              |           |      |      |       |
+ | INSPIRED, 2nd Edition                      |           |      |      |       |
  | Interactive Data Visualization for the Web |           |      |      |       |
  | Intro to Deep Learning                     |           |      |      |       |
  | Intro to Evolutionary Computing            |           |      |      |       |
@@ -73,25 +84,40 @@ In addition to a markdown file of notes (markdown is used for portability and ca
  | Kubeflow for Machine Learning              |           |      |      |       |
  | Lean Analytics                             |           |      |      |       |
  | Learn Docker                               |           |      |      |       |
+ | Learning Algorithms                        |           |      |      |       |
+ | Learning Anguler, 3rd Edition              |           |      |      |       |
+ | Learning Go                                |           |      |      |       |
+ | Learning React, 2nd Edition                |           |      |      |       |
+ | Linear Algebra, 5th Edition                |           |      |      |       |
  | Linear Algebra Done Right                  |           |      |      |       |
  | Linear and Nonlinear Programming           |           |      |      |       |
- | Mastering Bitcoin, 2nd                     |           |      |      |       |
+ | Mastering Ansible, 3rd Edition             |           |      |      |       |
+ | Mastering Bitcoin, 2nd Edition             |           |      |      |       |
  | Mastering Computer Vision with TensorFlow  |           |      |      |       |
  | Mastering Julia                            |           |      |      |       |
  | Mastering Kubernetes                       |           |      |      |       |
+ | Matrix Differential Calculus...            |           |      |      |       |
  | Mining the Social Web                      |           |      |      |       |
+ | Modern Computer Vision with PyTorch        |           |      |      |       |
  | Neural Networks and Deep Learning          |           |      |      |       |
+ | Node.js Design Patterns, 3rd Edition       |           |      |      |       |
+ | Practical Boostrap...                      |           |      |      |       |
+ | Practical Git                              |           |      |      |       |
+ | Practical Recommender Systems              |           |      |      |       |
  | Practical Tableau                          |           |      |      |       |
  | Process Mining                             |           |      |      |       |
  | Programming Quantum Computers              |           |      |      |       |
- | Programming Scala, 2nd                     |           |      |      |       |
+ | Programming Rust, 2nd Edition              |           |      |      |       |
+ | Programming Scala, 2nd Edition             |           |      |      |       |
+ | Programming TypeScript                     |           |      |      |       |
  | PyTorch Computer Vision Cookbook           |           |      |      |       |
  | Quantum Information                        |           |      |      |       |
+ | Responsive Web Design with HTML5 and CSS   |           |      |      |       |
  | Solutions Architect's Handbook             |           |      |      |       |
  | Spark The Definitive Guide                 |           |      |      |       |
  | Stochastic Processes and Calculus          |           |      |      |       |
- | Terrafrom Up and Running, 2nd              |           |      |      |       |
- | The Linux Command Line, 2nd                |           |      |      |       |
+ | Terrafrom Up and Running, 2nd Edition      |           |      |      |       |
+ | The Linux Command Line, 2nd Edition        |           |      |      |       |
  | The State of the Kubernetes Ecosystem      |           |      |      |       |
  | The Year without Pants                     |           |      |      |       |
  | Visualizing Streaming Data                 |           |      |      |       |
