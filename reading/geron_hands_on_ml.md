@@ -7,9 +7,10 @@
 - [Part 1 - The Fundamentals of Machine Learning](#part-1---the-fundamentals-of-machine-learning)
   - [Chapter 1 - The Machine Learning Landscape](#chapter-1---the-machine-learning-landscape)
   - [Chapter 2 - End-to-End Machine Learning Project](#chapter-2---end-to-end-machine-learning-project)
-  - [Chapter 3 – Classification](#chapter-3--classification)
-  - [Chapter 4 – Training Models](#chapter-4--training-models)
-  - [Chapter 5 – Support Vector Machines](#chapter-5--support-vector-machines)
+  - [Chapter 3 - Classification](#chapter-3---classification)
+  - [Chapter 4 - Training Models](#chapter-4---training-models)
+  - [Chapter 5 - Support Vector Machines](#chapter-5---support-vector-machines)
+  - [Chapter 6 - Decision Trees](#chapter-6---decision-trees)
 
 # Preface
 
@@ -205,7 +206,7 @@
       - Take snapshots of online models so you can revert if needed
 - Exercises on pg. 79
 
-## Chapter 3 – Classification
+## Chapter 3 - Classification
 - Binary classifier: a classifier task where there are only two classes
 - Stochastics Gradient Descent (SGD):
   - Well suited for large datasets
@@ -272,7 +273,7 @@
     - Each label can have multiple values (multioutput)
 - Exercises on pgs. 104-105
 
-## Chapter 4 – Training Models
+## Chapter 4 - Training Models
 - Closed Form Solution:
   - A mathematical equation that gives the result directly
   - Example: normal equation for linear regression
@@ -347,7 +348,7 @@
     - In order to run this methodology, you can use _sklearn.LogisticRegression_ but you must set the _multi_class_ argument to multinomial and the _solver_ to a solver that supports softmax (such as lbfgs)
 - Exercises on pg. 145
 
-## Chapter 5 – Support Vector Machines
+## Chapter 5 - Support Vector Machines
 - Support Vector Machines (SVMs) are able to use linear or nonlinear classification, regression and outlier detection
 - SVM is particularly well suited for classification of complex, small-to-medium sized datasets
 - Linear SVM:
@@ -399,4 +400,51 @@
   - Width of the street is controlled by ϵ
   - LinearSVC becomes LinearSVR
   - SVC becomes SVR
-- 
+- Under the Hood:
+  - Training Objectives:
+    - b = bias term
+    - w = weight term
+    - Predicts the class of a new instance x by comuting a decision function based on the preceding weights and biases
+    - Margins in a linear SVM are equal in distance to the decision boundary, while the values for w and b are found by maximizing the margin while avoiding margin violations (hard margin) or limiting them (soft margin)
+    - Constrained optimization: for hard margin problems, we must minimize the ||w|| while constraining the problem such that there are no margin violations
+    - Slack variable: a factor introduced for soft margin problems such that instances can violate the margin, but minimizing the slack margin is critical
+    - C = hyperparameter defining how to weight the tradeoffs between minimizing ||w|| and the slack variable
+  - Quadratic Programming:
+    - Hard and soft margin problems are convex quadratic optimization problems, also known as Quadratic Programming (QP)
+    - Pg. 161 has some details on the mathematical expression of this concept
+    - Many QP solvers exist and can be used relatively easily, unless the kernel trick is desired
+  - The Dual Problem:
+    - If the constrained optimization problem is the primal problem, then there is a dual problem which can give a lower bound (or the same answer) to the primary
+    - Appendix C shows how to derive the dual from the primal
+    - The dual problem for SVM is much faster than the primal when the number of instances is less than the number of features
+  - Kernelized SVM:
+    - Pgs. 163-164 show the math
+    - Abbreviated: the second degree polynomial transformation ends up allowing you to skip transforming all the training instances and go straight to replacing the dot product with the square
+    - Kernel: a function capable of computing the dot product of two vectors and a transformation based only on the original vectors without having to compute the actual transformations
+    - Some common kernels: linear, polynomial, gaussian RBF, sigmoid
+    - It is possible to make predictions with kernelized models, even though you cannot necessarily apply the transformation (some transformations may have infinite dimensions)
+  - Online SVMs:
+    - It is most common to use gradient descent based methods for online learning as they converge over time, albeit slowly
+    - It is also possible to do so with kernelized SVMs but those methods are in Matlab and C++ (see links on pg. 167)
+    - Exercises on pg. 167
+
+## Chapter 6 - Decision Trees
+- Decision trees can be visualized using the _export_graphviz()_ in sklearn.tree
+- Gini impurity: a measure of how "pure" the node is (if fully pure then gini=0)
+- White box models: models which are relatively easy to understand and interpret, whereas black box models are far more complex and obscure
+- Estimating Class Probabilities:
+  - The example will traverse the model, while the model can then determine the likelihood of that being the correct node
+  - The highest probability will also be the class that the model predicts
+- CART:
+  - CART: Classification And Regression Tree
+  - First splits the training set into two subsets based on a feature k and a threshold t<sub>k</sub>
+  - The models selects the combination of these two factors with the purest resulting subsets
+  - It then follows the same procedure recursively
+  - The algorithm stops when it reaches the maximum depth defined by the user or it can no longer find a split that reduces impurity
+  - Greedy algorithm: an algorithm that searches for the optimum split at the top level and repeats, but does not check if that solution leads to the lowest impurity at lower levels
+- Computational Complexity:
+  - Since finding the optimum tree is considered an NP-Complete problem (requires O(exp(m)) for m instances), it is unlikely to find the perfect solution, only a "reasonably good" one
+  - Predictions are significantly less complex, requiring O(log<sub>2</sub>(m))
+  - Presorting the data for small sets can improve the training speed, but is much slower for large sets
+- Gini Impurity or Entropy?
+  - 

@@ -75,6 +75,7 @@ In addition to a markdown file of notes (markdown is used for portability and ca
  | Intro to Deep Learning                     |           |      |      |       |
  | Intro to Evolutionary Computing            |           |      |      |       |
  | Intro to Partial Differential Equations    |           |      |      |       |
+ | Introducing GitHub, 2nd Edition            |           |      |      |       |
  | JavaScript The Definitive Guide            |           |      |      |       |
  | Julia 1.0 Programming                      |           |      |      |       |
  | Julia for Data Science                     |           |      |      |       |
