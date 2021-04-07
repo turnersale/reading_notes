@@ -447,4 +447,24 @@
   - Predictions are significantly less complex, requiring O(log<sub>2</sub>(m))
   - Presorting the data for small sets can improve the training speed, but is much slower for large sets
 - Gini Impurity or Entropy?
-  - 
+  - In general, it does not matter as they end up leading to similar trees
+  - Gini is slightly faster to compute so it the default for most
+  - When they do differ, Gini tends to isolate the largest class in its own branch, while entropy tends to be a bit more balanced
+- Regularized Hyperparameters:
+  - Many trees can lead to overfitting the training set, this is called nonparametric (since it does not have any parameters to constrain it prior to training)
+  - Parametric models have a limited number of predetermined parameters, therefor its degrees of freedom is limited and reduces overfitting risk
+  - Model parameters are fluid, but the maximum depth is the most common
+  - sklearn has some other hyperparameters:
+    - _min_samples_split_ is the minimum number of samples a node must have before splitting
+    - _min_samples_lead_ is the number of samples a lead must have
+    - _min_weight_fraction_leaf_ fraction instead of nominal
+    - _max_features_ is the number of features to evaluate at each split
+  - Some models start with an unrestrained tree then "prune" leaves based on their statistical significance
+- Regression:
+  - Regression will split instances into a node just like classification, but it will assign the average value of the training samples as the prediction
+  - Addition nodes may allow for more detailed regression but can also be prone to overfitting
+- Instability:
+  - DTs are very powerful but are sensitive to training set rotations (it prefers orthagonal decisions boundaries)
+  - PCA can be used to limit the impacts of such rotations
+  - DTs are senstive to the training set as well, and the same data can even lead to different trees (unless hard coding the random state)
+- Exercises on pg. 180
